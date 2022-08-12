@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/style.css">
+		<title>Добавить товар</title>
+</head>
+<body>
+		<section class="add-item" area-label="добавить товар">
+				<div class="container">
+						<h1 class="add-item__title">добавить товар</h1>
+						<form class="add-item__form">
+								<fieldset class="add-item__content">
+										<label class="add-item__label">
+												наименование
+												<input class="add-item__input" type="text" name="name" required>
+										</label>
+										<label class="add-item__label">
+												категория
+												<input class="add-item__input" type="text" name="category" required>
+										</label>
+										<label class="add-item__label">
+												еденицы измерения
+												<input class="add-item__input" type="text" name="measure" required>
+										</label>
+										<div class="add-item__discount">
+												<label class="add-item__label" for="discount">дисконт</label>
+												<div class="add-item__input-set">
+														<input class="add-item__checkbox" type="checkbox" id="discount">
+														<input class="add-item__input" type="text" name="discount">
+												</div>
+										</div>
+										<label class="add-item__label">
+												описание
+												<input class="add-item__input" type="text" name="description">
+										</label>
+										<label class="add-item__label">
+												количество
+												<input class="add-item__input" type="text" name="quantity" required>
+										</label>
+										<label class="add-item__label">
+												цена
+												<input class="add-item__input" type="text" name="price" required>
+										</label>
+								</fieldset>
+								<button class="add-item__submit-button" type="submit">
+										добавить товар
+								</button>
+								<button class="add-item-close-button" type="button">
+										X
+								</button>
+						</form>
+				</div>
+
+		</section>
+</body>
+</html>
