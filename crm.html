@@ -2,56 +2,60 @@
 <html lang="ru">
 <head>
 		<meta charset="UTF-8">
+		<link rel="preload" href="font/Inter-Regular.ttf" as="font" type="font/ttf" crossorigin>
+		<link rel="preload" href="font/Inter-Bold.ttf" as="font" type="font/ttf" crossorigin>
 		<link rel="stylesheet" href="css/style.css">
 		<title>Добавить товар</title>
 </head>
 <body>
-		<section class="add-item" area-label="добавить товар">
-				<div class="container">
+		<div class="add-item" area-label="добавить товар">
+				<div class="add-item__container">
 						<h1 class="add-item__title">добавить товар</h1>
 						<form class="add-item__form">
 								<fieldset class="add-item__content">
-										<label class="add-item__label">
+										<label class="add-item__label" for="add-item-name">
 												наименование
-												<input class="add-item__input" type="text" name="name" required>
 										</label>
-										<label class="add-item__label">
+										<input class="add-item__input" type="text" name="name" id="add-item-name" required>
+										<label class="add-item__label" for="add-item-category">
 												категория
-												<input class="add-item__input" type="text" name="category" required>
 										</label>
-										<label class="add-item__label">
+										<input class="add-item__input" type="text" name="category" id="add-item-category" required>
+										<label class="add-item__label" for="add-item-measure">
 												еденицы измерения
-												<input class="add-item__input" type="text" name="measure" required>
 										</label>
+										<input class="add-item__input" type="text" name="measure" id="add-item-measure" required>
 										<div class="add-item__discount">
-												<label class="add-item__label" for="discount">дисконт</label>
+												<label class="add-item__label add-item__label_margin" for="discount">дисконт</label>
 												<div class="add-item__input-set">
 														<input class="add-item__checkbox" type="checkbox" id="discount">
-														<input class="add-item__input" type="text" name="discount">
+														<input class="add-item__input add-item__input_orange" type="text" name="discount">
 												</div>
 										</div>
-										<label class="add-item__label">
+										<label class="add-item__label" for="add-item-description">
 												описание
-												<input class="add-item__input" type="text" name="description">
 										</label>
-										<label class="add-item__label">
+										<textarea class="add-item__input add-item__input_multiline" type="text" name="description" id="add-item-description"></textarea>
+										<label class="add-item__label" for="add-item-quantity">
 												количество
-												<input class="add-item__input" type="text" name="quantity" required>
 										</label>
-										<label class="add-item__label">
+										<input class="add-item__input" type="number" name="quantity" required id="add-item-quantity">
+										<label class="add-item__label" for="add-item-price">
 												цена
-												<input class="add-item__input" type="text" name="price" required>
 										</label>
+										<input class="add-item__input" type="number" name="price" required id="add-item-price">
 								</fieldset>
 								<button class="add-item__submit-button" type="submit">
 										добавить товар
 								</button>
-								<button class="add-item-close-button" type="button">
-										X
-								</button>
 						</form>
 				</div>
-
-		</section>
+				<button class="add-item-close-button" type="button">
+						<svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+								<path d="M2 2L22 22" stroke="#6E6893" stroke-width="3" stroke-linecap="round"/>
+								<path d="M2 22L22 2" stroke="#6E6893" stroke-width="3" stroke-linecap="round"/>
+						</svg>
+				</button>
+		</div>
 </body>
 </html>
