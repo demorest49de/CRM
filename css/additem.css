@@ -59,13 +59,11 @@
     margin-bottom: 5px;
 }
 
-.add-item__label_margin {
-    margin: 0;
-}
-
 .add-item__input-set {
     display: flex;
-    margin-top: 5px;
+    margin-bottom: 12px;
+    gap: 10px;
+
 }
 
 .add-item__input {
@@ -73,6 +71,18 @@
     background: #F4F2FF;
     border-radius: 6px;
     border-style: none;
+    resize: none;
+    width: 100%;
+}
+
+.add-item__input:disabled {
+    background-color: #EEEEEE;
+    width: 100%;
+}
+
+
+.add-item__input:nth-last-child(5) {
+    height: 112px;
 }
 
 .add-item__input:not(:nth-last-child(1)) {
@@ -83,12 +93,8 @@
     outline: none;
 }
 
-.add-item__discount {
-    margin-bottom: 12px;
-}
-
 .add-item__checkbox {
-    position: absolute;
+    position: relative;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -96,7 +102,7 @@
 
 .add-item__checkbox:before {
     content: '';
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     display: block;
@@ -139,18 +145,6 @@
 
 .add-item__checkbox:disabled:before {
     background-color: #cccccc;
-}
-
-.add-item__input_orange {
-    background-color: #EEEEEE;
-    width: 100%;
-    margin-left: 50px;
-}
-
-.add-item__input_multiline {
-    height: 112px;
-    resize: none;
-    width: 100%;
 }
 
 .add-item__submit-button {
