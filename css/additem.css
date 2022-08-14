@@ -63,7 +63,6 @@
     display: flex;
     margin-bottom: 12px;
     gap: 10px;
-
 }
 
 .add-item__input {
@@ -73,16 +72,16 @@
     border-style: none;
     resize: none;
     width: 100%;
+    padding-left: 10px;
+    font-size: 16px;
 }
 
 .add-item__input:disabled {
     background-color: #EEEEEE;
-    width: 100%;
 }
 
-
 .add-item__input:nth-last-child(5) {
-    height: 112px;
+    height: auto;
 }
 
 .add-item__input:not(:nth-last-child(1)) {
