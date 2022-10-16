@@ -70,6 +70,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-top: 5px;
 }
 
 .add-item__input-set .add-item__input {
