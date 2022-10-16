@@ -104,7 +104,7 @@ body {
 
 .add-item__content {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 250px);
     column-gap: 24px;
     row-gap: 12px;
     grid-template-areas:
@@ -150,6 +150,7 @@ body {
 
 .add-item__add-image-button{
     grid-area: add-image;
+    position: relative;
 }
 
 .add-item__checkbox {
@@ -216,17 +217,54 @@ body {
     font-weight: 600;
 }
 
-.button__add-image {
+.add__label-add-image{
+    position: absolute;
+    font-weight: 600;
     font-size: 14px;
     line-height: 17px;
+    left: 23px;
+    top: 31px;
+    z-index: 1;
+    color: var(--color-FFFFFF);
+}
+
+.button__add-image {
     padding: 11px 27px;
     margin-top: 20px;
+    min-height: 39px;
+    color: transparent;
+    max-width: 250px;
+}
+
+
+.button__add-image::-webkit-file-upload-button {
+    display: none;
+}
+
+.add-item__total-block{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 28px;
+}
+
+.add-item__total-text{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: var(--color-6E6893);
+}
+
+.add-item__total-value{
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    color: var(--color-6D5BD0);
 }
 
 .button__add-item {
     font-size: 16px;
     line-height: 19px;
-    left: 352px;
     padding: 10px 25px;
 }
 
