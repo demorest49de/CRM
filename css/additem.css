@@ -248,6 +248,10 @@ body {
     margin: 0 28px;
 }
 
+.add-item__total{
+    align-self: start;
+}
+
 .add-item__total-text{
     font-weight: 500;
     font-size: 14px;
