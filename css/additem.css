@@ -12,16 +12,13 @@
     font-display: swap;
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .overlay {
-    width: 792px;
     position: absolute;
-    background: rgba(0, 0, 0, 1);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .5);
 }
 
 .add-item {
@@ -35,13 +32,14 @@ body {
     font-weight: 600;
     line-height: 15px;
     letter-spacing: 0.05em;
-    /*position: relative;*/
+    position: relative;
+    max-width: 792px;
+    margin: 0 auto;
+    top: 30%;
 }
 
 .add-item__container {
-    min-width: 580px;
     padding: 0 106px;
-    margin: 0 auto;
 }
 
 .add-item__title {
@@ -104,7 +102,7 @@ body {
 
 .add-item__content {
     display: grid;
-    grid-template-columns: repeat(2, 250px);
+    grid-template-columns: repeat(2, minmax(200px, 250px));
     column-gap: 24px;
     row-gap: 12px;
     grid-template-areas:
@@ -148,7 +146,7 @@ body {
     grid-area: price;
 }
 
-.add-item__add-image-button{
+.add-item__add-image-button {
     grid-area: add-image;
     position: relative;
 }
@@ -217,7 +215,7 @@ body {
     font-weight: 600;
 }
 
-.add__label-add-image{
+.add__label-add-image {
     position: absolute;
     font-weight: 600;
     font-size: 14px;
@@ -241,25 +239,25 @@ body {
     display: none;
 }
 
-.add-item__total-block{
+.add-item__total-block {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0 28px;
 }
 
-.add-item__total{
+.add-item__total {
     align-self: start;
 }
 
-.add-item__total-text{
+.add-item__total-text {
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
     color: var(--color-6E6893);
 }
 
-.add-item__total-value{
+.add-item__total-value {
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;
@@ -279,4 +277,19 @@ body {
     right: 30px;
     padding: 0;
     border-style: none;
+}
+
+@media (max-width: 800px) {
+
+    .add-item__content {
+        grid-template-areas:
+    "name       "
+    "category   "
+    "measure    "
+    "discount  "
+    "description"
+    "quantity"
+    "price"
+    "add-image";
+    }
 }
