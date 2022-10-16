@@ -80,11 +80,10 @@ body {
 
 .add-item__label {
     padding-left: 10px;
-    margin-bottom: 10px;
 }
 
 .add-item__input {
-    height: 40px;
+    min-height: 40px;
     background: #F4F2FF;
     border-radius: 6px;
     border-style: none;
@@ -92,6 +91,7 @@ body {
     width: 100%;
     font-size: 16px;
     padding-left: 10px;
+    margin-top: 5px;
 }
 
 .add-item__input:disabled {
