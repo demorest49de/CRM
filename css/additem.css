@@ -334,10 +334,9 @@
 
     .add__label-add-image {
         position: absolute;
-        color: black;
         width: fit-content;
         left: unset;
-        right: 18px;
+        right: 23px;
         top: 31px;
     }
 
@@ -367,19 +366,24 @@
 
 @media (max-width: 600px) {
     .add-item__container {
-        padding: 0 15px;
+        padding: 0 20px;
     }
 
-    .add-item__content{
+    .add-item__content {
         padding: 28px 15px;
     }
 
-    .add-item__content{
+    .add-item__content {
         grid-template-columns: minmax(200px, 540px);
     }
 
-    .add-item__input-set{
+    .add-item__input-set {
         justify-content: start;
         grid-template-columns: 40px minmax(200px, calc(524px - 50px));
+    }
+
+    .add-item-close-button {
+        top: 12px;
+        right: 8px;
     }
 }
