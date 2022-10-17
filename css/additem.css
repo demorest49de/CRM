@@ -19,6 +19,7 @@
     top: 0;
     bottom: 0;
     background: rgba(0, 0, 0, .5);
+    /*display: none;*/
 }
 
 .add-item {
@@ -295,16 +296,11 @@
 @media (max-width: 800px) {
 
     .add-item__content {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-    "name       "
-    "category   "
-    "measure    "
-    "discount  "
-    "description"
-    "quantity"
-    "price"
-    "add-image";
+        min-width: 580px;
+    }
+
+    .add-item__overflow {
+        overflow-x: auto;
     }
 
     .add-item__title {
@@ -342,7 +338,6 @@
 
     .add-item__button-image {
         max-width: 250px;
-        /*margin: 0 auto;*/
     }
 
     .add-item__total {
@@ -355,7 +350,7 @@
 
     .add-item__input-set {
         display: grid;
-        grid-template-columns: 40px 1fr;
+        grid-template-columns: 40px 200px;
         column-gap: 10px;
     }
 
@@ -364,12 +359,29 @@
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 500px) {
+
+    .add-item__overflow {
+        overflow-x: unset;
+    }
+
     .add-item__container {
         padding: 0 20px;
     }
 
     .add-item__content {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+        "name       "
+        "category   "
+        "measure    "
+        "discount  "
+        "description"
+        "quantity"
+        "price"
+        "add-image";
+
+        min-width: unset;
         padding: 28px 15px;
     }
 
