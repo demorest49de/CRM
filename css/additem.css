@@ -50,6 +50,10 @@
     letter-spacing: 0.1em;
 }
 
+.add-item__overflow{
+    overflow-x: auto;
+}
+
 .add-item__content {
     border-style: none;
     background: #FFFFFF;
@@ -112,6 +116,7 @@
     "measure    quantity"
     "discount   price"
     ".   add-image";
+    min-width: 320px;
 }
 
 .add-item__name {
@@ -280,7 +285,7 @@
     border-style: none;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
 
     .add-item__content {
         grid-template-areas:
