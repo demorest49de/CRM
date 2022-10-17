@@ -50,10 +50,6 @@
     letter-spacing: 0.1em;
 }
 
-.add-item__overflow{
-    overflow-x: auto;
-}
-
 .add-item__content {
     border-style: none;
     background: #FFFFFF;
@@ -72,6 +68,7 @@
 
 .add-item__input-set {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 10px;
     margin-top: 5px;
@@ -79,6 +76,13 @@
 
 .add-item__input-set .add-item__input {
     margin-top: 0;
+    max-width: calc(250px - 40px - 10px);
+}
+
+.add-item__block {
+    display: flex;
+    flex-direction: column;
+
 }
 
 .add-item__label {
@@ -90,8 +94,6 @@
     background: #F4F2FF;
     border-radius: 6px;
     border-style: none;
-    resize: none;
-    width: 100%;
     font-size: 16px;
     padding-left: 10px;
     margin-top: 5px;
@@ -107,7 +109,7 @@
 
 .add-item__content {
     display: grid;
-    grid-template-columns: repeat(2, minmax(200px, 250px));
+    grid-template-columns: repeat(2, 250px);
     column-gap: 24px;
     row-gap: 12px;
     grid-template-areas:
@@ -116,7 +118,6 @@
     "measure    quantity"
     "discount   price"
     ".   add-image";
-    min-width: 320px;
 }
 
 .add-item__name {
@@ -154,7 +155,6 @@
 
 .add-item__add-image-button {
     grid-area: add-image;
-    position: relative;
 }
 
 .add-item__checkbox {
@@ -219,6 +219,13 @@
     color: #FFFFFF;
     position: relative;
     font-weight: 600;
+}
+
+.add-item__add-image-button {
+    grid-area: add-image;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .add__label-add-image {
@@ -288,6 +295,7 @@
 @media (max-width: 800px) {
 
     .add-item__content {
+        grid-template-columns: 1fr;
         grid-template-areas:
     "name       "
     "category   "
@@ -299,7 +307,79 @@
     "add-image";
     }
 
-    .add-item__title{
+    .add-item__title {
         text-align: center;
+    }
+
+    .add-item__block {
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+        max-width: 524px;
+    }
+
+    .add-item__total-block {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        gap: 28px;
+    }
+
+    .add-item__add-image-button {
+        flex-direction: row;
+        justify-content: end;
+    }
+
+    .add__label-add-image {
+        position: absolute;
+        color: black;
+        width: fit-content;
+        left: unset;
+        right: 18px;
+        top: 31px;
+    }
+
+    .button__add-image {
+        max-width: 250px;
+        /*margin: 0 auto;*/
+    }
+
+    .add-item__total {
+        margin: 0 auto;
+    }
+
+    .button__add-item {
+        width: 250px;
+    }
+
+    .add-item__input-set {
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        column-gap: 10px;
+    }
+
+    .add-item__input-set .add-item__input {
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 600px) {
+    .add-item__container {
+        padding: 0 15px;
+    }
+
+    .add-item__content{
+        padding: 28px 15px;
+    }
+
+    .add-item__content{
+        grid-template-columns: minmax(200px, 540px);
+    }
+
+    .add-item__input-set{
+        justify-content: start;
+        grid-template-columns: 40px minmax(200px, calc(524px - 50px));
     }
 }
