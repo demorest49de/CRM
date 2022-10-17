@@ -12,6 +12,10 @@
     font-display: swap;
 }
 
+body{
+    position: relative;
+}
+
 .overlay {
     position: absolute;
     left: 0;
@@ -19,7 +23,6 @@
     top: 0;
     bottom: 0;
     background: rgba(0, 0, 0, .5);
-    /*display: none;*/
 }
 
 .add-item {
@@ -33,10 +36,14 @@
     font-weight: 600;
     line-height: 15px;
     letter-spacing: 0.05em;
-    position: relative;
+    position: absolute;
     max-width: 792px;
-    margin: 0 auto;
-    /*top: 30%;*/
+    max-height: 606px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto auto;
 }
 
 .add-item__container {
@@ -294,6 +301,13 @@
 }
 
 @media (max-width: 800px) {
+
+    .add-item {
+        position: absolute;
+        max-width: 792px;
+        max-height: unset;
+        margin: auto auto;
+    }
 
     .add-item__content {
         min-width: 580px;
