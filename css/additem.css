@@ -35,7 +35,7 @@
     position: relative;
     max-width: 792px;
     margin: 0 auto;
-    top: 30%;
+    /*top: 30%;*/
 }
 
 .add-item__container {
@@ -285,7 +285,7 @@
     border-style: none;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 800px) {
 
     .add-item__content {
         grid-template-areas:
@@ -297,5 +297,9 @@
     "quantity"
     "price"
     "add-image";
+    }
+
+    .add-item__title{
+        text-align: center;
     }
 }
