@@ -1,0 +1,18 @@
+.list-product__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    border-bottom: 1px solid #C6C2DE;
+    margin-bottom: 20px;
+    padding-bottom: 7px;
+}
+
+.list-product__title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6e6893;
+    margin-left: 20px;
+}
