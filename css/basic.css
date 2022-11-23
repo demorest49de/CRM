@@ -12,6 +12,10 @@
     font-display: swap;
 }
 
+body{
+    font-family: Inter, Arial, sans-serif;
+}
+
 section{
     padding: 79px 0;
 }
