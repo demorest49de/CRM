@@ -16,3 +16,135 @@
     color: #6e6893;
     margin-left: 20px;
 }
+
+.list-product__sum {
+    margin-right: 20px;
+}
+
+.card-sum__text {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #6E6893;
+}
+
+.card-sum__price {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    color: #6D5BD0;
+}
+
+.list-product__block {
+    background: #FFFFFF;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+.nav__block {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    height: 70px;
+}
+
+.nav__sub {
+    display: flex;
+    gap: 20px;
+}
+
+.nav__filter-btn {
+    width: 108px;
+    text-align: right;
+    position: relative;
+
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #25213B;
+    padding: 10px;
+    background: #FFFFFF;
+    border: 1px solid #C6C2DE;
+    border-radius: 6px;
+}
+
+.nav__filter-btn:before {
+    content: "";
+    position: absolute;
+    background-image: url("../img/filter.svg");
+    width: 20px;
+    height: 20px;
+    left: 10px;
+}
+
+.nav__input {
+    height: 100%;
+    min-width: 392px;
+    background: #F4F2FF;
+    border-radius: 6px;
+    border: none;
+    padding: 13px 40px;
+
+
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #6E6893;
+}
+
+.nav__search {
+    position: relative;
+}
+
+.nav__search:before {
+    content: "";
+    position: absolute;
+    background-image: url("../img/search.svg");
+    width: 20px;
+    height: 20px;
+    left: 10px;
+    top: 10px;
+}
+
+.nav__add-btn {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    border: none;
+    background: #6D5BD0;
+    border-radius: 6px;
+    padding: 10px 16px;
+}
+
+.list-product__table {
+    min-width: 1100px;
+    border-collapse: collapse;
+}
+
+.list-product__table-head {
+    height: 45px;
+    background: #F4F2FF;
+    text-align: left;
+
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #6E6893;
+    border-top: 1px solid #D9D5EC;
+    border-bottom: 1px solid #D9D5EC;
+}
+
+.list-product__table-td {
+    padding-left: 15px;
+}
+
+.list-product__table-head
+.list-product__table-td:nth-child(1) {
+
+}

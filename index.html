@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preload" href="font/Inter-Regular.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="preload" href="font/Inter-Bold.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!--  <link rel="preload" href="font/Inter-Regular.ttf" as="font" type="font/ttf" crossorigin>-->
+<!--  <link rel="preload" href="font/Inter-Bold.ttf" as="font" type="font/ttf" crossorigin>-->
   <link rel="stylesheet" href="css/style.css">
   <title>CRM</title>
 </head>
@@ -12,22 +15,23 @@
   <section class="list-product">
 	<div class="container">
 	  <div class="list-product__header">
-		<h1 class="list-product__title">CRM</h1>
+		<h1 class="list-product__title">crm</h1>
 		<div class="list-product__sum card-sum">
 		  <span class="card-sum__text">Итоговая стоимость:</span>
-
 		  <span class="card-sum__price">$900.00</span>
 		</div>
+
 	  </div>
 	  <div class="list-product__block">
-
-		<div class="list-product__nav">
-		  <div class="list-product__nav-block">
-			<button class="list-product__nav-filter-btn">Фильтр</button>
-			<form action="" class="list-product__nav-search">
-			  <input class="list-product__nav-input" type="search" placeholder="Поиск по наименованию и категории">
-			</form>
-			<button class="list-product__nav-add-btn">Добавить товар</button>
+		<div class="list-product__nav nav">
+		  <div class="nav__block">
+			<div class="nav__sub">
+			  <button class="nav__filter-btn">Фильтр</button>
+			  <form action="" class="nav__search">
+				<input class="nav__input" type="search" placeholder="Поиск по наименованию и категории">
+			  </form>
+			</div>
+			<button class="nav__add-btn">Добавить товар</button>
 		  </div>
 
 		  <table class="list-product__table">
