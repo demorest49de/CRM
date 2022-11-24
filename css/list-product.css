@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: end;
-    border-bottom: 1px solid #C6C2DE;
+    border-bottom: 1px solid var(--color-C6C2DE);
     margin-bottom: 20px;
     padding-bottom: 7px;
 }
@@ -13,7 +13,7 @@
     line-height: 29px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #6e6893;
+    color: var(--color-6E6893);
     margin-left: 20px;
 }
 
@@ -25,18 +25,18 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
-    color: #6E6893;
+    color: var(--color-6E6893);
 }
 
 .card-sum__price {
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;
-    color: #6D5BD0;
+    color: var(--color-6D5BD0);
 }
 
 .list-product__block {
-    background: #FFFFFF;
+    background: var(--color-FFFFFF);
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     overflow-x: auto;
@@ -63,10 +63,10 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 19px;
-    color: #25213B;
+    color: var(--color-25213B);
     padding: 10px;
-    background: #FFFFFF;
-    border: 1px solid #C6C2DE;
+    background: var(--color-FFFFFF);
+    border: 1px solid var(--color-C6C2DE);
     border-radius: 6px;
 }
 
@@ -82,7 +82,7 @@
 .nav__input {
     height: 100%;
     min-width: 392px;
-    background: #F4F2FF;
+    background: var(--color-F4F2FF);
     border-radius: 6px;
     border: none;
     padding: 13px 40px;
@@ -91,7 +91,7 @@
     font-weight: 400;
     font-size: 12px;
     line-height: 15px;
-    color: #6E6893;
+    color: var(--color-6E6893);
 }
 
 .nav__search {
@@ -113,9 +113,9 @@
     font-size: 16px;
     line-height: 19px;
     text-transform: uppercase;
-    color: #FFFFFF;
+    color: var(--color-FFFFFF);
     border: none;
-    background: #6D5BD0;
+    background: var(--color-6D5BD0);
     border-radius: 6px;
     padding: 10px 16px;
 }
@@ -126,7 +126,7 @@
 }
 
 .list-product__table-head {
-    background: #F4F2FF;
+    background: var(--color-F4F2FF);
     text-align: left;
 
     font-weight: 600;
@@ -134,9 +134,9 @@
     line-height: 15px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: #6E6893;
-    border-top: 1px solid #D9D5EC;
-    border-bottom: 1px solid #D9D5EC;
+    color: var(--color-6E6893);
+    border-top: 1px solid var(--color-D9D5EC);
+    border-bottom: 1px solid var(--color-D9D5EC);
 }
 
 .list-product__table-head
@@ -173,6 +173,7 @@
 
 .list-product__table-td:nth-child(4) {
     width: 69px;
+    color: var(--color-6E6893);
 }
 
 .list-product__table-td:nth-child(5) {
@@ -224,8 +225,8 @@
     align-items: center;
     justify-content: flex-end;
     gap: 50px;
-    background: #F4F2FF;
-    color: #6e6893;
+    background: var(--color-F4F2FF);
+    color: var(--color-6E6893);
     font-size: 12px;
     font-weight: 600;
     line-height: 15px;
@@ -234,6 +235,7 @@
 
 .list-product__select-page {
     width: 32px;
+    font-weight: 600;
     background-color: inherit;
     border: none;
     outline: none;
