@@ -1,5 +1,6 @@
 .list-product__header {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: end;
     border-bottom: 1px solid var(--color-C6C2DE);
@@ -149,7 +150,7 @@
     height: 45px;
 }
 
-.list-product__table-td{
+.list-product__table-td {
     padding-left: 15px;
 }
 
@@ -278,4 +279,12 @@
 .list-product__footer {
     min-width: 1100px;
     border-collapse: collapse;
+}
+
+@media (max-width: 385px) {
+    .list-product__header {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
 }
