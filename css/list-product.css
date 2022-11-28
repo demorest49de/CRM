@@ -169,6 +169,7 @@ tr,
 .list-product__table-tr
 .list-product__table-td:nth-child(8) {
     text-align: center;
+    padding-right: 2px;
 }
 
 .list-product__table-td:nth-child(4) {
