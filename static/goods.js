@@ -51,9 +51,5 @@ window.goods =
     "discont": false,
     "count": 420,
     "units": "v",
-    "images": {
-      "small": "img/lan_proconnect43-3-25.jpg",
-      "big": "img/lan_proconnect43-3-25-b.jpg"
-    }
   }
 ]
