@@ -1,7 +1,7 @@
 'use strict';
 const list = document.querySelector('.list-product__table-body');
 
-const createRow = ({id, title, price, description, category, discount, count, units, images}) => {
+const createRow = ({id, title, price, description, category, discont, count, units, images}) => {
   const tr = document.createElement('tr');
   tr.classList.add('list-product__table-tr');
 
@@ -13,7 +13,7 @@ const createRow = ({id, title, price, description, category, discount, count, un
     <td class="list-product__table-td">${count}</td>
     <td class="list-product__table-td">${price}</td>
     <td class="list-product__table-td">$${
-    price * count * (1 - (discount ? discount / 100 : discount))
+    Math.floor(price * count * (1 - (discont ? discont / 100 : discont)))
   }</td>
     <td class="list-product__table-td">
     <button class="list-product__table-btn 
