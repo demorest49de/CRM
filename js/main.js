@@ -1,22 +1,18 @@
 'use strict';
 const list = document.querySelector('.list-product__table-body');
 
-const createRow = (rowObject) => {
+const createRow = ({id, title, price, description, category, discon, count, units, images}) => {
   const tr = document.createElement('tr');
   tr.classList.add('list-product__table-tr');
-  const keys = Object.keys(rowObject);
-  const values = Object.values(rowObject);
 
-  const generateTableRow = () => {
-    const tdNames = ['id', 'title', 'category', 'units', 'count', 'price'];
-    for (const name of tdNames) {
-      handleData(name);
-    }
-    calculateTotal();
-    addButtons();
-    list.append(tr);
-    console.log(': ', tr);
-  };
+  tr.innerHTML = `
+    <td class="list-product__table-td">${id}</td>
+    <td class="list-product__table-td">${title}</td>
+    <td class="list-product__table-td">${category}</td>
+    <td class="list-product__table-td">${units}</td>
+    <td class="list-product__table-td">${count}</td>
+    <td class="list-product__table-td">${price}</td>  
+  `;
 
   const addButtons = () => {
     const btnImg = [`list-product__button-img`, `image`];
@@ -35,25 +31,6 @@ const createRow = (rowObject) => {
     tr.append(td);
   };
 
-  const calculateTotal = () => {
-    const count = +values[keys.findIndex(item => item === 'count')];
-    const price = +values[keys.findIndex(item => item === 'price')];
-    tr.append(generateTableData(count * price));
-  };
-
-  const handleData = (value) => {
-    const result = values[keys.findIndex(item => item === value)];
-    tr.append(generateTableData(result));
-  };
-
-  const generateTableData = (value) => {
-    const td = document.createElement('td');
-    td.classList.add('list-product__table-td');
-    td.textContent = value;
-    return td;
-  };
-
-  generateTableRow();
 };
 
 
