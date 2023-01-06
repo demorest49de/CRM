@@ -195,6 +195,10 @@ tr,
     background-image: url("../img/yes-img.svg");
 }
 
+.list-product__button-no-img {
+    background-image: url("../img/no-img.svg");
+}
+
 .list-product__button-edit {
     background-image: url("../img/edit.svg");
 }
