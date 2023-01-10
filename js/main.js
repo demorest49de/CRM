@@ -25,7 +25,6 @@ const createRow = ({id, title, price, description, category, discont, count, uni
   return tr;
 };
 
-
 const renderGoods = () => {
   for (const item of window.goods) {
     list.append(createRow(item));
@@ -33,3 +32,24 @@ const renderGoods = () => {
 };
 
 renderGoods();
+
+
+const btnAddItem = document.querySelector('.nav__add-btn');
+const overlay = document.querySelector('.overlay');
+const addItem = document.querySelector('.add-item');
+const addItemCloseButton = document.querySelector('.add-item-close-button');
+btnAddItem.addEventListener('click', () => {
+  overlay.classList.remove('is-visible');
+});
+
+addItem.addEventListener('click', event => {
+  event.stopPropagation();
+});
+
+addItemCloseButton.addEventListener('click', () => {
+  overlay.classList.add('is-visible');
+});
+
+overlay.addEventListener('click', () => {
+  overlay.classList.add('is-visible');
+});

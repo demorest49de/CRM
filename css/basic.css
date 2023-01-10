@@ -12,7 +12,7 @@ section {
     margin: 0 auto;
 }
 
-.hide {
+.is-visible {
     display: none;
 }
 
