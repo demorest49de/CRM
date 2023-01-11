@@ -1,4 +1,4 @@
-body{
+body {
     position: relative;
 }
 
@@ -55,6 +55,7 @@ body{
     /*margin: 0 auto 28px auto;*/
     margin-bottom: 28px;
 }
+
 .add-item__line {
     margin-bottom: 21px;
     height: 1px;
@@ -313,6 +314,7 @@ body{
 
         min-width: unset;
         padding: 28px 15px;
+        margin-bottom: 15px;
     }
 
     .add-item__title {
@@ -332,7 +334,7 @@ body{
         justify-content: center;
         align-items: center;
         margin: 0;
-        gap: 28px;
+        gap: 10px;
     }
 
     .add-item__add-image-button {
@@ -372,6 +374,10 @@ body{
 }
 
 @media (max-width: 613px) {
+    .add-item {
+        max-height: 940px;
+        margin: 15px auto;
+    }
 
     .add-item__container {
         padding: 0 20px;
@@ -384,6 +390,14 @@ body{
     .add-item__input-set {
         justify-content: start;
         grid-template-columns: 40px minmax(170px, calc(524px - 50px));
+    }
+
+    .add-item__label-add-image {
+        font-size: 12px;
+    }
+
+    .add-item__total-text {
+        font-size: 12px;
     }
 
     .add-item-close-button {
