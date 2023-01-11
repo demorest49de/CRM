@@ -15,7 +15,7 @@ body{
     background: #F2F0F9;
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
     color: #6E6893;
-    padding: 32px 0;
+    padding: 35px 0;
     font-size: 12px;
     text-transform: uppercase;
     font-weight: 600;
@@ -23,16 +23,18 @@ body{
     letter-spacing: 0.05em;
     position: absolute;
     max-width: 792px;
-    max-height: 606px;
+    max-height: 613px;
     left: 0;
     right: 0;
-    bottom: 70px;
-    top: 0;
+    bottom: 0px;
+    top: 0px;
     margin: auto auto;
 }
 
 .add-item__container {
-    padding: 0 106px;
+    padding: 0 0px;
+    max-width: 580px;
+    margin: 0 auto;
 }
 
 .add-item__title {
@@ -49,9 +51,10 @@ body{
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     padding: 28px;
+    max-width: 100%;
+    /*margin: 0 auto 28px auto;*/
     margin-bottom: 28px;
 }
-
 .add-item__line {
     margin-bottom: 21px;
     height: 1px;
@@ -136,6 +139,7 @@ body{
 .add-item__description
 .add-item__input {
     min-height: 112px;
+    padding-top: 10px;
 }
 
 .add-item__quantity {
@@ -249,7 +253,6 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 28px;
 }
 
 .add-item__total {
@@ -285,21 +288,31 @@ body{
     border-style: none;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 822px) {
 
     .add-item {
         position: absolute;
-        max-width: 792px;
-        max-height: unset;
-        margin: auto auto;
+        max-width: unset;
+        margin: 50px auto;
+        left: 15px;
+        right: 15px;
+        max-height: 913px;
     }
 
     .add-item__content {
-        min-width: 580px;
-    }
+        grid-template-columns: 1fr;
+        grid-template-areas:
+        "name       "
+        "category   "
+        "measure    "
+        "discount  "
+        "description"
+        "quantity"
+        "price"
+        "add-image";
 
-    .add-item__overflow {
-        overflow-x: auto;
+        min-width: unset;
+        padding: 28px 15px;
     }
 
     .add-item__title {
@@ -349,39 +362,19 @@ body{
 
     .add-item__input-set {
         display: grid;
-        grid-template-columns: 40px 200px;
+        grid-template-columns: 40px 100%;
         column-gap: 10px;
     }
 
     .add-item__input-set .add-item__input {
-        max-width: 500px;
+        max-width: calc(524px - 10px - 40px);
     }
 }
 
-@media (max-width: 500px) {
-
-    .add-item__overflow {
-        overflow-x: unset;
-    }
+@media (max-width: 613px) {
 
     .add-item__container {
         padding: 0 20px;
-    }
-
-    .add-item__content {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-        "name       "
-        "category   "
-        "measure    "
-        "discount  "
-        "description"
-        "quantity"
-        "price"
-        "add-image";
-
-        min-width: unset;
-        padding: 28px 15px;
     }
 
     .add-item__content {
@@ -390,7 +383,7 @@ body{
 
     .add-item__input-set {
         justify-content: start;
-        grid-template-columns: 40px minmax(200px, calc(524px - 50px));
+        grid-template-columns: 40px minmax(170px, calc(524px - 50px));
     }
 
     .add-item-close-button {
