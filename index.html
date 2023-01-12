@@ -3,298 +3,305 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM</title>
   <link rel="preload" href="font/Inter-Regular.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="font/Inter-Bold.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="css/style.css">
   <script defer src="static/goods.js"></script>
   <script defer src="js/main.js"></script>
-  <title>CRM</title>
+  <script>
+    document.addEventListener('DomContentLoaded', () => {
+      listProductInit('#app');
+    });
+  </script>
 </head>
+
 <body>
-  <section class="list-product">
-	<div class="container">
-	  <div class="list-product__header">
-		<h1 class="list-product__title">crm</h1>
-		<div class="list-product__sum card-sum">
-		  <span class="card-sum__text">Итоговая стоимость:</span>
-		  <span class="card-sum__price">$900.00</span>
-		</div>
+<div id="app"></div>
+    <section class="list-product">
+  	<div class="container">
+  	  <div class="list-product__header">
+  		<h1 class="list-product__title">crm</h1>
+  		<div class="list-product__sum card-sum">
+  		  <span class="card-sum__text">Итоговая стоимость:</span>
+  		  <span class="card-sum__price">$900.00</span>
+  		</div>
 
-	  </div>
-	  <div class="list-product__block">
-		<div class="list-product__nav nav">
-		  <div class="nav__block">
-			<button class="nav__filter-btn">Фильтр</button>
-			<form action="" class="nav__search">
-			  <input class="nav__input" type="search" placeholder="Поиск по наименованию и категории">
-			</form>
-			<button class="nav__add-btn">Добавить товар</button>
-		  </div>
-		</div>
-		<div class="list-product__wrapper">
-		  <table class="list-product__table">
-			<thead class="list-product__table-head">
-			<tr>
-			  <th class="list-product__table-td">ID</th>
-			  <th class="list-product__table-td">Наименование</th>
-			  <th class="list-product__table-td">Категория</th>
-			  <th class="list-product__table-td">Ед/Изм</th>
-			  <th class="list-product__table-td">Количество</th>
-			  <th class="list-product__table-td">Цена</th>
-			  <th class="list-product__table-td">Итог</th>
-			  <th class="list-product__table-td"></th>
-			</tr>
-			</thead>
+  	  </div>
+  	  <div class="list-product__block">
+  		<div class="list-product__nav nav">
+  		  <div class="nav__block">
+  			<button class="nav__filter-btn">Фильтр</button>
+  			<form action="" class="nav__search">
+  			  <input class="nav__input" type="search" placeholder="Поиск по наименованию и категории">
+  			</form>
+  			<button class="nav__add-btn">Добавить товар</button>
+  		  </div>
+  		</div>
+  		<div class="list-product__wrapper">
+  		  <table class="list-product__table">
+  			<thead class="list-product__table-head">
+  			<tr>
+  			  <th class="list-product__table-td">ID</th>
+  			  <th class="list-product__table-td">Наименование</th>
+  			  <th class="list-product__table-td">Категория</th>
+  			  <th class="list-product__table-td">Ед/Изм</th>
+  			  <th class="list-product__table-td">Количество</th>
+  			  <th class="list-product__table-td">Цена</th>
+  			  <th class="list-product__table-td">Итог</th>
+  			  <th class="list-product__table-td"></th>
+  			</tr>
+  			</thead>
 
-			<tbody class="list-product__table-body">
-			<tr class="list-product__table-tr">
-			  <td class="list-product__table-td">246016548</td>
-			  <td class="list-product__table-td">Навигационная система Soundmax</td>
-			  <td class="list-product__table-td">Техника для дома</td>
-			  <td class="list-product__table-td">шт</td>
-			  <td class="list-product__table-td">5</td>
-			  <td class="list-product__table-td">$100</td>
-			  <td class="list-product__table-td">$500</td>
-			  <td class="list-product__table-td">
-				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
-				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
-				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
-			  </td>
-			</tr>
-			<tr class="list-product__table-tr">
-			  <td class="list-product__table-td">246016548</td>
-			  <td class="list-product__table-td">Навигационная система Soundmax</td>
-			  <td class="list-product__table-td">Техника для дома</td>
-			  <td class="list-product__table-td">шт</td>
-			  <td class="list-product__table-td">5</td>
-			  <td class="list-product__table-td">$100</td>
-			  <td class="list-product__table-td">$500</td>
-			  <td class="list-product__table-td">
-				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
-				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
-				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
-			  </td>
-			</tr>
-			<tr class="list-product__table-tr">
-			  <td class="list-product__table-td">246016548</td>
-			  <td class="list-product__table-td">Навигационная система Soundmax</td>
-			  <td class="list-product__table-td">Техника для дома</td>
-			  <td class="list-product__table-td">шт</td>
-			  <td class="list-product__table-td">5</td>
-			  <td class="list-product__table-td">$100</td>
-			  <td class="list-product__table-td">$500</td>
-			  <td class="list-product__table-td">
-				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
-				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
-				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
-			  </td>
-			</tr>
-			<tr class="list-product__table-tr">
-			  <td class="list-product__table-td">246016548</td>
-			  <td class="list-product__table-td">Навигационная система Soundmax</td>
-			  <td class="list-product__table-td">Техника для дома</td>
-			  <td class="list-product__table-td">шт</td>
-			  <td class="list-product__table-td">5</td>
-			  <td class="list-product__table-td">$100</td>
-			  <td class="list-product__table-td">$500</td>
-			  <td class="list-product__table-td">
-				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
-				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
-				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
-			  </td>
-			</tr>
-			<tr class="list-product__table-tr">
-			  <td class="list-product__table-td">246016548</td>
-			  <td class="list-product__table-td">Навигационная система Soundmax</td>
-			  <td class="list-product__table-td">Техника для дома</td>
-			  <td class="list-product__table-td">шт</td>
-			  <td class="list-product__table-td">5</td>
-			  <td class="list-product__table-td">$100</td>
-			  <td class="list-product__table-td">$500</td>
-			  <td class="list-product__table-td">
-				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
-				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
-				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
-			  </td>
-			</tr>
-			<tr class="list-product__table-tr">
-			  <td class="list-product__table-td">246016548</td>
-			  <td class="list-product__table-td">Навигационная система Soundmax</td>
-			  <td class="list-product__table-td">Техника для дома</td>
-			  <td class="list-product__table-td">шт</td>
-			  <td class="list-product__table-td">5</td>
-			  <td class="list-product__table-td">$100</td>
-			  <td class="list-product__table-td">$500</td>
-			  <td class="list-product__table-td">
-				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
-				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
-				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
-			  </td>
-			</tr>
-			<tr class="list-product__table-tr">
-			  <td class="list-product__table-td">246016548</td>
-			  <td class="list-product__table-td">Навигационная система Soundmax</td>
-			  <td class="list-product__table-td">Техника для дома</td>
-			  <td class="list-product__table-td">шт</td>
-			  <td class="list-product__table-td">5</td>
-			  <td class="list-product__table-td">$100</td>
-			  <td class="list-product__table-td">$500</td>
-			  <td class="list-product__table-td">
-				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
-				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
-				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
-			  </td>
-			</tr>
-			<tr class="list-product__table-tr">
-			  <td class="list-product__table-td">246016548</td>
-			  <td class="list-product__table-td">Навигационная система Soundmax</td>
-			  <td class="list-product__table-td">Техника для дома</td>
-			  <td class="list-product__table-td">шт</td>
-			  <td class="list-product__table-td">5</td>
-			  <td class="list-product__table-td">$100</td>
-			  <td class="list-product__table-td">$500</td>
-			  <td class="list-product__table-td">
-				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
-				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
-				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
-			  </td>
-			</tr>
-			<tr class="list-product__table-tr">
-			  <td class="list-product__table-td">246016548</td>
-			  <td class="list-product__table-td">Навигационная система Soundmax</td>
-			  <td class="list-product__table-td">Техника для дома</td>
-			  <td class="list-product__table-td">шт</td>
-			  <td class="list-product__table-td">5</td>
-			  <td class="list-product__table-td">$100</td>
-			  <td class="list-product__table-td">$500</td>
-			  <td class="list-product__table-td">
-				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
-				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
-				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
-			  </td>
-			</tr>
-			</tbody>
-		  </table>
-		</div>
-		<div class="list-product__footer">
-		  <div class="list-product__footer-block">
-			<div class="list-product__footer-sub-block">
-			  <span class="list-product__footer-span">Показывать на странице:</span>
-			  <select class="list-product__select-page">
-				<option value="5">5</option>
-				<option value="10">10</option>
-				<option value="20">20</option>
-			  </select>
-			</div>
+  			<tbody class="list-product__table-body">
+  			<tr class="list-product__table-tr">
+  			  <td class="list-product__table-td">246016548</td>
+  			  <td class="list-product__table-td">Навигационная система Soundmax</td>
+  			  <td class="list-product__table-td">Техника для дома</td>
+  			  <td class="list-product__table-td">шт</td>
+  			  <td class="list-product__table-td">5</td>
+  			  <td class="list-product__table-td">$100</td>
+  			  <td class="list-product__table-td">$500</td>
+  			  <td class="list-product__table-td">
+  				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
+  				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
+  				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
+  			  </td>
+  			</tr>
+  			<tr class="list-product__table-tr">
+  			  <td class="list-product__table-td">246016548</td>
+  			  <td class="list-product__table-td">Навигационная система Soundmax</td>
+  			  <td class="list-product__table-td">Техника для дома</td>
+  			  <td class="list-product__table-td">шт</td>
+  			  <td class="list-product__table-td">5</td>
+  			  <td class="list-product__table-td">$100</td>
+  			  <td class="list-product__table-td">$500</td>
+  			  <td class="list-product__table-td">
+  				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
+  				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
+  				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
+  			  </td>
+  			</tr>
+  			<tr class="list-product__table-tr">
+  			  <td class="list-product__table-td">246016548</td>
+  			  <td class="list-product__table-td">Навигационная система Soundmax</td>
+  			  <td class="list-product__table-td">Техника для дома</td>
+  			  <td class="list-product__table-td">шт</td>
+  			  <td class="list-product__table-td">5</td>
+  			  <td class="list-product__table-td">$100</td>
+  			  <td class="list-product__table-td">$500</td>
+  			  <td class="list-product__table-td">
+  				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
+  				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
+  				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
+  			  </td>
+  			</tr>
+  			<tr class="list-product__table-tr">
+  			  <td class="list-product__table-td">246016548</td>
+  			  <td class="list-product__table-td">Навигационная система Soundmax</td>
+  			  <td class="list-product__table-td">Техника для дома</td>
+  			  <td class="list-product__table-td">шт</td>
+  			  <td class="list-product__table-td">5</td>
+  			  <td class="list-product__table-td">$100</td>
+  			  <td class="list-product__table-td">$500</td>
+  			  <td class="list-product__table-td">
+  				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
+  				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
+  				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
+  			  </td>
+  			</tr>
+  			<tr class="list-product__table-tr">
+  			  <td class="list-product__table-td">246016548</td>
+  			  <td class="list-product__table-td">Навигационная система Soundmax</td>
+  			  <td class="list-product__table-td">Техника для дома</td>
+  			  <td class="list-product__table-td">шт</td>
+  			  <td class="list-product__table-td">5</td>
+  			  <td class="list-product__table-td">$100</td>
+  			  <td class="list-product__table-td">$500</td>
+  			  <td class="list-product__table-td">
+  				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
+  				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
+  				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
+  			  </td>
+  			</tr>
+  			<tr class="list-product__table-tr">
+  			  <td class="list-product__table-td">246016548</td>
+  			  <td class="list-product__table-td">Навигационная система Soundmax</td>
+  			  <td class="list-product__table-td">Техника для дома</td>
+  			  <td class="list-product__table-td">шт</td>
+  			  <td class="list-product__table-td">5</td>
+  			  <td class="list-product__table-td">$100</td>
+  			  <td class="list-product__table-td">$500</td>
+  			  <td class="list-product__table-td">
+  				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
+  				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
+  				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
+  			  </td>
+  			</tr>
+  			<tr class="list-product__table-tr">
+  			  <td class="list-product__table-td">246016548</td>
+  			  <td class="list-product__table-td">Навигационная система Soundmax</td>
+  			  <td class="list-product__table-td">Техника для дома</td>
+  			  <td class="list-product__table-td">шт</td>
+  			  <td class="list-product__table-td">5</td>
+  			  <td class="list-product__table-td">$100</td>
+  			  <td class="list-product__table-td">$500</td>
+  			  <td class="list-product__table-td">
+  				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
+  				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
+  				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
+  			  </td>
+  			</tr>
+  			<tr class="list-product__table-tr">
+  			  <td class="list-product__table-td">246016548</td>
+  			  <td class="list-product__table-td">Навигационная система Soundmax</td>
+  			  <td class="list-product__table-td">Техника для дома</td>
+  			  <td class="list-product__table-td">шт</td>
+  			  <td class="list-product__table-td">5</td>
+  			  <td class="list-product__table-td">$100</td>
+  			  <td class="list-product__table-td">$500</td>
+  			  <td class="list-product__table-td">
+  				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
+  				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
+  				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
+  			  </td>
+  			</tr>
+  			<tr class="list-product__table-tr">
+  			  <td class="list-product__table-td">246016548</td>
+  			  <td class="list-product__table-td">Навигационная система Soundmax</td>
+  			  <td class="list-product__table-td">Техника для дома</td>
+  			  <td class="list-product__table-td">шт</td>
+  			  <td class="list-product__table-td">5</td>
+  			  <td class="list-product__table-td">$100</td>
+  			  <td class="list-product__table-td">$500</td>
+  			  <td class="list-product__table-td">
+  				<button class="list-product__table-btn	list-product__button-img " aria-label="image"></button>
+  				<button class="list-product__table-btn	list-product__button-edit" aria-label="edit"></button>
+  				<button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
+  			  </td>
+  			</tr>
+  			</tbody>
+  		  </table>
+  		</div>
+  		<div class="list-product__footer">
+  		  <div class="list-product__footer-block">
+  			<div class="list-product__footer-sub-block">
+  			  <span class="list-product__footer-span">Показывать на странице:</span>
+  			  <select class="list-product__select-page">
+  				<option value="5">5</option>
+  				<option value="10">10</option>
+  				<option value="20">20</option>
+  			  </select>
+  			</div>
 
-			<div class="list-product__pages">
-			  <div class="list-product__pages-displayed">1-5 of</div>
+  			<div class="list-product__pages">
+  			  <div class="list-product__pages-displayed">1-5 of</div>
 
-			  <div class="list-product__total-pages">25</div>
-			</div>
-			<button class="list-product__arrow-pages list-product__prev-page" aria-label="left"></button>
+  			  <div class="list-product__total-pages">25</div>
+  			</div>
+  			<button class="list-product__arrow-pages list-product__prev-page" aria-label="left"></button>
 
-			<button class="list-product__arrow-pages list-product__next-page" aria-label="right"></button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-
-
-  </section>
-
-  <div class="overlay is-visible">
-	<div class="add-item">
-	  <div class="add-item__container">
-		<h1 class="add-item__title">добавить товар</h1>
-		<div class="add-item__line"></div>
-
-		<form class="add-item__form" action="https://jsonplaceholder.typicode.com/posts" name="add-item__form"
-			  id="add-item__form" method="post">
+  			<button class="list-product__arrow-pages list-product__next-page" aria-label="right"></button>
+  		  </div>
+  		</div>
+  	  </div>
+  	</div>
 
 
-		  <fieldset class="add-item__content">
-			<div class="add-item__block add-item__name">
-			  <label class="add-item__label" for="add-item__name">
-				наименование
-			  </label>
-			  <input class="add-item__input" type="text" name="name" id="add-item__name" required>
-			</div>
+    </section>
 
-			<div class="add-item__block add-item__category"><label class="add-item__label"
-																   for="add-item__category">
-			  категория
-			</label>
-			  <input class="add-item__input" type="text" name="category" id="add-item__category"
-					 required>
-			</div>
+    <div class="overlay is-visible">
+  	<div class="add-item">
+  	  <div class="add-item__container">
+  		<h1 class="add-item__title">добавить товар</h1>
+  		<div class="add-item__line"></div>
 
-			<div class="add-item__block add-item__measure"><label class="add-item__label"
-																  for="add-item__measure">
-			  еденицы измерения
-			</label>
-			  <input class="add-item__input" type="text" name="measure" id="add-item__measure"
-					 required>
-			</div>
-
-			<div class="add-item__discount">
-			  <label class="add-item__label" for="add-item__discount">дисконт</label>
-			  <div class="add-item__input-set">
-				<input class="add-item__checkbox" type="checkbox">
-				<input class="add-item__input" type="text" name="discount" id="add-item__discount"
-					   disabled
-					   required>
-			  </div>
-			</div>
-
-			<div class="add-item__block add-item__description">
-			  <label class="add-item__label" for="add-item__description">описание</label>
-			  <textarea class="add-item__input" rows="5" name="description"
-						id="add-item__description"></textarea>
-			</div>
-
-			<div class="add-item__block add-item__quantity"><label class="add-item__label"
-																   for="add-item__quantity">количество</label>
-			  <input class="add-item__input" type="number" name="quantity" id="add-item__quantity"
-					 required></div>
-
-			<div class="add-item__block add-item__price"><label class="add-item__label"
-																for="add-item__price">
-			  цена
-			</label>
-			  <input class="add-item__input" type="number" name="price" id="add-item__price" required>
-			</div>
-
-			<div class="add-item__add-image-button">
-			  <label class="add-item__label-add-image" for="add-item__button-image">добавить
-				изображение</label>
-			  <input class="add-item__button add-item__button-image" type="file"
-					 id="add-item__button-image"
-					 name="image"
-					 accept="image/jpeg, image/png">
-			</div>
-		  </fieldset>
-		</form>
-
-		<div class="add-item__total-block">
-		  <p class="add-item__total">
-			<span class="add-item__total-text">Итоговая стоимость: </span>
-			<span class="add-item__total-value">$ 0.00</span>
-		  </p>
-		  <button form="add-item__form" class="add-item__button add-item__button-item" type="submit">
-			добавить товар
-		  </button>
-		</div>
+  		<form class="add-item__form" action="https://jsonplaceholder.typicode.com/posts" name="add-item__form"
+  			  id="add-item__form" method="post">
 
 
-	  </div>
-	  <button class="add-item-close-button" type="button">
-		<svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-		  <path d="M2 2L22 22" stroke="#6E6893" stroke-width="3" stroke-linecap="round"/>
-		  <path d="M2 22L22 2" stroke="#6E6893" stroke-width="3" stroke-linecap="round"/>
-		</svg>
-	  </button>
-	</div>
-  </div>
+  		  <fieldset class="add-item__content">
+  			<div class="add-item__block add-item__name">
+  			  <label class="add-item__label" for="add-item__name">
+  				наименование
+  			  </label>
+  			  <input class="add-item__input" type="text" name="name" id="add-item__name" required>
+  			</div>
+
+  			<div class="add-item__block add-item__category"><label class="add-item__label"
+  																   for="add-item__category">
+  			  категория
+  			</label>
+  			  <input class="add-item__input" type="text" name="category" id="add-item__category"
+  					 required>
+  			</div>
+
+  			<div class="add-item__block add-item__measure"><label class="add-item__label"
+  																  for="add-item__measure">
+  			  еденицы измерения
+  			</label>
+  			  <input class="add-item__input" type="text" name="measure" id="add-item__measure"
+  					 required>
+  			</div>
+
+  			<div class="add-item__discount">
+  			  <label class="add-item__label" for="add-item__discount">дисконт</label>
+  			  <div class="add-item__input-set">
+  				<input class="add-item__checkbox" type="checkbox">
+  				<input class="add-item__input" type="text" name="discount" id="add-item__discount"
+  					   disabled
+  					   required>
+  			  </div>
+  			</div>
+
+  			<div class="add-item__block add-item__description">
+  			  <label class="add-item__label" for="add-item__description">описание</label>
+  			  <textarea class="add-item__input" rows="5" name="description"
+  						id="add-item__description"></textarea>
+  			</div>
+
+  			<div class="add-item__block add-item__quantity"><label class="add-item__label"
+  																   for="add-item__quantity">количество</label>
+  			  <input class="add-item__input" type="number" name="quantity" id="add-item__quantity"
+  					 required></div>
+
+  			<div class="add-item__block add-item__price"><label class="add-item__label"
+  																for="add-item__price">
+  			  цена
+  			</label>
+  			  <input class="add-item__input" type="number" name="price" id="add-item__price" required>
+  			</div>
+
+  			<div class="add-item__add-image-button">
+  			  <label class="add-item__label-add-image" for="add-item__button-image">добавить
+  				изображение</label>
+  			  <input class="add-item__button add-item__button-image" type="file"
+  					 id="add-item__button-image"
+  					 name="image"
+  					 accept="image/jpeg, image/png">
+  			</div>
+  		  </fieldset>
+  		</form>
+
+  		<div class="add-item__total-block">
+  		  <p class="add-item__total">
+  			<span class="add-item__total-text">Итоговая стоимость: </span>
+  			<span class="add-item__total-value">$ 0.00</span>
+  		  </p>
+  		  <button form="add-item__form" class="add-item__button add-item__button-item" type="submit">
+  			добавить товар
+  		  </button>
+  		</div>
+
+
+  	  </div>
+  	  <button class="add-item-close-button" type="button">
+  		<svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  		  <path d="M2 2L22 22" stroke="#6E6893" stroke-width="3" stroke-linecap="round"/>
+  		  <path d="M2 22L22 2" stroke="#6E6893" stroke-width="3" stroke-linecap="round"/>
+  		</svg>
+  	  </button>
+  	</div>
+    </div>
 </body>
 </html>
