@@ -52,26 +52,36 @@
     return document.createElement(elem);
   };
 
-  const createNav = () =>{
-
+  const createNav = () => {
+    const nav = createElem('div');
+    nav.classList.add('list-product__nav');
+    nav.classList.add('nav');
+    const navBlock = createElem('div');
+    navBlock.classList.add('nav__block');
+    nav.append(navBlock);
+    return nav;
   };
-  const createWrapper = () =>{
-
+  const createWrapper = () => {
+    const wrapper = createElem('div');
+    wrapper.classList.add('list-product__wrapper');
+    return wrapper;
   };
-  const createFooter = () =>{
-
+  const createFooter = () => {
+    const footer = createElem('div');
+    footer.classList.add('list-product__footer');
+    return footer;
   };
 
   const createMainBlock = () => {
     const mainBlock = createElem('div');
     mainBlock.classList.add('list-product__main-block');
-    const nav = createElem('div');
-    nav.classList.add('list-product__nav');
-    nav.classList.add('nav');
+    const nav = createNav();
     mainBlock.append(nav);
-    const navBlock = createElem('div');
-    navBlock.classList.add('nav__block');
-    nav.append(navBlock);
+    const wrapper = createWrapper();
+    mainBlock.append(wrapper);
+    const footer = createFooter();
+    mainBlock.append(footer);
+
     return mainBlock;
   };
 
