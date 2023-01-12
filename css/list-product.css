@@ -50,7 +50,7 @@
     color: var(--color-6D5BD0);
 }
 
-.list-product__block {
+.list-product__main-block {
     background: var(--color-FFFFFF);
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
@@ -292,7 +292,7 @@ tr,
         justify-self: end;
     }
 
-    .list-product__block {
+    .list-product__main-block {
         overflow: unset;
     }
 

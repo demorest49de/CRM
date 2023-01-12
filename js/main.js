@@ -9,63 +9,85 @@
 
   const createSection = () => {
     const section = document.createElement('section');
+    section.classList.add('list-product');
+    const container = createContainer();
+    section.container = container;
+    section.append(container);
     return section;
-  };
-
-  const createHeader = () => {
-    const header = document.createElement('div');
-    header.classList.add('list-product__header');
-    const headerContainer = createContainer();
-    header.append(headerContainer);
-    header.headerContainer = headerContainer;
-
-    return header;
   };
 
   const createLogo = (title) => {
     const h1 = document.createElement('h1');
     h1.classList.add('list-product__title');
-    h1.textContent = `crm`;
+    h1.textContent = title;
     return h1;
+  };
+
+  const createTitleSum = () => {
+    const titleSum = createElem('div');
+    titleSum.classList.add('list-product__sum');
+    titleSum.classList.add('card-sum');
+    titleSum.insertAdjacentHTML('beforeend',
+      `
+      <span class="card-sum__text">Итоговая стоимость:</span>
+    `);
+    const cardSumPrice = createElem('span');
+    cardSumPrice.classList.add('card-sum__price');
+    cardSumPrice.textContent = `$0.00`;
+    titleSum.append(cardSumPrice);
+    return titleSum;
+  };
+
+  const createHeader = (title) => {
+    const header = document.createElement('div');
+    header.classList.add('list-product__header');
+    const logo = createLogo(title);
+    header.append(logo);
+    const titleSum = createTitleSum();
+    header.append(titleSum);
+    return header;
   };
 
   const createElem = (elem) => {
     return document.createElement(elem);
   };
 
-  const listProductSum = createElem('div');
-  listProductSum.classList.add('list-product__sum card-sum');
-  listProductSum.insertAdjacentHTML('beforeend',
-    `
-      <span class="card-sum__text">Итоговая стоимость:</span>
-    `);
-  const cardSumPrice = createElem('span');
-  listProductSum.append(cardSumPrice.classList.add('card-sum__price'));
+  // const createMainBlock = () => {
+  // };
 
-  const renderCRM = (app) => {
+  const renderCRM = (app, title) => {
+    const section = createSection();
+    const header = createHeader(title);
+    // const logo = createLogo();
 
+    // const mainBlock = createMainBlock();
+    section.container.append(header);
+    app.append(section);
   };
 
-  const init = selectorApp => {
+  const init = (selectorApp, title) => {
     const app = document.querySelector(selectorApp);
-    const crm = renderCRM(app);
-    const {list, logo, btnAdd, overlay, form} = crm;
+    const crm = renderCRM(app, title);
+    // const {list, logo, btnAdd, overlay, form} = crm;
 
     // Функционал
 
-    const allRow = renderItems(list, window.goods);
+    // const renderItems = (list, goods) => {
+    // };
+    //
+    // const allRow = renderItems(list, window.goods);
 
     // const addItem = document.querySelector('.add-item');
     // const addItemCloseButton = document.querySelector('.add-item-close-button');
 
-    btnAdd.addEventListener('click', () => {
-      overlay.classList.remove('is-visible');
-    });
+    // btnAdd.addEventListener('click', () => {
+    //   overlay.classList.remove('is-visible');
+    // });
 
     // addItem.addEventListener('click', event => {
     //   event.stopPropagation();
     // });
-    //
+
     // addItemCloseButton.addEventListener('click', () => {
     //   overlay.classList.add('is-visible');
     // });
@@ -113,5 +135,4 @@
 // renderGoods();
 //
 //
-
 // });
