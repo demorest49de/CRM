@@ -52,16 +52,41 @@
     return document.createElement(elem);
   };
 
-  // const createMainBlock = () => {
-  // };
+  const createNav = () =>{
+
+  };
+  const createWrapper = () =>{
+
+  };
+  const createFooter = () =>{
+
+  };
+
+  const createMainBlock = () => {
+    const mainBlock = createElem('div');
+    mainBlock.classList.add('list-product__main-block');
+    const nav = createElem('div');
+    nav.classList.add('list-product__nav');
+    nav.classList.add('nav');
+    mainBlock.append(nav);
+    const navBlock = createElem('div');
+    navBlock.classList.add('nav__block');
+    nav.append(navBlock);
+    return mainBlock;
+  };
 
   const renderCRM = (app, title) => {
     const section = createSection();
+    const sectionContainer = section.container;
     const header = createHeader(title);
-    // const logo = createLogo();
 
-    // const mainBlock = createMainBlock();
-    section.container.append(header);
+    const mainBlock = createMainBlock();
+
+
+    sectionContainer.append(header);
+    sectionContainer.append(mainBlock);
+
+
     app.append(section);
   };
 
