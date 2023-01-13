@@ -1,15 +1,19 @@
 'use strict';
 
+const addClass = (element, ...tokens) => {
+  element.classList.add(tokens);
+};
+
 {
   const createContainer = () => {
     const container = document.createElement('div');
-    container.classList.add('container');
+    addClass(container, 'container');
     return container;
   };
 
   const createSection = () => {
     const section = document.createElement('section');
-    section.classList.add('list-product');
+    addClass(section, ('list-product'));
     const container = createContainer();
     section.container = container;
     section.append(container);
@@ -25,14 +29,13 @@
 
   const createTitleSum = () => {
     const titleSum = createElem('div');
-    titleSum.classList.add('list-product__sum');
-    titleSum.classList.add('card-sum');
+    addClass(titleSum, ['list-product__sum', 'card-sum']);
     titleSum.insertAdjacentHTML('beforeend',
       `
       <span class="card-sum__text">Итоговая стоимость:</span>
     `);
     const cardSumPrice = createElem('span');
-    cardSumPrice.classList.add('card-sum__price');
+    addClass(cardSumPrice, 'card-sum__price');
     cardSumPrice.textContent = `$0.00`;
     titleSum.append(cardSumPrice);
     return titleSum;
@@ -40,7 +43,7 @@
 
   const createHeader = (title) => {
     const header = document.createElement('div');
-    header.classList.add('list-product__header');
+    addClass(header, 'list-product__header');
     const logo = createLogo(title);
     header.append(logo);
     const titleSum = createTitleSum();
@@ -54,27 +57,44 @@
 
   const createNav = () => {
     const nav = createElem('div');
-    nav.classList.add('list-product__nav');
-    nav.classList.add('nav');
+    addClass(nav, ['list-product__nav', 'nav']);
     const navBlock = createElem('div');
-    navBlock.classList.add('nav__block');
+    addClass(navBlock, 'nav__block');
     nav.append(navBlock);
     return nav;
   };
   const createWrapper = () => {
     const wrapper = createElem('div');
-    wrapper.classList.add('list-product__wrapper');
+    addClass(wrapper, 'list-product__wrapper');
+    const table = createElem('table');
+    addClass(table, 'list-product__table');
+    wrapper.append(table);
+    const thead = createElem('thead');
+    addClass(thead, 'thead');
+    thead.insertAdjacentHTML('beforeend',
+      `
+        <tr>
+        <th class="list-product__table-td">ID</th>
+        <th class="list-product__table-td">Наименование</th>
+        <th class="list-product__table-td">Категория</th>
+        <th class="list-product__table-td">Ед/Изм</th>
+        <th class="list-product__table-td">Количество</th>
+        <th class="list-product__table-td">Цена</th>
+        <th class="list-product__table-td">Итог</th>
+        <th class="list-product__table-td"></th>
+      </tr>
+      `);
     return wrapper;
   };
   const createFooter = () => {
     const footer = createElem('div');
-    footer.classList.add('list-product__footer');
+    addClass(footer, 'list-product__footer');
     return footer;
   };
 
   const createMainBlock = () => {
     const mainBlock = createElem('div');
-    mainBlock.classList.add('list-product__main-block');
+    addClass(mainBlock, 'list-product__main-block');
     const nav = createNav();
     mainBlock.append(nav);
     const wrapper = createWrapper();
