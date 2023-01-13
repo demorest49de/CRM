@@ -117,6 +117,27 @@
   const createFooter = () => {
     const footer = createElem('div');
     addClass(footer, 'list-product__footer');
+    footer.insertAdjacentHTML('beforeend',
+      `
+        <div class="list-product__footer">
+          <div class="list-product__footer-block">
+            <div class="list-product__footer-sub-block">
+              <span class="list-product__footer-span">Показывать на странице:</span>
+              <select class="list-product__select-page">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div class="list-product__pages">
+              <div class="list-product__pages-displayed">1-5 of</div>
+              <div class="list-product__total-pages">25</div>
+            </div>
+            <button class="list-product__arrow-pages list-product__prev-page" aria-label="left"></button>
+            <button class="list-product__arrow-pages list-product__next-page" aria-label="right"></button>
+          </div>
+        </div>
+      `);
     return footer;
   };
 
