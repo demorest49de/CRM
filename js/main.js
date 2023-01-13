@@ -4,6 +4,8 @@
 {
   const addClass = (element, ...tokens) => {
     element.classList.add(tokens);
+    const ttt = [1,2,3];
+    console.log(': ',ttt.join('::'), ttt, typeof tokens);
   };
 
   const createContainer = () => {
@@ -290,7 +292,7 @@
 
     const overlay = createOverlay();
 
-    app.append(section);
+    app.append(section, overlay);
   };
 
   const init = (selectorApp, title) => {
