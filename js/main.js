@@ -1,10 +1,11 @@
 'use strict';
 
-const addClass = (element, ...tokens) => {
-  element.classList.add(tokens);
-};
 
 {
+  const addClass = (element, ...tokens) => {
+    element.classList.add(tokens);
+  };
+
   const createContainer = () => {
     const container = document.createElement('div');
     addClass(container, 'container');
@@ -68,7 +69,7 @@ const addClass = (element, ...tokens) => {
     navBlock.append(filterBtn);
 
     const form = createElem('form');
-    addClass(form, 'nav__search')
+    addClass(form, 'nav__search');
     form.insertAdjacentHTML('beforeend',
       `
         <input class="nav__input" type="search" placeholder="Поиск по наименованию и категории">      
@@ -76,7 +77,7 @@ const addClass = (element, ...tokens) => {
     navBlock.append(form);
 
     const addItemBtn = createElem('button');
-    addClass(addItemBtn, 'nav__add-btn')
+    addClass(addItemBtn, 'nav__add-btn');
     addItemBtn.textContent = 'Добавить товар';
     navBlock.append(addItemBtn);
 
