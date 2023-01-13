@@ -61,8 +61,28 @@ const addClass = (element, ...tokens) => {
     const navBlock = createElem('div');
     addClass(navBlock, 'nav__block');
     nav.append(navBlock);
+
+    const filterBtn = createElem('button');
+    addClass(filterBtn, 'nav__filter-btn');
+    filterBtn.textContent = 'Фильтр';
+    navBlock.append(filterBtn);
+
+    const form = createElem('form');
+    addClass(form, 'nav__search')
+    form.insertAdjacentHTML('beforeend',
+      `
+        <input class="nav__input" type="search" placeholder="Поиск по наименованию и категории">      
+      `);
+    navBlock.append(form);
+
+    const addItemBtn = createElem('button');
+    addClass(addItemBtn, 'nav__add-btn')
+    addItemBtn.textContent = 'Добавить товар';
+    navBlock.append(addItemBtn);
+
     return nav;
   };
+
   const createWrapper = () => {
     const wrapper = createElem('div');
     addClass(wrapper, 'list-product__wrapper');
@@ -70,7 +90,7 @@ const addClass = (element, ...tokens) => {
     addClass(table, 'list-product__table');
     wrapper.append(table);
     const thead = createElem('thead');
-    addClass(thead, 'thead');
+    addClass(thead, 'list-product__table-head');
     thead.insertAdjacentHTML('beforeend',
       `
         <tr>
@@ -84,6 +104,10 @@ const addClass = (element, ...tokens) => {
         <th class="list-product__table-td"></th>
       </tr>
       `);
+    const tbody = createElem('tbody');
+    addClass(tbody, 'list-product__table-body');
+    table.append(thead, tbody);
+    table.tbody = tbody;
     return wrapper;
   };
   const createFooter = () => {
