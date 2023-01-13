@@ -1,4 +1,4 @@
-window.goods =
+window.items =
 [
   {
     "id": 253842678,

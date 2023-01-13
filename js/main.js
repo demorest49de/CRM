@@ -109,7 +109,10 @@
     addClass(tbody, 'list-product__table-body');
     table.append(thead, tbody);
     table.tbody = tbody;
-    return wrapper;
+    return {
+      tbody,
+      wrapper
+    };
   };
   const createFooter = () => {
     const footer = createElem('div');
@@ -122,12 +125,41 @@
     addClass(mainBlock, 'list-product__main-block');
     const nav = createNav();
     mainBlock.append(nav);
-    const wrapper = createWrapper();
+    const {wrapper, tbody} = createWrapper();
     mainBlock.append(wrapper);
     const footer = createFooter();
     mainBlock.append(footer);
 
-    return mainBlock;
+    return {mainBlock, tbody};
+  };
+
+  const createRow = ({id, title, price, description, category, discont, count, units, images}) => {
+    const tr = createElem('tr');
+    addClass(tr, 'list-product__table-tr');
+
+    tr.innerHTML = `
+    <td class="list-product__table-td">${id}</td>
+    <td class="list-product__table-td">${title}</td>
+    <td class="list-product__table-td">${category}</td>
+    <td class="list-product__table-td">${units}</td>
+    <td class="list-product__table-td">${count}</td>
+    <td class="list-product__table-td">${price}</td>
+    <td class="list-product__table-td">$${
+      Math.floor(price * count * (1 - (discont ? discont / 100 : discont)))
+    }</td>
+    <td class="list-product__table-td">
+    <button class="list-product__table-btn
+    ${images && images?.small || images?.big ? 'list-product__button-img' : 'list-product__button-no-img'}" aria-label="image"></button>
+    <button class="list-product__table-btn list-product__button-edit" aria-label="edit"></button>
+    <button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
+    </td>
+  `;
+    return tr;
+  };
+
+  const renderItems = (tbody) => {
+    const allRows = window.items.map(createRow);
+    tbody.append(...allRows);
   };
 
   const renderCRM = (app, title) => {
@@ -135,8 +167,8 @@
     const sectionContainer = section.container;
     const header = createHeader(title);
 
-    const mainBlock = createMainBlock();
-
+    const {mainBlock, tbody} = createMainBlock();
+    renderItems(tbody);
 
     sectionContainer.append(header);
     sectionContainer.append(mainBlock);
@@ -147,7 +179,8 @@
 
   const init = (selectorApp, title) => {
     const app = document.querySelector(selectorApp);
-    const crm = renderCRM(app, title);
+    renderCRM(app, title);
+
     // const {list, logo, btnAdd, overlay, form} = crm;
 
     // Функционал
