@@ -187,7 +187,7 @@
 
   const createOverlay = () => {
     const overlay = createElem('div');
-    addClass(overlay, ['overlay', 'is-visible']);
+    addClass(overlay, ['overlay']);
     const addItemBlock = createElem('div');
     addClass(addItemBlock, ['add-item']);
     const addItemContainer = createElem('div');
@@ -291,7 +291,7 @@
     addItemBlock.append(addItemCloseBtn);
     overlay.append(addItemBlock);
 
-    return {overlay, addItemCloseBtn, addItemFormBtn};
+    return {overlay, addItemCloseBtn, addItemBlock};
   };
 
   const renderCRM = (app, title) => {
@@ -321,19 +321,19 @@
     // Функционал
 
     addItemBtn.addEventListener('click', () => {
-      overlay.classList.remove('is-visible');
+      overlay.classList.add('is-visible');
     });
-
-    addItemBtn.addEventListener('click', event => {
+    console.log(': ',addItemBlock);
+    addItemBlock.addEventListener('click', event => {
       event.stopPropagation();
     });
 
     addItemCloseBtn.addEventListener('click', () => {
-      overlay.classList.add('is-visible');
+      overlay.classList.remove('is-visible');
     });
 
     overlay.addEventListener('click', () => {
-      overlay.classList.add('is-visible');
+      overlay.classList.remove('is-visible');
     });
   };
 
