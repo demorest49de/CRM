@@ -187,10 +187,8 @@
 
   const createOverlay = () => {
     const overlay = createElem('div');
-    // addClass(overlay, ['overlay', 'is-visible']);
-    addClass(overlay, ['overlay']);
-    const addItemBlock = createElem('div');//добавить кодом additem, additemcontainer, <= получить их в переменные после этого добавить adjacent все до формы
-    // а ниже в контейнер доб кнопки и в эддайтем доавбить кнпоки
+    addClass(overlay, ['overlay', 'is-visible']);
+    const addItemBlock = createElem('div');
     addClass(addItemBlock, ['add-item']);
     const addItemContainer = createElem('div');
     addClass(addItemContainer, ['add-item__container']);
@@ -293,7 +291,7 @@
     addItemBlock.append(addItemCloseBtn);
     overlay.append(addItemBlock);
 
-    return overlay;
+    return {overlay, addItemCloseBtn, addItemFormBtn};
   };
 
   const renderCRM = (app, title) => {
@@ -307,18 +305,18 @@
     sectionContainer.append(header);
     sectionContainer.append(mainBlock);
 
-    const overlay = createOverlay();
+    const {overlay, addItemCloseBtn, addItemBlock} = createOverlay();
 
     app.append(section, overlay);
 
-    return {addItemBtn, overlay};
+    return {addItemBtn, overlay, addItemCloseBtn, addItemBlock};
   };
 
   const init = (selectorApp, title) => {
     const app = document.querySelector(selectorApp);
     const crm = renderCRM(app, title);
 
-    const {addItemBtn, overlay} = crm;
+    const {addItemBtn, overlay, addItemCloseBtn, addItemBlock} = crm;
 
     // Функционал
 
@@ -326,22 +324,17 @@
       overlay.classList.remove('is-visible');
     });
 
-    const addItemCloseButton = document.querySelector('.add-item-close-button');
+    addItemBtn.addEventListener('click', event => {
+      event.stopPropagation();
+    });
 
-    // btnAdd.addEventListener('click', () => {
-    //   overlay.classList.remove('is-visible');
-    // });
+    addItemCloseBtn.addEventListener('click', () => {
+      overlay.classList.add('is-visible');
+    });
 
-    // addItem.addEventListener('click', event => {
-    //   event.stopPropagation();
-    // });
-
-    // addItemCloseButton.addEventListener('click', () => {
-    //   overlay.classList.add('is-visible');
-    // });
-    //
-    // overlay.addEventListener('click', () => {
-    //   overlay.classList.add('is-visible');
+    overlay.addEventListener('click', () => {
+      overlay.classList.add('is-visible');
+    });
   };
 
   window.listProductInit = init;
