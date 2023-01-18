@@ -323,17 +323,13 @@
     addItemBtn.addEventListener('click', () => {
       overlay.classList.add('is-visible');
     });
-    console.log(': ',addItemBlock);
-    addItemBlock.addEventListener('click', event => {
-      event.stopPropagation();
-    });
 
-    addItemCloseBtn.addEventListener('click', () => {
-      overlay.classList.remove('is-visible');
-    });
+    overlay.addEventListener('click', event => {
+      const target = event.target;
 
-    overlay.addEventListener('click', () => {
-      overlay.classList.remove('is-visible');
+      if (target === overlay || target.classList.contains('close')) {
+        overlay.classList.remove('is-visible');
+      }
     });
   };
 
