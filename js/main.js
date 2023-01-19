@@ -109,6 +109,7 @@
     addClass(tbody, ['list-product__table-body']);
     table.append(thead, tbody);
     table.tbody = tbody;
+    console.log(': ', tbody);
     return {
       tbody,
       wrapper
@@ -309,14 +310,14 @@
 
     app.append(section, overlay);
 
-    return {addItemBtn, overlay, addItemCloseBtn, addItemBlock};
+    return {addItemBtn, overlay, items: tbody};
   };
 
   const init = (selectorApp, title) => {
     const app = document.querySelector(selectorApp);
     const crm = renderCRM(app, title);
 
-    const {addItemBtn, overlay, addItemCloseBtn, addItemBlock} = crm;
+    const {addItemBtn, overlay, items} = crm;
 
     // Функционал
 
@@ -329,6 +330,24 @@
 
       if (target === overlay || target.classList.contains('close')) {
         overlay.classList.remove('is-visible');
+      }
+    });
+
+    items.addEventListener('click', e => {
+      const target = e.target;
+
+      if (target.closest('.list-product__button-delete')) {
+        const forDelId = target.closest('.list-product__table-tr').children[0].textContent;
+        const items = window.items;
+        for (let i = 0; i < items.length; i++) {
+          console.log(': ',items[i]);
+          if(items[i].id === +forDelId){
+            items.splice(i, 1);
+            console.log('items: ', window.items);
+          }
+        }
+
+        target.closest('.list-product__table-tr').remove();
       }
     });
   };
