@@ -109,7 +109,6 @@
     addClass(tbody, ['list-product__table-body']);
     table.append(thead, tbody);
     table.tbody = tbody;
-    console.log(': ', tbody);
     return {
       tbody,
       wrapper
@@ -340,7 +339,6 @@
         const forDelId = target.closest('.list-product__table-tr').children[0].textContent;
         const items = window.items;
         for (let i = 0; i < items.length; i++) {
-          console.log(': ',items[i]);
           if(items[i].id === +forDelId){
             items.splice(i, 1);
             console.log('items: ', window.items);
