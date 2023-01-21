@@ -162,6 +162,7 @@
   const createRow = ({id, title, price, description, category, discont, count, units, images}) => {
     const tr = createElem('tr');
     addClass(tr, ['list-product__table-tr']);
+    const total = Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : +discont)));
     tr.innerHTML = `
     <td class="list-product__table-td">${id}</td>
     <td class="list-product__table-td">${title}</td>
@@ -169,9 +170,7 @@
     <td class="list-product__table-td">${units}</td>
     <td class="list-product__table-td">${count}</td>
     <td class="list-product__table-td">${price}</td>
-    <td class="list-product__table-td">$${
-      Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : +discont)))
-    }</td>
+    <td class="list-product__table-td" data-total-price=${total}>$${total}</td>
     <td class="list-product__table-td">
     <button class="list-product__table-btn
     ${images && images?.small || images?.big ? 'list-product__button-img' : 'list-product__button-no-img'}" aria-label="image"></button>
@@ -331,6 +330,18 @@
 
 
     // Функционал
+    const calculateTotal = () => {
+      const totalPriceOfItems = app.querySelector('.card-sum__price-value');
+      const totalPricesCount = app.querySelectorAll('.list-product__table-td[data-total-price]');
+      let count = 0;
+      totalPricesCount.forEach(item => {
+
+        count += +(item.getAttribute('data-total-price'));
+      });
+      totalPriceOfItems.textContent = count;
+    };
+
+    calculateTotal();
 
     addItemBtn.addEventListener('click', () => {
       overlay.classList.add('is-visible');
@@ -382,6 +393,7 @@
 
         target.closest('.list-product__table-tr').remove();
       }
+      calculateTotal();
     });
 
     form.addEventListener('submit', e => {
@@ -405,30 +417,21 @@
       items.append(row);
       form.reset();
       overlay.classList.remove('is-visible');
-
+      calculateTotal();
     });
 
     form.price.addEventListener('blur', e => {
       const discont = form.discount.value;
       const price = form.price.value;
       const count = form.quantity.value;
-      // if (discont > 0 && !isNaN(discont) &&
-      //   price > 0 &&
-      //   count > 0
-      // ) {
-      //   const res = Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : +discont)));
-      //   console.log(': ', discont, price, count, res);
-      // } else {
-      //   console.log(': ', discont, price, count);
-      // }
       const result = Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : +discont)));
-      console.log(': ',discont,
-      price,
-      count,result);
+      console.log(': ', discont,
+        price,
+        count, result);
 
       const total = overlay.querySelector('.add-item__total-value');
-      console.log(': ',total);
-      total.textContent = result;
+      console.log(': ', total);
+      total.textContent = result.toString();
     });
   };
 
