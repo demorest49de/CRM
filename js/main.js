@@ -158,7 +158,7 @@
   const createRow = ({id, title, price, description, category, discont, count, units, images}) => {
     const tr = createElem('tr');
     addClass(tr, ['list-product__table-tr']);
-
+    console.log(': ',price, discont, count);
     tr.innerHTML = `
     <td class="list-product__table-td">${id}</td>
     <td class="list-product__table-td">${title}</td>
@@ -167,7 +167,7 @@
     <td class="list-product__table-td">${count}</td>
     <td class="list-product__table-td">${price}</td>
     <td class="list-product__table-td">$${
-      Math.floor(price * count * (1 - (discont ? discont / 100 : discont)))
+      Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : +discont)))
     }</td>
     <td class="list-product__table-td">
     <button class="list-product__table-btn
@@ -348,6 +348,15 @@
       }
     };
 
+    const createId = () => {
+      let ID = ``;
+      const characters = '0123456789';
+      for (let i = 0; i < 9; i++) {
+        ID += characters.charAt(Math.floor(Math.random() * 10));
+      }
+      return ID;
+    };
+
     items.addEventListener('click', e => {
       const target = e.target;
 
@@ -373,21 +382,12 @@
       const {name, category, measure, discount, description, quantity, price} = data;
       const id = createId();
 
-      const row = createRow({id, title: name, price, description, category, discount, count: quantity, units: measure});
+      const row = createRow({id, title: name, price, description, category, discont: discount, count: quantity, units: measure});
       items.append(row);
       form.reset();
       overlay.classList.remove('is-visible');
 
     });
-
-    const createId = () => {
-      let ID = ``;
-      const characters = '0123456789';
-      for (let i = 0; i < 9; i++) {
-        ID += characters.charAt(Math.floor(Math.random() * 10));
-      }
-      return ID;
-    };
   };
 
   window.listProductInit = init;
