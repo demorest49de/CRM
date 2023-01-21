@@ -238,7 +238,7 @@
           
             <div class="add-item__block add-item__quantity"><label class="add-item__label" 
               for="add-item__quantity">количество</label>
-              <input class="add-item__input" type="number" name="quantity" id="add-item__quantity"
+              <input class="add-item__input" type="number" name="quantity" id="add-item__quantity" min="0"
               required>
             </div>
           
@@ -246,7 +246,7 @@
               <label class="add-item__label" for="add-item__price">
                 цена
               </label>
-              <input class="add-item__input" type="number" name="price" id="add-item__price" required>
+              <input class="add-item__input" type="number" name="price" id="add-item__price" min="0" required>
             </div>
           
             <div class="add-item__add-image-button">
