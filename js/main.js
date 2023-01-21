@@ -158,7 +158,6 @@
   const createRow = ({id, title, price, description, category, discont, count, units, images}) => {
     const tr = createElem('tr');
     addClass(tr, ['list-product__table-tr']);
-    console.log(': ', price, discont, count);
     tr.innerHTML = `
     <td class="list-product__table-td">${id}</td>
     <td class="list-product__table-td">${title}</td>
@@ -243,7 +242,7 @@
           
             <div class="add-item__block add-item__quantity"><label class="add-item__label" 
               for="add-item__quantity">количество</label>
-              <input class="add-item__input" type="number" name="quantity" id="add-item__quantity" min="0"
+              <input class="add-item__input" type="number" name="quantity" id="add-item__quantity" min="1"
               required>
             </div>
           
@@ -251,7 +250,7 @@
               <label class="add-item__label" for="add-item__price">
                 цена
               </label>
-              <input class="add-item__input" type="number" name="price" id="add-item__price" min="0" required>
+              <input class="add-item__input" type="number" name="price" id="add-item__price" min="1" required>
             </div>
           
             <div class="add-item__add-image-button">
@@ -331,7 +330,6 @@
     addItemBtn.addEventListener('click', () => {
       overlay.classList.add('is-visible');
       const id = overlay.querySelector('.vendor-code__id');
-      console.log(': ',id);
       id.textContent = createId();
     });
 
@@ -388,9 +386,9 @@
       const input = form.querySelector('#add-item__discount');
       input.setAttribute('disabled', '');
       const {name, category, measure, discount, description, quantity, price} = data;
-
+      const id = overlay.querySelector('.vendor-code__id');
       const row = createRow({
-        id,
+        id: id.textContent,
         title: name,
         price,
         description,
@@ -403,6 +401,21 @@
       form.reset();
       overlay.classList.remove('is-visible');
 
+    });
+
+    form.price.addEventListener('blur', e => {
+      const discont = +form.discount.value;
+      const price = +form.discount.value;
+      const count = +form.quantity.value;
+      if (discont > 0 && !isNaN(discont) &&
+        price > 0 &&
+        count > 0
+      ) {
+        const res = Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : +discont)));
+        console.log(': ', discont, price, count, res);
+      } else {
+        console.log(': ', discont, price, count);
+      }
     });
   };
 
