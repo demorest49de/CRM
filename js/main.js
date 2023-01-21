@@ -258,6 +258,7 @@
           </fieldset>
         </form>
     `);
+    const addItemCheckbox = addItemContainer.querySelector('.add-item__checkbox');
 
     const addItemTotalBlock = createElem('div');
     addClass(addItemTotalBlock, ['add-item__total-block']);
@@ -291,7 +292,7 @@
     addItemBlock.append(addItemCloseBtn);
     overlay.append(addItemBlock);
 
-    return {overlay, addItemCloseBtn, addItemBlock};
+    return {overlay, discount: addItemCheckbox};
   };
 
   const renderCRM = (app, title) => {
@@ -305,18 +306,18 @@
     sectionContainer.append(header);
     sectionContainer.append(mainBlock);
 
-    const {overlay, addItemCloseBtn, addItemBlock} = createOverlay();
+    const {overlay, discount} = createOverlay();
 
     app.append(section, overlay);
 
-    return {addItemBtn, overlay, items: tbody};
+    return {addItemBtn, overlay, items: tbody, discount};
   };
 
   const init = (selectorApp, title) => {
     const app = document.querySelector(selectorApp);
     const crm = renderCRM(app, title);
 
-    const {addItemBtn, overlay, items} = crm;
+    const {addItemBtn, overlay, items, discount} = crm;
 
     // Функционал
 
@@ -326,11 +327,24 @@
 
     overlay.addEventListener('click', event => {
       const target = event.target;
-
-      if (target === overlay || target.classList.contains('close')) {
+      if (target === overlay || target.closest('.add-item-close-button')) {
         overlay.classList.remove('is-visible');
       }
+
+      if (target.closest('.add-item__checkbox')) {
+        handleDiscount(target);
+      }
     });
+
+    const handleDiscount = (target) => {
+      const input = target.parentElement.querySelector('.add-item__input');
+      if (target.checked) {
+        input.removeAttribute('disabled');
+      } else {
+        input.value = '';
+        input.setAttribute('disabled', '');
+      }
+    };
 
     items.addEventListener('click', e => {
       const target = e.target;
@@ -339,7 +353,7 @@
         const forDelId = target.closest('.list-product__table-tr').children[0].textContent;
         const items = window.items;
         for (let i = 0; i < items.length; i++) {
-          if(items[i].id === +forDelId){
+          if (items[i].id === +forDelId) {
             items.splice(i, 1);
             console.log('items: ', window.items);
           }
@@ -348,6 +362,7 @@
         target.closest('.list-product__table-tr').remove();
       }
     });
+
   };
 
   window.listProductInit = init;
