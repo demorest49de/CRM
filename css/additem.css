@@ -12,7 +12,7 @@ body {
     background: rgba(0, 0, 0, .5);
 }
 
-.overlay.is-visible{
+.overlay.is-visible {
     display: block;
 }
 
@@ -42,8 +42,22 @@ body {
     margin: 0 auto;
 }
 
-.add-item__title {
+.add-item__title-block {
     margin-bottom: 21px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+.add-item__id-block {
+    font-size: 10px;
+    line-height: 12px;
+    text-transform: uppercase;
+    color: #C5C5C5;
+}
+
+
+.add-item__title {
     font-weight: 700;
     font-size: 24px;
     line-height: 29px;

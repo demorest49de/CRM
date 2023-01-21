@@ -158,7 +158,7 @@
   const createRow = ({id, title, price, description, category, discont, count, units, images}) => {
     const tr = createElem('tr');
     addClass(tr, ['list-product__table-tr']);
-    console.log(': ',price, discont, count);
+    console.log(': ', price, discont, count);
     tr.innerHTML = `
     <td class="list-product__table-td">${id}</td>
     <td class="list-product__table-td">${title}</td>
@@ -194,7 +194,12 @@
     addClass(addItemContainer, ['add-item__container']);
 
     addItemContainer.insertAdjacentHTML('beforeend', `
-        <h1 class="add-item__title">добавить товар</h1>
+        <div class="add-item__title-block">
+          <h1 class="add-item__title">добавить товар</h1>
+          <p class="add-item__id-block">id:
+            <span class="vendor-code__id"></span>
+          </p>
+        </div>
         <div class="add-item__line"></div>
         <form class="add-item__form"
          name="add-item__form"
@@ -325,6 +330,9 @@
 
     addItemBtn.addEventListener('click', () => {
       overlay.classList.add('is-visible');
+      const id = overlay.querySelector('.vendor-code__id');
+      console.log(': ',id);
+      id.textContent = createId();
     });
 
     overlay.addEventListener('click', event => {
@@ -380,9 +388,17 @@
       const input = form.querySelector('#add-item__discount');
       input.setAttribute('disabled', '');
       const {name, category, measure, discount, description, quantity, price} = data;
-      const id = createId();
 
-      const row = createRow({id, title: name, price, description, category, discont: discount, count: quantity, units: measure});
+      const row = createRow({
+        id,
+        title: name,
+        price,
+        description,
+        category,
+        discont: discount,
+        count: quantity,
+        units: measure
+      });
       items.append(row);
       form.reset();
       overlay.classList.remove('is-visible');
