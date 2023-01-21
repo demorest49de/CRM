@@ -357,7 +357,6 @@
         for (let i = 0; i < items.length; i++) {
           if (items[i].id === +forDelId) {
             items.splice(i, 1);
-            console.log('items: ', window.items);
           }
         }
 
@@ -368,17 +367,27 @@
     form.addEventListener('submit', e => {
       e.preventDefault();
       const formData = new FormData(e.target);
-      console.log(': ', [...formData.entries()]);
       const data = Object.fromEntries(formData);
-      console.log(': ',data);
-      const input =  form.querySelector('#add-item__discount');
+      const input = form.querySelector('#add-item__discount');
       input.setAttribute('disabled', '');
-      // const item = createRow();
+      const {name, category, measure, discount, description, quantity, price} = data;
+      const id = createId();
 
+      const row = createRow({id, title: name, price, description, category, discount, count: quantity, units: measure});
+      items.append(row);
       form.reset();
       overlay.classList.remove('is-visible');
 
     });
+
+    const createId = () => {
+      let ID = ``;
+      const characters = '0123456789';
+      for (let i = 0; i < 9; i++) {
+        ID += characters.charAt(Math.floor(Math.random() * 10));
+      }
+      return ID;
+    };
   };
 
   window.listProductInit = init;
