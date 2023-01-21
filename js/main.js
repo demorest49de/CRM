@@ -192,10 +192,12 @@
     addClass(addItemBlock, ['add-item']);
     const addItemContainer = createElem('div');
     addClass(addItemContainer, ['add-item__container']);
+
     addItemContainer.insertAdjacentHTML('beforeend', `
         <h1 class="add-item__title">добавить товар</h1>
         <div class="add-item__line"></div>
-        <form class="add-item__form" action="https://jsonplaceholder.typicode.com/posts" name="add-item__form"
+        <form class="add-item__form"
+         name="add-item__form"
           id="add-item__form" method="post">
           <fieldset class="add-item__content">
             <div class="add-item__block add-item__name">
@@ -231,7 +233,7 @@
             <div class="add-item__block add-item__description">
               <label class="add-item__label" for="add-item__description">описание</label>
               <textarea class="add-item__input" rows="5" name="description" 
-              id="add-item__description"></textarea>
+              id="add-item__description" required></textarea>
             </div>
           
             <div class="add-item__block add-item__quantity"><label class="add-item__label" 
@@ -259,7 +261,7 @@
         </form>
     `);
     const addItemCheckbox = addItemContainer.querySelector('.add-item__checkbox');
-
+    const form = addItemContainer.querySelector('form');
     const addItemTotalBlock = createElem('div');
     addClass(addItemTotalBlock, ['add-item__total-block']);
 
@@ -292,7 +294,7 @@
     addItemBlock.append(addItemCloseBtn);
     overlay.append(addItemBlock);
 
-    return {overlay, discount: addItemCheckbox};
+    return {overlay, discount: addItemCheckbox, form};
   };
 
   const renderCRM = (app, title) => {
@@ -306,18 +308,18 @@
     sectionContainer.append(header);
     sectionContainer.append(mainBlock);
 
-    const {overlay, discount} = createOverlay();
+    const {overlay, form} = createOverlay();
 
     app.append(section, overlay);
 
-    return {addItemBtn, overlay, items: tbody, discount};
+    return {addItemBtn, overlay, items: tbody, form};
   };
 
   const init = (selectorApp, title) => {
     const app = document.querySelector(selectorApp);
     const crm = renderCRM(app, title);
 
-    const {addItemBtn, overlay, items, discount} = crm;
+    const {addItemBtn, overlay, items, form} = crm;
 
     // Функционал
 
@@ -337,7 +339,7 @@
     });
 
     const handleDiscount = (target) => {
-      const input = target.parentElement.querySelector('.add-item__input');
+      const input = target.parentElement.querySelector('#add-item__discount');
       if (target.checked) {
         input.removeAttribute('disabled');
       } else {
@@ -363,6 +365,20 @@
       }
     });
 
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      console.log(': ', [...formData.entries()]);
+      const data = Object.fromEntries(formData);
+      console.log(': ',data);
+      const input =  form.querySelector('#add-item__discount');
+      input.setAttribute('disabled', '');
+      // const item = createRow();
+
+      form.reset();
+      overlay.classList.remove('is-visible');
+
+    });
   };
 
   window.listProductInit = init;
