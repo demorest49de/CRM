@@ -37,7 +37,11 @@
     `);
     const cardSumPrice = createElem('span');
     addClass(cardSumPrice, ['card-sum__price']);
-    cardSumPrice.textContent = `$0.00`;
+    cardSumPrice.textContent = `$`;
+    const cardSumPriceValue = createElem('span');
+    addClass(cardSumPriceValue, ['card-sum__price-value']);
+    cardSumPriceValue.textContent = `0.00`;
+    cardSumPrice.append(cardSumPriceValue);
     titleSum.append(cardSumPrice);
     return titleSum;
   };
@@ -272,7 +276,7 @@
     addItemTotalBlock.insertAdjacentHTML('beforeend', `
       <p class="add-item__total">
         <span class="add-item__total-text">Итоговая стоимость: </span>
-        <span class="add-item__total-value">$ 0.00</span>
+        <span class="add-item__total-currency">$ <span class="add-item__total-value">0.00</span></span>
       </p>
     `);
 
@@ -324,6 +328,7 @@
     const crm = renderCRM(app, title);
 
     const {addItemBtn, overlay, items, form} = crm;
+
 
     // Функционал
 
@@ -404,18 +409,26 @@
     });
 
     form.price.addEventListener('blur', e => {
-      const discont = +form.discount.value;
-      const price = +form.discount.value;
-      const count = +form.quantity.value;
-      if (discont > 0 && !isNaN(discont) &&
-        price > 0 &&
-        count > 0
-      ) {
-        const res = Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : +discont)));
-        console.log(': ', discont, price, count, res);
-      } else {
-        console.log(': ', discont, price, count);
-      }
+      const discont = form.discount.value;
+      const price = form.price.value;
+      const count = form.quantity.value;
+      // if (discont > 0 && !isNaN(discont) &&
+      //   price > 0 &&
+      //   count > 0
+      // ) {
+      //   const res = Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : +discont)));
+      //   console.log(': ', discont, price, count, res);
+      // } else {
+      //   console.log(': ', discont, price, count);
+      // }
+      const result = Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : +discont)));
+      console.log(': ',discont,
+      price,
+      count,result);
+
+      const total = overlay.querySelector('.add-item__total-value');
+      console.log(': ',total);
+      total.textContent = result;
     });
   };
 

@@ -286,7 +286,7 @@ body {
     color: var(--color-6E6893);
 }
 
-.add-item__total-value {
+.add-item__total-currency {
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;
