@@ -330,6 +330,8 @@
 
 
     // Функционал
+
+    // handle total amount on table screen
     const calculateTotal = () => {
       const totalPriceOfItems = app.querySelector('.card-sum__price-value');
       const totalPricesCount = app.querySelectorAll('.list-product__table-td[data-total-price]');
@@ -343,18 +345,20 @@
 
     calculateTotal();
 
+    //  handle new item
     addItemBtn.addEventListener('click', () => {
       overlay.classList.add('is-visible');
       const id = overlay.querySelector('.vendor-code__id');
       id.textContent = createId();
     });
 
+    // handle close button on form
     overlay.addEventListener('click', event => {
       const target = event.target;
       if (target === overlay || target.closest('.add-item-close-button')) {
         overlay.classList.remove('is-visible');
       }
-
+      // handle discount checkbox
       if (target.closest('.add-item__checkbox')) {
         handleDiscount(target);
       }
@@ -379,6 +383,7 @@
       return ID;
     };
 
+    // handle delete table button
     items.addEventListener('click', e => {
       const target = e.target;
 
@@ -393,9 +398,11 @@
 
         target.closest('.list-product__table-tr').remove();
       }
+      // recalculate total amount
       calculateTotal();
     });
 
+    // handle form
     form.addEventListener('submit', e => {
       e.preventDefault();
       const formData = new FormData(e.target);
@@ -420,6 +427,7 @@
       calculateTotal();
     });
 
+    // handle blur when loosing focus from price input field
     form.price.addEventListener('blur', e => {
       const discont = form.discount.value;
       const price = form.price.value;
