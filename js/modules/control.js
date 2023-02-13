@@ -42,7 +42,7 @@ const handleDeleteTableButton = ($) => {
   });
 };
 
-const handleForm = ($) => {
+const SubmitFormData = ($) => {
   $.form.addEventListener('submit', e => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -64,7 +64,7 @@ const handleForm = ($) => {
     items.append(row);
     $.form.reset();
     $.overlay.classList.remove('is-visible');
-    calculateTotal();
+    calculateTotal($);
   });
 };
 
@@ -85,6 +85,6 @@ export default {
   handleOpenForm,
   handleCloseForm,
   handleDeleteTableButton,
-  handleForm,
+  handleForm: SubmitFormData,
   handleBlur
 };

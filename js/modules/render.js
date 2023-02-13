@@ -1,6 +1,22 @@
-export const renderItems = (tbody) => {
-  const allRows = window.items.map(createRow);
-  tbody.append(...allRows);
+import {createRow} from "./createElement.js";
+import createElement from "./createElement.js";
+const{
+  createSection,
+  createHeader,
+  createMainBlock,
+  createOverlay
+} = createElement;
+
+export const renderItems = (storage, $) => {
+  while ($.tbody.firstChild) {
+    $.tbody.removeChild($.tbody.firstChild);
+  }
+
+  Object.entries(storage.data).forEach(([index, value]) => {
+    // const {id, title, price, description, category, discont, count, units, images} = value;
+    const row = createRow(value);
+    $.list.append(row);
+  });
 };
 
 export const renderCRM = (app, title) => {
@@ -9,7 +25,6 @@ export const renderCRM = (app, title) => {
   const header = createHeader(title);
 
   const {mainBlock, tbody, addItemBtn} = createMainBlock();
-  renderItems(tbody);
 
   sectionContainer.append(header);
   sectionContainer.append(mainBlock);

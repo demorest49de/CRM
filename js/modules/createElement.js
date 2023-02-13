@@ -1,3 +1,4 @@
+
 const addClass = (element, tokens) => {
   element.classList.add(...tokens);
 };
