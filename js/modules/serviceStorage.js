@@ -1,6 +1,6 @@
 import {renderItems} from './render.js';
 
-const getStorage = (title) => {
+export const getStorage = (title) => {
   const empty = createEmptyObject();
   let storage = localStorage.getItem(title) ?
     localStorage.getItem(title) : localStorage.setItem(title, empty);
@@ -11,11 +11,11 @@ const getStorage = (title) => {
 const createEmptyObject = () => {
   return JSON.stringify({
     data: [],
-    sort: {
-      column: 1,
-      direction: true,
-    },
   });
+};
+
+export const saveStorage = (storage, nameApp) => {
+  localStorage.setItem(nameApp, JSON.stringify(storage));
 };
 
 const handleStorage = ($) => {

@@ -1,5 +1,7 @@
 import {handleDiscount, calculateTotal} from "./calculations.js";
 import {createId, createRow} from "./createElement.js";
+import {getStorage, saveStorage} from "./serviceStorage.js";
+import {renderItems} from "./render.js";
 
 
 const handleOpenForm = ($) => {
@@ -23,8 +25,9 @@ const handleCloseForm = ($) => {
   });
 };
 
-const handleDeleteTableButton = ($) => {
-  items.addEventListener('click', e => {
+const deleteRow = ($) => {
+
+  $.overlay.addEventListener('click', e => {
     const target = e.target;
 
     if (target.closest('.list-product__button-delete')) {
@@ -51,7 +54,7 @@ const SubmitFormData = ($) => {
     input.setAttribute('disabled', '');
     const {name, category, measure, discount, description, quantity, price} = data;
     const id = $.overlay.querySelector('.vendor-code__id');
-    const row = createRow({
+    const rowData = {
       id: id.textContent,
       title: name,
       price,
@@ -60,8 +63,13 @@ const SubmitFormData = ($) => {
       discont: discount,
       count: quantity,
       units: measure
-    });
-    items.append(row);
+    };
+    const row = createRow(rowData);
+    const storage = getStorage($.title);
+    storage.data.push(rowData);
+    saveStorage(storage, $.title);
+    $.tbody.append(row);
+    renderItems(storage, $);
     $.form.reset();
     $.overlay.classList.remove('is-visible');
     calculateTotal($);
@@ -70,13 +78,18 @@ const SubmitFormData = ($) => {
 
 // handle blur when loosing focus from price input field
 const handleBlur = ($) => {
-  $.form.price.addEventListener('blur', e => {
+  handleBlurElement($.form.price, $);
+  handleBlurElement($.form.quantity, $);
+  handleBlurElement($.form.discount, $);
+};
+
+const handleBlurElement = (element, $) => {
+  element.addEventListener('blur', e => {
     const discont = $.form.discount.value;
     const price = $.form.price.value;
     const count = $.form.quantity.value;
     const result = Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : +discont)));
     const total = $.overlay.querySelector('.add-item__total-value');
-    console.log(': ', total);
     total.textContent = result.toString();
   });
 };
@@ -84,7 +97,7 @@ const handleBlur = ($) => {
 export default {
   handleOpenForm,
   handleCloseForm,
-  handleDeleteTableButton,
-  handleForm: SubmitFormData,
+  deleteRow,
+  SubmitFormData,
   handleBlur
 };

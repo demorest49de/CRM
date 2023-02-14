@@ -1,6 +1,7 @@
 import {createRow} from "./createElement.js";
 import createElement from "./createElement.js";
-const{
+
+const {
   createSection,
   createHeader,
   createMainBlock,
@@ -12,10 +13,9 @@ export const renderItems = (storage, $) => {
     $.tbody.removeChild($.tbody.firstChild);
   }
 
-  Object.entries(storage.data).forEach(([index, value]) => {
-    // const {id, title, price, description, category, discont, count, units, images} = value;
+  Object.values(storage.data).forEach((value) => {
     const row = createRow(value);
-    $.list.append(row);
+    $.tbody.append(row);
   });
 };
 
@@ -33,5 +33,5 @@ export const renderCRM = (app, title) => {
 
   app.append(section, overlay);
 
-  return {addItemBtn, overlay, items: tbody, form, header};
+  return {addItemBtn, overlay, tbody, form, header};
 };

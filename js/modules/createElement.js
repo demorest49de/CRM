@@ -128,7 +128,7 @@ const createFooter = () => {
               <select class="list-product__select-page">
                 <option value="10">10</option>
                 <option value="20">20</option>
-                <option value="5">5</option>
+                <option value="50">50</option>
               </select>
             </div>
             <div class="list-product__pages">
@@ -159,14 +159,14 @@ const createMainBlock = () => {
 export const createRow = ({id, title, price, description, category, discont, count, units, images}) => {
   const tr = createElem('tr');
   addClass(tr, ['list-product__table-tr']);
-  const total = Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : +discont)));
+  const total = Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : 0)));
   tr.innerHTML = `
     <td class="list-product__table-td">${id}</td>
     <td class="list-product__table-td">${title}</td>
     <td class="list-product__table-td">${category}</td>
     <td class="list-product__table-td">${units}</td>
     <td class="list-product__table-td">${count}</td>
-    <td class="list-product__table-td">${price}</td>
+    <td class="list-product__table-td">$${price}</td>
     <td class="list-product__table-td" data-total-price=${total}>$${total}</td>
     <td class="list-product__table-td">
     <button class="list-product__table-btn
@@ -292,7 +292,7 @@ const createOverlay = () => {
   addItemBlock.append(addItemCloseBtn);
   overlay.append(addItemBlock);
 
-  return {overlay, discount: addItemCheckbox, form};
+  return {overlay, form};
 };
 
 export const createId = () => {

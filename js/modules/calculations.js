@@ -1,6 +1,8 @@
 export const calculateTotal = ($) => {
   const totalPriceOfItems = $.header.querySelector('.card-sum__price-value');
-  const totalPricesCount = $.header.querySelectorAll('.list-product__table-td[data-total-price]');
+  const totalPricesCount = $.tbody.querySelectorAll('.list-product__table-td[data-total-price]');
+  console.log(': ',totalPricesCount);
+  console.log(': ',totalPriceOfItems);
   let count = 0;
   totalPricesCount.forEach(item => {
 

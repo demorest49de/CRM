@@ -4,7 +4,7 @@ import control from './modules/control.js';
 import serviceStorage from './modules/serviceStorage.js';
 
 const {
-  handleBlur, handleForm, handleDeleteTableButton, handleCloseForm, handleOpenForm
+  handleBlur, SubmitFormData, deleteRow, handleCloseForm, handleOpenForm
 } = control;
 
 {
@@ -12,20 +12,20 @@ const {
     const app = document.querySelector(selectorApp);
     const crm = renderCRM(app, title);
 
-    const {addItemBtn, overlay, items, form, header} = crm;
-    const generalVars = {addItemBtn, overlay, items, form, header, title};
+    const {addItemBtn, overlay, tbody, form, header} = crm;
+    const generalVars = {addItemBtn, overlay, tbody, form, header, title};
 
     // Функционал
 
-    calculateTotal(generalVars);
 
     handleOpenForm(generalVars);
     handleCloseForm(generalVars);
-    handleDeleteTableButton(generalVars);
-    handleForm(generalVars);
+    deleteRow(generalVars);
+    SubmitFormData(generalVars);
     handleBlur(generalVars);
 
     serviceStorage.handleStorage(generalVars);
+    calculateTotal(generalVars);
 
   };
 
