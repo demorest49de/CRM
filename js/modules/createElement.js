@@ -37,7 +37,7 @@ const createTitleSum = () => {
   cardSumPrice.textContent = `$`;
   const cardSumPriceValue = createElem('span');
   addClass(cardSumPriceValue, ['card-sum__price-value']);
-  cardSumPriceValue.textContent = `0.00`;
+  cardSumPriceValue.textContent = `0`;
   cardSumPrice.append(cardSumPriceValue);
   titleSum.append(cardSumPrice);
   return titleSum;
@@ -258,7 +258,7 @@ const createOverlay = () => {
           </fieldset>
         </form>
     `);
-  const addItemCheckbox = addItemContainer.querySelector('.add-item__checkbox');
+
   const form = addItemContainer.querySelector('form');
   const addItemTotalBlock = createElem('div');
   addClass(addItemTotalBlock, ['add-item__total-block']);
@@ -266,7 +266,7 @@ const createOverlay = () => {
   addItemTotalBlock.insertAdjacentHTML('beforeend', `
       <p class="add-item__total">
         <span class="add-item__total-text">Итоговая стоимость: </span>
-        <span class="add-item__total-currency">$ <span class="add-item__total-value">0.00</span></span>
+        <span class="add-item__total-currency">$ <span class="add-item__total-value">0</span></span>
       </p>
     `);
 

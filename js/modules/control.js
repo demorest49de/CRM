@@ -6,6 +6,10 @@ import {renderItems} from "./render.js";
 
 const handleOpenForm = ($) => {
   $.addItemBtn.addEventListener('click', () => {
+    $.form.reset();
+    $.form.discount.setAttribute('disabled', '');
+    $.overlay.querySelector('.add-item__title').textContent = 'добавить товар';
+    $.overlay.querySelector('button.add-item__button-item[type=submit]').textContent = 'добавить товар';
     $.overlay.classList.add('is-visible');
     const id = $.overlay.querySelector('.vendor-code__id');
     id.textContent = createId();
@@ -50,8 +54,10 @@ const SubmitFormData = ($) => {
     const data = Object.fromEntries(formData);
     const input = $.form.querySelector('#add-item__discount');
     input.setAttribute('disabled', '');
-    const {name, category, measure, discount, description, quantity, price} = data;
+
+    const {name, category, measure, discount, description, quantity, price, image} = data;
     const id = $.overlay.querySelector('.vendor-code__id');
+    console.log(': ',data, image);
     const rowData = {
       id: id.textContent,
       title: name,
@@ -60,7 +66,11 @@ const SubmitFormData = ($) => {
       category,
       discont: discount,
       count: quantity,
-      units: measure
+      units: measure,
+      images: {
+        small: `/upload/${image.name}`,
+        big: `/upload/${image.name}`,
+      },
     };
     const row = createRow(rowData);
     const storage = getStorage($.title);
@@ -71,6 +81,43 @@ const SubmitFormData = ($) => {
     $.form.reset();
     $.overlay.classList.remove('is-visible');
     calculateTotal($);
+  });
+};
+
+const editRow = ($) => {
+  $.tbody.addEventListener('click', e => {
+    const target = e.target;
+    if (target.closest('.list-product__button-edit')) {
+      $.overlay.classList.add('is-visible');
+
+      $.overlay.querySelector('.add-item__title').textContent = 'Изменить товар';
+      $.overlay.querySelector('button.add-item__button-item[type=submit]').textContent = 'Сохранить';
+
+      const tdId = target.closest('.list-product__table-tr').querySelector('td[data-id]').getAttribute('data-id');
+
+      const id = $.overlay.querySelector('.vendor-code__id');
+      id.textContent = tdId;
+
+      const storage = getStorage($.title);
+      const data = storage.data;
+
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].id === tdId) {
+          $.form.name.value = data[i].title;
+          $.form.measure.value = data[i].units;
+          $.form.category.value = data[i].category;
+          if (data[i].discont) {
+            $.form.discount.removeAttribute('disabled', '');
+            $.form.discount.value = data[i].discont;
+            $.form.querySelector('.add-item__checkbox').checked = 'true';
+          }
+          $.form.description.value = data[i].description;
+          $.form.quantity.value = data[i].count;
+          $.form.price.value = data[i].price;
+          return;
+        }
+      }
+    }
   });
 };
 
@@ -86,7 +133,7 @@ const handleBlurElement = (element, $) => {
     const discont = $.form.discount.value;
     const price = $.form.price.value;
     const count = $.form.quantity.value;
-    const result = Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : +discont)));
+    const result = Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : 0)));
     const total = $.overlay.querySelector('.add-item__total-value');
     total.textContent = result.toString();
   });
@@ -97,5 +144,6 @@ export default {
   handleCloseForm,
   deleteRow,
   SubmitFormData,
-  handleBlur
+  handleBlur,
+  editRow
 };

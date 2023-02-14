@@ -4,7 +4,7 @@ import control from './modules/control.js';
 import serviceStorage from './modules/serviceStorage.js';
 
 const {
-  handleBlur, SubmitFormData, deleteRow, handleCloseForm, handleOpenForm
+  handleBlur, SubmitFormData, deleteRow, handleCloseForm, handleOpenForm, editRow
 } = control;
 
 {
@@ -21,6 +21,7 @@ const {
     handleOpenForm(generalVars);
     handleCloseForm(generalVars);
     deleteRow(generalVars);
+    editRow(generalVars);
     SubmitFormData(generalVars);
     handleBlur(generalVars);
 
