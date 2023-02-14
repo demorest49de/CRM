@@ -161,7 +161,7 @@ export const createRow = ({id, title, price, description, category, discont, cou
   addClass(tr, ['list-product__table-tr']);
   const total = Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : 0)));
   tr.innerHTML = `
-    <td class="list-product__table-td">${id}</td>
+    <td class="list-product__table-td" data-id='${id}'>${id}</td>
     <td class="list-product__table-td">${title}</td>
     <td class="list-product__table-td">${category}</td>
     <td class="list-product__table-td">${units}</td>

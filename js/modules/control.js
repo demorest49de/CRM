@@ -27,18 +27,16 @@ const handleCloseForm = ($) => {
 
 const deleteRow = ($) => {
 
-  $.overlay.addEventListener('click', e => {
+  $.tbody.addEventListener('click', e => {
     const target = e.target;
 
     if (target.closest('.list-product__button-delete')) {
-      const forDelId = target.closest('.list-product__table-tr').children[0].textContent;
-      const items = window.items;
-      for (let i = 0; i < items.length; i++) {
-        if (items[i].id === +forDelId) {
-          items.splice(i, 1);
-        }
-      }
-
+      const item = target.closest('.list-product__table-tr');
+      const id = item.querySelector('.list-product__table-td[data-id]').getAttribute('data-id');
+      const storage = getStorage($.title);
+      const data = storage.data;
+      storage.data = data.filter(x => x.id !== id);
+      saveStorage(storage, $.title);
       target.closest('.list-product__table-tr').remove();
     }
     calculateTotal($);
