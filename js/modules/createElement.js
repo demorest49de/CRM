@@ -198,6 +198,7 @@ const createOverlay = () => {
          name="add-item__form"
           id="add-item__form" method="post">
           <fieldset class="add-item__content">
+            <div class="add-item__block-id hide-element"></div>
             <div class="add-item__block add-item__name">
               <label class="add-item__label" for="add-item__name">
                 наименование

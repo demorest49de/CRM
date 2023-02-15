@@ -52,32 +52,58 @@ const SubmitFormData = ($) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
+
+
+    const storage = getStorage($.title);
+    const {name, category, measure, discount, description, quantity, price, image} = data;
+    if ($.form.querySelector('.add-item__block-id').getAttribute('data-id')) {
+      const id = $.form.querySelector('.add-item__block-id').getAttribute('data-id');
+      $.form.querySelector('.add-item__block-id').removeAttribute('data-id');
+
+      const result = storage.data.map(item => {
+        if (item.id === id) {
+          item.category = category;
+          item.count = quantity;
+          item.description = description;
+          item.discont = discount;
+          item.images = {'small': `/upload/${image.name}`, 'big': `/upload/${image.name}`,};
+          item.price = price;
+          item.title = name;
+          item.units = measure;
+        }
+
+        return item;
+      });
+
+      storage.data = result;
+      renderItems(storage, $);
+    } else {
+      const id = $.overlay.querySelector('.vendor-code__id');
+      console.log(': ', data, image);
+      const rowData = {
+        id: id.textContent,
+        title: name,
+        price,
+        description,
+        category,
+        discont: discount,
+        count: quantity,
+        units: measure,
+        images: {
+          small: `/upload/${image.name}`,
+          big: `/upload/${image.name}`,
+        },
+      };
+      const row = createRow(rowData);
+      storage.data.push(rowData);
+      $.tbody.append(row);
+    }
+
+    //discount сброс  поля в disabled
     const input = $.form.querySelector('#add-item__discount');
     input.setAttribute('disabled', '');
 
-    const {name, category, measure, discount, description, quantity, price, image} = data;
-    const id = $.overlay.querySelector('.vendor-code__id');
-    console.log(': ',data, image);
-    const rowData = {
-      id: id.textContent,
-      title: name,
-      price,
-      description,
-      category,
-      discont: discount,
-      count: quantity,
-      units: measure,
-      images: {
-        small: `/upload/${image.name}`,
-        big: `/upload/${image.name}`,
-      },
-    };
-    const row = createRow(rowData);
-    const storage = getStorage($.title);
-    storage.data.push(rowData);
     saveStorage(storage, $.title);
-    $.tbody.append(row);
-    renderItems(storage, $);
     $.form.reset();
     $.overlay.classList.remove('is-visible');
     calculateTotal($);
@@ -103,6 +129,7 @@ const editRow = ($) => {
 
       for (let i = 0; i < data.length; i++) {
         if (data[i].id === tdId) {
+          $.form.querySelector('.add-item__block-id').setAttribute('data-id', data[i].id);
           $.form.name.value = data[i].title;
           $.form.measure.value = data[i].units;
           $.form.category.value = data[i].category;
