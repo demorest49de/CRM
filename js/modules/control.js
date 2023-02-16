@@ -67,6 +67,7 @@ const SubmitFormData = ($) => {
 
     const storage = getStorage($.title);
     const {name, category, measure, discount, description, quantity, price, image} = data;
+    // already has item
     if ($.form.querySelector('.add-item__block-id').getAttribute('data-id')) {
       const id = $.form.querySelector('.add-item__block-id').getAttribute('data-id');
       $.form.querySelector('.add-item__block-id').removeAttribute('data-id');
@@ -77,7 +78,7 @@ const SubmitFormData = ($) => {
           item.count = quantity;
           item.description = description;
           item.discont = discount;
-          item.images = {'small': `/upload/${image.name}`, 'big': `/upload/${image.name}`,};
+          item.images = image.name ? {'small': `/upload/${image.name}`, 'big': `/upload/${image.name}`,} : item.images;
           item.price = price;
           item.title = name;
           item.units = measure;
@@ -88,7 +89,7 @@ const SubmitFormData = ($) => {
 
       storage.data = result;
       renderItems(storage, $);
-    } else {
+    } else {// new item
       const id = $.overlay.querySelector('.vendor-code__id');
       const rowData = {
         id: id.textContent,
@@ -99,10 +100,10 @@ const SubmitFormData = ($) => {
         discont: discount,
         count: quantity,
         units: measure,
-        images: {
+        images: image.name ? {
           small: `/upload/${image.name}`,
           big: `/upload/${image.name}`,
-        },
+        } : undefined,
       };
       const row = createRow(rowData);
       storage.data.push(rowData);
@@ -145,12 +146,13 @@ const editRow = ($) => {
             $.form.discount.removeAttribute('disabled', '');
             $.form.discount.value = data[i].discont;
             $.form.querySelector('.add-item__checkbox').checked = 'true';
-          }else{
+          } else {
             $.form.discount.setAttribute('disabled', '');
           }
           $.form.description.value = data[i].description;
           $.form.quantity.value = data[i].count;
           $.form.price.value = data[i].price;
+          console.log(': ', $.form.image, data[i].image);
           calculateFormTotal($);
           return;
         }
