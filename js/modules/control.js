@@ -19,9 +19,14 @@ const handleDiscount = (target, $) => {
   const inputDiscount = $.form.discount;
   if (target.checked) {
     inputDiscount.removeAttribute('disabled');
+    inputDiscount.value = inputDiscount.getAttribute('data-discont');
+    inputDiscount.removeAttribute('data-discont');
   } else {
     inputDiscount.setAttribute('disabled', '');
+    inputDiscount.setAttribute('data-discont', inputDiscount.value);
+    inputDiscount.value = '';
   }
+  calculateFormTotal($);
 };
 
 const handleCloseForm = ($) => {
@@ -30,6 +35,7 @@ const handleCloseForm = ($) => {
     if (target === $.overlay || target.closest('.add-item-close-button')) {
       $.overlay.classList.remove('is-visible');
       $.form.reset();
+      $.form.discount.removeAttribute('data-discont');
     }
   });
 };
@@ -84,7 +90,6 @@ const SubmitFormData = ($) => {
       renderItems(storage, $);
     } else {
       const id = $.overlay.querySelector('.vendor-code__id');
-      console.log(': ', data, image);
       const rowData = {
         id: id.textContent,
         title: name,
@@ -104,6 +109,8 @@ const SubmitFormData = ($) => {
       $.tbody.append(row);
     }
 
+    //delete attribute from form after submit
+    $.form.discount.removeAttribute('data-discont');
     saveStorage(storage, $.title);
     $.form.reset();
     $.overlay.classList.remove('is-visible');
@@ -138,6 +145,8 @@ const editRow = ($) => {
             $.form.discount.removeAttribute('disabled', '');
             $.form.discount.value = data[i].discont;
             $.form.querySelector('.add-item__checkbox').checked = 'true';
+          }else{
+            $.form.discount.setAttribute('disabled', '');
           }
           $.form.description.value = data[i].description;
           $.form.quantity.value = data[i].count;

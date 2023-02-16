@@ -1,4 +1,3 @@
-
 const addClass = (element, tokens) => {
   element.classList.add(...tokens);
 };
@@ -221,7 +220,9 @@ const createOverlay = () => {
             </div>
           
             <div class="add-item__discount">
-              <label class="add-item__label" for="add-item__discount">дисконт</label>
+              <label class="add-item__label" for="add-item__discount">
+              дисконт
+              </label>
               <div class="add-item__input-set">
                 <input class="add-item__checkbox" type="checkbox">
                 <input class="add-item__input" type="text" name="discount" id="add-item__discount"
@@ -232,7 +233,7 @@ const createOverlay = () => {
             <div class="add-item__block add-item__description">
               <label class="add-item__label" for="add-item__description">описание</label>
               <textarea class="add-item__input" rows="5" name="description" 
-              id="add-item__description" required></textarea>
+              id="add-item__description"></textarea>
             </div>
           
             <div class="add-item__block add-item__quantity"><label class="add-item__label" 
