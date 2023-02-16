@@ -225,7 +225,7 @@ const createOverlay = () => {
               <div class="add-item__input-set">
                 <input class="add-item__checkbox" type="checkbox">
                 <input class="add-item__input" type="text" name="discount" id="add-item__discount"
-                  disabled required>
+                  required>
               </div>
             </div>  
           
@@ -280,6 +280,7 @@ const createOverlay = () => {
   const addItemCloseBtn = createElem('button');
   addClass(addItemCloseBtn, ['add-item-close-button']);
   addItemCloseBtn.type = 'button';
+  addItemCloseBtn.title = 'закрыть';
   addItemCloseBtn.insertAdjacentHTML('beforeend', `
       <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
         <path d="M2 2L22 22" stroke="#6E6893" stroke-width="3" stroke-linecap="round"/>

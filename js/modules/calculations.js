@@ -8,13 +8,3 @@ export const calculateTotal = ($) => {
   });
   totalPriceOfItems.textContent = count;
 };
-
-export const handleDiscount = (target) => {
-  const input = target.parentElement.querySelector('#add-item__discount');
-  if (target.checked) {
-    input.removeAttribute('disabled');
-  } else {
-    input.value = '';
-    input.setAttribute('disabled', '');
-  }
-};

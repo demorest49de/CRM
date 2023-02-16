@@ -1,4 +1,4 @@
-import {handleDiscount, calculateTotal} from "./calculations.js";
+import {calculateTotal} from "./calculations.js";
 import {createId, createRow} from "./createElement.js";
 import {getStorage, saveStorage} from "./serviceStorage.js";
 import {renderItems} from "./render.js";
@@ -6,8 +6,7 @@ import {renderItems} from "./render.js";
 
 const handleOpenForm = ($) => {
   $.addItemBtn.addEventListener('click', () => {
-    $.form.reset();
-    $.form.discount.setAttribute('disabled', '');
+    handleDiscount($.form.querySelector('.add-item__checkbox'), $);
     $.overlay.querySelector('.add-item__title').textContent = 'добавить товар';
     $.overlay.querySelector('button.add-item__button-item[type=submit]').textContent = 'добавить товар';
     $.overlay.classList.add('is-visible');
@@ -16,15 +15,21 @@ const handleOpenForm = ($) => {
   });
 };
 
+const handleDiscount = (target, $) => {
+  const inputDiscount = $.form.discount;
+  if (target.checked) {
+    inputDiscount.removeAttribute('disabled');
+  } else {
+    inputDiscount.setAttribute('disabled', '');
+  }
+};
+
 const handleCloseForm = ($) => {
   $.overlay.addEventListener('click', event => {
     const target = event.target;
     if (target === $.overlay || target.closest('.add-item-close-button')) {
       $.overlay.classList.remove('is-visible');
-    }
-
-    if (target.closest('.add-item__checkbox')) {
-      handleDiscount(target);
+      $.form.reset();
     }
   });
 };
@@ -99,10 +104,6 @@ const SubmitFormData = ($) => {
       $.tbody.append(row);
     }
 
-    //discount сброс  поля в disabled
-    const input = $.form.querySelector('#add-item__discount');
-    input.setAttribute('disabled', '');
-
     saveStorage(storage, $.title);
     $.form.reset();
     $.overlay.classList.remove('is-visible');
@@ -141,9 +142,21 @@ const editRow = ($) => {
           $.form.description.value = data[i].description;
           $.form.quantity.value = data[i].count;
           $.form.price.value = data[i].price;
+          calculateFormTotal($);
           return;
         }
       }
+    }
+  });
+};
+
+const handleAddItemCheckbox = ($) => {
+  const discount = $.form.discount;
+  const addItemCheckbox = $.form.querySelector('.add-item__checkbox[type=checkbox]');
+  $.form.addEventListener('click', e => {
+    const target = e.target;
+    if (target.closest('.add-item__checkbox[type=checkbox]')) {
+      handleDiscount(target, $);
     }
   });
 };
@@ -156,14 +169,18 @@ const handleBlur = ($) => {
 };
 
 const handleBlurElement = (element, $) => {
-  element.addEventListener('blur', e => {
-    const discont = $.form.discount.value;
-    const price = $.form.price.value;
-    const count = $.form.quantity.value;
-    const result = Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : 0)));
-    const total = $.overlay.querySelector('.add-item__total-value');
-    total.textContent = result.toString();
+  element.addEventListener('blur', () => {
+    calculateFormTotal($);
   });
+};
+
+const calculateFormTotal = ($) => {
+  const discont = $.form.discount.value;
+  const price = $.form.price.value;
+  const count = $.form.quantity.value;
+  const result = Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : 0)));
+  const total = $.overlay.querySelector('.add-item__total-value');
+  total.textContent = result.toString();
 };
 
 export default {
@@ -172,5 +189,6 @@ export default {
   deleteRow,
   SubmitFormData,
   handleBlur,
-  editRow
+  editRow,
+  handleAddItemCheckbox
 };
