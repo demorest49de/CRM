@@ -1,11 +1,11 @@
-import {createRow} from "./createElement.js";
-import createElement from "./createElement.js";
+import {createRow} from './createElement.js';
+import createElement from './createElement.js';
 
 const {
   createSection,
   createHeader,
   createMainBlock,
-  createOverlay
+  createOverlay,
 } = createElement;
 
 export const renderItems = (storage, $) => {

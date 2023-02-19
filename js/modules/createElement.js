@@ -24,11 +24,13 @@ const createLogo = (title) => {
   return h1;
 };
 
+const createElem = (elem) => document.createElement(elem);
+
 const createTitleSum = () => {
   const titleSum = createElem('div');
   addClass(titleSum, ['list-product__sum', 'card-sum']);
   titleSum.insertAdjacentHTML('beforeend',
-    `
+      `
       <span class="card-sum__text">Итоговая стоимость:</span>
     `);
   const cardSumPrice = createElem('span');
@@ -52,10 +54,6 @@ const createHeader = (title) => {
   return header;
 };
 
-const createElem = (elem) => {
-  return document.createElement(elem);
-};
-
 const createNav = () => {
   const nav = createElem('div');
   addClass(nav, ['list-product__nav', 'nav']);
@@ -71,8 +69,9 @@ const createNav = () => {
   const form = createElem('form');
   addClass(form, ['nav__search']);
   form.insertAdjacentHTML('beforeend',
-    `
-        <input class="nav__input" type="search" placeholder="Поиск по наименованию и категории">      
+      `
+        <input class="nav__input" type="search"
+         placeholder="Поиск по наименованию и категории">      
       `);
   navBlock.append(form);
 
@@ -93,7 +92,7 @@ const createWrapper = () => {
   const thead = createElem('thead');
   addClass(thead, ['list-product__table-head']);
   thead.insertAdjacentHTML('beforeend',
-    `
+      `
         <tr>
         <th class="list-product__table-td">ID</th>
         <th class="list-product__table-td">Наименование</th>
@@ -111,7 +110,7 @@ const createWrapper = () => {
   table.tbody = tbody;
   return {
     tbody,
-    wrapper
+    wrapper,
   };
 };
 
@@ -119,11 +118,12 @@ const createFooter = () => {
   const footer = createElem('div');
   addClass(footer, ['list-product__footer']);
   footer.insertAdjacentHTML('beforeend',
-    `
+      `
         <div class="list-product__footer">
           <div class="list-product__footer-block">
             <div class="list-product__footer-sub-block">
-              <span class="list-product__footer-span">Показывать на странице:</span>
+              <span class="list-product__footer-span">
+              Показывать на странице:</span>
               <select class="list-product__select-page">
                 <option value="10">10</option>
                 <option value="20">20</option>
@@ -134,8 +134,10 @@ const createFooter = () => {
               <div class="list-product__pages-displayed">1-5 of</div>
               <div class="list-product__total-pages">25</div>
             </div>
-            <button class="list-product__arrow-pages list-product__prev-page" aria-label="left"></button>
-            <button class="list-product__arrow-pages list-product__next-page" aria-label="right"></button>
+            <button class="list-product__arrow-pages 
+            list-product__prev-page" aria-label="left"></button>
+            <button class="list-product__arrow-pages 
+            list-product__next-page" aria-label="right"></button>
           </div>
         </div>
       `);
@@ -155,10 +157,12 @@ const createMainBlock = () => {
   return {mainBlock, tbody, addItemBtn};
 };
 
-export const createRow = ({id, title, price, description, category, discont, count, units, images}) => {
+export const createRow = ({id, title, price, description,
+  category, discont, count, units, images}) => {
   const tr = createElem('tr');
   addClass(tr, ['list-product__table-tr']);
-  const total = Math.floor(+price * +count * (1 - (+discont ? +discont / 100 : 0)));
+  const total = Math.floor(+price * +count *
+    (1 - (+discont ? +discont / 100 : 0)));
   tr.innerHTML = `
     <td class="list-product__table-td" data-id='${id}'>${id}</td>
     <td class="list-product__table-td">${title}</td>
@@ -169,9 +173,12 @@ export const createRow = ({id, title, price, description, category, discont, cou
     <td class="list-product__table-td" data-total-price=${total}>$${total}</td>
     <td class="list-product__table-td">
     <button class="list-product__table-btn
-    ${images && images?.small || images?.big ? 'list-product__button-img' : 'list-product__button-no-img'}" aria-label="image"></button>
-    <button class="list-product__table-btn list-product__button-edit" aria-label="edit"></button>
-    <button class="list-product__table-btn list-product__button-delete" aria-label="delete"></button>
+    ${images && images?.small || images?.big ? 'list-product__button-img' :
+    'list-product__button-no-img'}" aria-label="image"></button>
+    <button class="list-product__table-btn list-product__button-edit" 
+    aria-label="edit"></button>
+    <button class="list-product__table-btn list-product__button-delete" 
+    aria-label="delete"></button>
     </td>
   `;
   return tr;
@@ -202,21 +209,24 @@ const createOverlay = () => {
               <label class="add-item__label" for="add-item__name">
                 наименование
               </label>
-              <input class="add-item__input" type="text" name="name" id="add-item__name" required>
+              <input class="add-item__input" type="text"
+               name="name" id="add-item__name" required>
             </div>
           
             <div class="add-item__block add-item__category">
               <label class="add-item__label" for="add-item__category">
                 категория
               </label>
-              <input class="add-item__input" type="text" name="category" id="add-item__category" required>
+              <input class="add-item__input" type="text"
+               name="category" id="add-item__category" required>
             </div>
           
             <div class="add-item__block add-item__measure">
               <label class="add-item__label" for="add-item__measure">
                 еденицы измерения
               </label>
-              <input class="add-item__input" type="text" name="measure" id="add-item__measure" required>
+              <input class="add-item__input" type="text"
+               name="measure" id="add-item__measure" required>
             </div>
           
             <div class="add-item__discount">
@@ -225,20 +235,25 @@ const createOverlay = () => {
               </label>
               <div class="add-item__input-set">
                 <input class="add-item__checkbox" type="checkbox">
-                <input class="add-item__input" type="text" name="discount" id="add-item__discount"
+                <input class="add-item__input" type="text"
+                 name="discount" id="add-item__discount"
                   required>
               </div>
             </div>  
           
             <div class="add-item__block add-item__description">
-              <label class="add-item__label" for="add-item__description">описание</label>
-              <textarea class="add-item__input" rows="5" name="description" 
+              <label class="add-item__label" for="add-item__description">
+              описание</label>
+              <textarea class="add-item__input" rows="5"
+               name="description" 
               id="add-item__description"></textarea>
             </div>
           
-            <div class="add-item__block add-item__quantity"><label class="add-item__label" 
+            <div class="add-item__block add-item__quantity">
+            <label class="add-item__label" 
               for="add-item__quantity">количество</label>
-              <input class="add-item__input" type="number" name="quantity" id="add-item__quantity" min="1"
+              <input class="add-item__input" type="number"
+               name="quantity" id="add-item__quantity" min="1"
               required>
             </div>
           
@@ -246,11 +261,13 @@ const createOverlay = () => {
               <label class="add-item__label" for="add-item__price">
                 цена
               </label>
-              <input class="add-item__input" type="number" name="price" id="add-item__price" min="1" required>
+              <input class="add-item__input" type="number"
+               name="price" id="add-item__price" min="1" required>
             </div>
           
             <div class="add-item__add-image-button">
-              <label class="add-item__label-add-image" for="add-item__button-image">добавить
+              <label class="add-item__label-add-image"
+               for="add-item__button-image">добавить
                 изображение</label>
               <input class="add-item__button add-item__button-image" type="file"
                 id="add-item__button-image"
@@ -268,24 +285,30 @@ const createOverlay = () => {
   addItemTotalBlock.insertAdjacentHTML('beforeend', `
       <p class="add-item__total">
         <span class="add-item__total-text">Итоговая стоимость: </span>
-        <span class="add-item__total-currency">$ <span class="add-item__total-value">0</span></span>
+        <span class="add-item__total-currency">
+        $<span class="add-item__total-value">0</span></span>
       </p>
     `);
 
   const addItemFormBtn = createElem('button');
-  addClass(addItemFormBtn, ['add-item__button', 'add-item__button-item']);
+  addClass(addItemFormBtn, ['add-item__button',
+    'add-item__button-item']);
   addItemFormBtn.type = 'submit';
   addItemFormBtn.textContent = 'добавить товар';
-  addItemFormBtn.setAttribute('form', 'add-item__form');
+  addItemFormBtn.setAttribute('form',
+      'add-item__form');
 
   const addItemCloseBtn = createElem('button');
   addClass(addItemCloseBtn, ['add-item-close-button']);
   addItemCloseBtn.type = 'button';
   addItemCloseBtn.title = 'закрыть';
   addItemCloseBtn.insertAdjacentHTML('beforeend', `
-      <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M2 2L22 22" stroke="#6E6893" stroke-width="3" stroke-linecap="round"/>
-        <path d="M2 22L22 2" stroke="#6E6893" stroke-width="3" stroke-linecap="round"/>
+      <svg width="20" height="20" viewbox="0 0 24 24" 
+      fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 2L22 22" stroke="#6E6893" 
+        stroke-width="3" stroke-linecap="round"/>
+        <path d="M2 22L22 2" stroke="#6E6893" 
+        stroke-width="3" stroke-linecap="round"/>
       </svg>
     `);
 

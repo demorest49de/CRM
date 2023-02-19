@@ -4,7 +4,8 @@ import control from './modules/control.js';
 import serviceStorage from './modules/serviceStorage.js';
 
 const {
-  handleBlur, SubmitFormData, deleteRow, handleCloseForm, handleOpenForm, editRow, handleAddItemCheckbox
+  handleBlur, submitFormData, deleteRow, handleCloseForm,
+  handleOpenForm, editRow, handleAddItemCheckbox,
 } = control;
 
 {
@@ -22,13 +23,12 @@ const {
     handleCloseForm(generalVars);
     deleteRow(generalVars);
     editRow(generalVars);
-    SubmitFormData(generalVars);
+    submitFormData(generalVars);
     handleBlur(generalVars);
     handleAddItemCheckbox(generalVars);
 
     serviceStorage.handleStorage(generalVars);
     calculateTotal(generalVars);
-
   };
 
   window.listProductInit = init;
