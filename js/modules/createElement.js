@@ -160,6 +160,7 @@ const createMainBlock = () => {
 export const createRow = ({id, title, price, description,
   category, discont, count, units, images}) => {
   const tr = createElem('tr');
+  console.log(': ',images);
   addClass(tr, ['list-product__table-tr']);
   const total = Math.floor(+price * +count *
     (1 - (+discont ? +discont / 100 : 0)));
@@ -174,7 +175,7 @@ export const createRow = ({id, title, price, description,
     <td class="list-product__table-td">
     <button class="list-product__table-btn
     ${images && images?.small || images?.big ? 'list-product__button-img' :
-    'list-product__button-no-img'}" aria-label="image"></button>
+    'list-product__button-no-img'}" aria-label="image" data-pic="upload/my_kote.jpg"></button>
     <button class="list-product__table-btn list-product__button-edit" 
     aria-label="edit"></button>
     <button class="list-product__table-btn list-product__button-delete" 

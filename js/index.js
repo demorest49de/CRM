@@ -5,7 +5,8 @@ import serviceStorage from './modules/serviceStorage.js';
 
 const {
   handleBlur, submitFormData, deleteRow, handleCloseForm,
-  handleOpenForm, editRow, handleAddItemCheckbox,
+  handleOpenForm, editRow,
+  handleAddItemCheckbox, handleListProductImageBtn,
 } = control;
 
 {
@@ -26,6 +27,7 @@ const {
     submitFormData(generalVars);
     handleBlur(generalVars);
     handleAddItemCheckbox(generalVars);
+    handleListProductImageBtn(generalVars);
 
     serviceStorage.handleStorage(generalVars);
     calculateTotal(generalVars);

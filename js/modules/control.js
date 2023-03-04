@@ -32,9 +32,9 @@ const handleOpenForm = ($) => {
   $.addItemBtn.addEventListener('click', () => {
     handleDiscount($.form.querySelector('.add-item__checkbox'), $);
     $.overlay.querySelector('.add-item__title')
-        .textContent = 'добавить товар';
+      .textContent = 'добавить товар';
     $.overlay.querySelector('button.add-item__button-item[type=submit]')
-        .textContent = 'добавить товар';
+      .textContent = 'добавить товар';
     $.overlay.classList.add('is-visible');
     const id = $.overlay.querySelector('.vendor-code__id');
     id.textContent = createId();
@@ -59,7 +59,7 @@ const deleteRow = ($) => {
     if (target.closest('.list-product__button-delete')) {
       const item = target.closest('.list-product__table-tr');
       const id = item.querySelector('.list-product__table-td[data-id]')
-          .getAttribute('data-id');
+        .getAttribute('data-id');
       const storage = getStorage($.title);
       const data = storage.data;
       storage.data = data.filter(x => x.id !== id);
@@ -75,18 +75,18 @@ const submitFormData = ($) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-
-
     const storage = getStorage($.title);
-    const {name, category, measure, discount,
-      description, quantity, price, image} = data;
+    const {
+      name, category, measure, discount,
+      description, quantity, price, image
+    } = data;
     // already has item
     if ($.form.querySelector('.add-item__block-id')
-        .getAttribute('data-id')) {
+      .getAttribute('data-id')) {
       const id = $.form.querySelector('.add-item__block-id')
-          .getAttribute('data-id');
+        .getAttribute('data-id');
       $.form.querySelector('.add-item__block-id')
-          .removeAttribute('data-id');
+        .removeAttribute('data-id');
 
       const result = storage.data.map(item => {
         if (item.id === id) {
@@ -124,6 +124,18 @@ const submitFormData = ($) => {
           big: `/upload/${image.name}`,
         } : undefined,
       };
+
+      // const imgBtn = $.form.querySelector('.add-item__button.add-item__button-image');
+      // const file = imgBtn.files[0];
+      //
+      // const reader = new FileReader();
+      // let base64, binary;
+      // reader.addEventListener('loadend', () => {
+      //   binary = reader.result;
+      //   base64 = btoa(binary);
+      // }, false);
+      // reader.readAsBinaryString(file);
+
       const row = createRow(rowData);
       storage.data.push(rowData);
       $.tbody.append(row);
@@ -145,12 +157,12 @@ const editRow = ($) => {
       $.overlay.classList.add('is-visible');
 
       $.overlay.querySelector('.add-item__title')
-          .textContent = 'Изменить товар';
+        .textContent = 'Изменить товар';
       $.overlay.querySelector('button.add-item__button-item[type=submit]')
-          .textContent = 'Сохранить';
+        .textContent = 'Сохранить';
 
       const tdId = target.closest('.list-product__table-tr')
-          .querySelector('td[data-id]').getAttribute('data-id');
+        .querySelector('td[data-id]').getAttribute('data-id');
 
       const id = $.overlay.querySelector('.vendor-code__id');
       id.textContent = tdId;
@@ -161,7 +173,7 @@ const editRow = ($) => {
       for (let i = 0; i < data.length; i++) {
         if (data[i].id === tdId) {
           $.form.querySelector('.add-item__block-id')
-              .setAttribute('data-id', data[i].id);
+            .setAttribute('data-id', data[i].id);
           $.form.name.value = data[i].title;
           $.form.measure.value = data[i].units;
           $.form.category.value = data[i].category;
@@ -206,6 +218,34 @@ const handleBlur = ($) => {
   handleBlurElement($.form.discount, $);
 };
 
+const handleListProductImageBtn = ($) => {
+  $.tbody.addEventListener('click', e => {
+    const target = e.target;
+    const imageBtn = target.closest('.list-product__table-btn.list-product__button-img');
+    if (target === imageBtn) {
+      const width = 700;
+      const height = 700;
+      const x = screen.width / 2 - width / 2;
+      const y = screen.height / 2 - height / 2;
+      const url = target.getAttribute('data-pic');
+      const win = open(url, '', `width=${width},height=${height}`);
+      win.moveBy(x, y);
+    }
+  });
+};
+
+const handleAddImageBtn = ($) => {
+  $.form.addEventListener('click', ev => {
+    const target = ev.target;
+    const imgBtn = target.closest('.add-item__button.add-item__button-image');
+    if (target === imgBtn) {
+      console.log(': ', imgBtn.files);
+    }
+  });
+
+};
+
+
 export default {
   handleOpenForm,
   handleCloseForm,
@@ -214,4 +254,5 @@ export default {
   handleBlur,
   editRow,
   handleAddItemCheckbox,
+  handleListProductImageBtn,
 };
