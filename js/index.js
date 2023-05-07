@@ -3,6 +3,8 @@ import {calculateTotal} from './modules/calculations.js';
 import control from './modules/control.js';
 import serviceStorage from './modules/serviceStorage.js';
 
+import {loadGoogsHandler} from './modules/loadGoods.js';
+
 const {
   handleBlur, submitFormData, deleteRow, handleCloseForm,
   handleOpenForm, editRow,
@@ -29,7 +31,8 @@ const {
     handleAddItemCheckbox(generalVars);
     handleListProductImageBtn(generalVars);
 
-    serviceStorage.handleStorage(generalVars);
+    // serviceStorage.handleStorage(generalVars);
+    loadGoogsHandler(generalVars);
     calculateTotal(generalVars);
   };
 

@@ -13,7 +13,7 @@ export const renderItems = (storage, $) => {
     $.tbody.removeChild($.tbody.firstChild);
   }
 
-  Object.values(storage.data).forEach((value) => {
+  Object.values(storage).forEach((value) => {
     const row = createRow(value);
     $.tbody.append(row);
   });
