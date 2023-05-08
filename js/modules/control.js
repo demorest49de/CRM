@@ -5,12 +5,6 @@ import {renderItems} from './render.js';
 
 export const handleControls = ($) => {
 
-    const handleBlurElement = (element) => {
-        element.addEventListener('blur', () => {
-            calculateFormTotal($);
-        });
-    };
-
     const handleOpenForm = () => {
         $.addItemBtn.addEventListener('click', () => {
             handleDiscount($.form.querySelector('.add-item__checkbox'), $);
@@ -184,6 +178,12 @@ export const handleControls = ($) => {
             if (target.closest('.add-item__checkbox[type=checkbox]')) {
                 handleDiscount(target, $);
             }
+        });
+    };
+
+    const handleBlurElement = (element) => {
+        element.addEventListener('blur', () => {
+            calculateFormTotal($);
         });
     };
 
