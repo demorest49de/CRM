@@ -1,6 +1,6 @@
 import {calculateTotal} from './calculations.js';
 import {createId, createRow} from './createElement.js';
-import {getStorage, saveStorage} from './serviceStorage.js';
+// import {getStorage, saveStorage} from './serviceStorage.js';
 import {renderItems} from './render.js';
 
 
@@ -60,10 +60,10 @@ const deleteRow = ($) => {
       const item = target.closest('.list-product__table-tr');
       const id = item.querySelector('.list-product__table-td[data-id]')
         .getAttribute('data-id');
-      const storage = getStorage($.title);
+      // const storage = getStorage($.title);
       const data = storage.data;
       storage.data = data.filter(x => x.id !== id);
-      saveStorage(storage, $.title);
+      // saveStorage(storage, $.title);
       target.closest('.list-product__table-tr').remove();
     }
     calculateTotal($);
@@ -75,7 +75,7 @@ const submitFormData = ($) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-    const storage = getStorage($.title);
+    // const storage = getStorage($.title);
     const {
       name, category, measure, discount,
       description, quantity, price, image
@@ -143,7 +143,7 @@ const submitFormData = ($) => {
 
     // delete attribute from form after submit
     $.form.discount.removeAttribute('data-discont');
-    saveStorage(storage, $.title);
+    // saveStorage(storage, $.title);
     $.form.reset();
     $.overlay.classList.remove('is-visible');
     calculateTotal($);
@@ -167,7 +167,7 @@ const editRow = ($) => {
       const id = $.overlay.querySelector('.vendor-code__id');
       id.textContent = tdId;
 
-      const storage = getStorage($.title);
+      // const storage = getStorage($.title);
       const data = storage.data;
 
       for (let i = 0; i < data.length; i++) {

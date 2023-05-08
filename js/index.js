@@ -1,7 +1,6 @@
 import {renderCRM} from './modules/render.js';
 import {calculateTotal} from './modules/calculations.js';
 import control from './modules/control.js';
-import serviceStorage from './modules/serviceStorage.js';
 
 import {loadGoogsHandler} from './modules/loadGoods.js';
 
