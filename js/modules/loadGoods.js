@@ -1,4 +1,5 @@
 import {renderItems} from './render.js';
+import {calculateTotal} from "./calculations.js";
 export const loadGoogsHandler = ($) => {
 
     const loadGoods = (callback) => {
@@ -18,9 +19,10 @@ export const loadGoogsHandler = ($) => {
     };
 
     const renderGoogs = (data) => {
-        console.log(' : ', data);
+        // console.log(' : ', data);
 
         renderItems(data, $);
+        calculateTotal($);
     };
 
     loadGoods(renderGoogs);

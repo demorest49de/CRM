@@ -1,14 +1,7 @@
 import {renderCRM} from './modules/render.js';
-import {calculateTotal} from './modules/calculations.js';
-import control from './modules/control.js';
-
+import {handleControls} from './modules/control.js';
 import {loadGoogsHandler} from './modules/loadGoods.js';
 
-const {
-  handleBlur, submitFormData, deleteRow, handleCloseForm,
-  handleOpenForm, editRow,
-  handleAddItemCheckbox, handleListProductImageBtn,
-} = control;
 
 {
   const init = (selectorApp, title) => {
@@ -20,19 +13,8 @@ const {
 
     // Функционал
 
-
-    handleOpenForm(generalVars);
-    handleCloseForm(generalVars);
-    deleteRow(generalVars);
-    editRow(generalVars);
-    submitFormData(generalVars);
-    handleBlur(generalVars);
-    handleAddItemCheckbox(generalVars);
-    handleListProductImageBtn(generalVars);
-
-    // serviceStorage.handleStorage(generalVars);
+    handleControls(generalVars);
     loadGoogsHandler(generalVars);
-    calculateTotal(generalVars);
   };
 
   window.listProductInit = init;

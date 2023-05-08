@@ -160,7 +160,6 @@ const createMainBlock = () => {
 export const createRow = ({id, title, price, description,
   category, discont, count, units, images}) => {
   const tr = createElem('tr');
-  console.log(': ',images);
   addClass(tr, ['list-product__table-tr']);
   const total = Math.floor(+price * +count *
     (1 - (+discont ? +discont / 100 : 0)));
