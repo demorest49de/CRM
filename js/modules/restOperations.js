@@ -3,13 +3,14 @@ import {calculateTotal} from "./calculations.js";
 
 const httpRequest = (url, {
     method = 'get',
+    id = '',
     callback,
     body = {},
     headers,
     consts = {},
 }) => {
     const xhr = new XMLHttpRequest();
-    xhr.open(method, url);
+    xhr.open(method, url + `/${id}`);
 
     if (headers) {
         for (const [key, value] of Object.entries(headers)) {
@@ -33,8 +34,13 @@ const httpRequest = (url, {
 };
 
 const renderGoods = (data, $, method) => {
-    console.log(' : ', method);
-    if (method != $.verbs.post) {
+
+    if(method = $.verbs.get){
+        loadGoodsHandler($);
+        return;
+    }
+
+    if (data && method !== $.verbs.post) {
         renderItems(data, $);
         calculateTotal($);
     } else {
@@ -42,11 +48,17 @@ const renderGoods = (data, $, method) => {
     }
 };
 
+const getGoods = (data, $, method) => {
+    renderItems(data, $);
+    calculateTotal($);
+};
+
 export const loadGoodsHandler = ($) => {
 
     httpRequest($.URL, {
         method: $.verbs.get,
-        callback: renderGoods,
+        headers: {'Content-Type': 'application/json'},
+        callback: getGoods,
         consts: $,
     });
 };
@@ -62,10 +74,11 @@ export const sendGoodsHandler = (body, $) => {
     });
 };
 
-export const deleteGoodsHandler = ($) => {
+export const deleteGoodsHandler = (id, $) => {
 
     httpRequest($.URL, {
         method: $.verbs.delete,
+        id: id,
         callback: renderGoods,
         headers: {'Content-Type': 'application/json'},
         consts: $,

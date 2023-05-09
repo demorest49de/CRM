@@ -1,7 +1,6 @@
 import {calculateTotal, calculateFormTotal, handleDiscount} from './calculations.js';
-import {createRow} from './createElement.js';
 import {renderItems} from './render.js';
-import {sendGoodsHandler} from './restOperations.js';
+import {sendGoodsHandler, deleteGoodsHandler} from './restOperations.js';
 
 
 export const handleControls = ($) => {
@@ -38,12 +37,8 @@ export const handleControls = ($) => {
                     .getAttribute('data-id');
 
                 // написать запрос к апи метод delete
-                const data = storage.data;
-                storage.data = data.filter(x => x.id !== id);
-                // saveStorage(storage, $.title);
-                target.closest('.list-product__table-tr').remove();
+                deleteGoodsHandler(id, $);
             }
-            calculateTotal($);
         });
     };
 
@@ -63,7 +58,7 @@ export const handleControls = ($) => {
 
                 const id = $.overlay.querySelector('.vendor-code__id');
                 id.textContent = tdId;
-                console.log(' : ',tdId);
+                // console.log(' : ',tdId);
 
 
                 // написать запрос к апи метод put
