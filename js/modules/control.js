@@ -14,8 +14,6 @@ export const handleControls = ($) => {
             $.overlay.querySelector('button.add-item__button-item[type=submit]')
                 .textContent = 'добавить товар';
             $.overlay.classList.add('is-visible');
-            // const id = $.overlay.querySelector('.vendor-code__id');
-            // id.textContent = createId();
             $.overlay.querySelector('.add-item__id-block').style.display = `none`;
         });
     };
@@ -26,7 +24,6 @@ export const handleControls = ($) => {
             if (target === $.overlay || target.closest('.add-item-close-button')) {
                 $.overlay.classList.remove('is-visible');
                 $.form.reset();
-                // $.form.discount.removeAttribute('data-discont');
             }
         });
     };
@@ -66,31 +63,33 @@ export const handleControls = ($) => {
 
                 const id = $.overlay.querySelector('.vendor-code__id');
                 id.textContent = tdId;
+                console.log(' : ',tdId);
+
 
                 // написать запрос к апи метод put
-                const data = storage.data;
+                // const data = storage.data;
 
-                for (let i = 0; i < data.length; i++) {
-                    if (data[i].id === tdId) {
-                        $.form.querySelector('.add-item__block-id')
-                            .setAttribute('data-id', data[i].id);
-                        $.form.name.value = data[i].title;
-                        $.form.measure.value = data[i].units;
-                        $.form.category.value = data[i].category;
-                        if (data[i].discont) {
-                            $.form.discount.removeAttribute('disabled', '');
-                            $.form.discount.value = data[i].discont;
-                            $.form.querySelector('.add-item__checkbox').checked = 'true';
-                        } else {
-                            $.form.discount.setAttribute('disabled', '');
-                        }
-                        $.form.description.value = data[i].description;
-                        $.form.quantity.value = data[i].count;
-                        $.form.price.value = data[i].price;
-                        calculateFormTotal($);
-                        return;
-                    }
-                }
+                // for (let i = 0; i < data.length; i++) {
+                //     if (data[i].id === tdId) {
+                //         $.form.querySelector('.add-item__block-id')
+                //             .setAttribute('data-id', data[i].id);
+                //         $.form.name.value = data[i].title;
+                //         $.form.measure.value = data[i].units;
+                //         $.form.category.value = data[i].category;
+                //         if (data[i].discont) {
+                //             $.form.discount.removeAttribute('disabled', '');
+                //             $.form.discount.value = data[i].discont;
+                //             $.form.querySelector('.add-item__checkbox').checked = 'true';
+                //         } else {
+                //             $.form.discount.setAttribute('disabled', '');
+                //         }
+                //         $.form.description.value = data[i].description;
+                //         $.form.quantity.value = data[i].count;
+                //         $.form.price.value = data[i].price;
+                //         calculateFormTotal($);
+                //         return;
+                //     }
+                // }
             }
         });
     };
