@@ -5,13 +5,24 @@ const httpRequest = (url, {
     method = 'get',
     callback,
     body = {},
+    headers,
+    consts = {},
 }) => {
     const xhr = new XMLHttpRequest();
     xhr.open(method, url);
 
+    if (headers) {
+        for (const [key, value] of Object.entries(headers)) {
+            xhr.setRequestHeader(key, value);
+        }
+    }
+
     xhr.addEventListener('load', () => {
         const data = JSON.parse(xhr.response);
-        callback(data);
+        console.log(' : ', data);
+        if (callback) {
+            callback(data, consts, method);
+        }
     });
 
     xhr.addEventListener('error', () => {
@@ -21,40 +32,42 @@ const httpRequest = (url, {
     xhr.send(JSON.stringify(body));
 };
 
-export const loadGoodsHandler = ($) => {
-    const renderGoods = (data) => {
+const renderGoods = (data, $, method) => {
+    console.log(' : ', method);
+    if (method != $.verbs.post) {
         renderItems(data, $);
         calculateTotal($);
-    };
+    } else {
+        loadGoodsHandler($);
+    }
+};
+
+export const loadGoodsHandler = ($) => {
 
     httpRequest($.URL, {
-        method: 'get',
+        method: $.verbs.get,
         callback: renderGoods,
+        consts: $,
     });
 };
 
 export const sendGoodsHandler = (body, $) => {
 
-    const sendGoods = (callback) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('post', 'https://muddy-substantial-gear.glitch.me/api/goods');
+    httpRequest($.URL, {
+        method: $.verbs.post,
+        callback: renderGoods,
+        headers: {'Content-Type': 'application/json'},
+        consts: $,
+        body: body,
+    });
+};
 
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.addEventListener('load', () => {
-            JSON.parse(xhr.response);
-            callback();
-        });
+export const deleteGoodsHandler = ($) => {
 
-        xhr.addEventListener('error', () => {
-            console.log(' error: ',);
-        });
-
-        xhr.send(JSON.stringify(body));
-    };
-
-    const renderGoogs = () => {
-        loadGoodsHandler($);
-    };
-
-    sendGoods(renderGoogs);
+    httpRequest($.URL, {
+        method: $.verbs.delete,
+        callback: renderGoods,
+        headers: {'Content-Type': 'application/json'},
+        consts: $,
+    });
 };

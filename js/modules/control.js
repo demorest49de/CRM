@@ -104,8 +104,6 @@ export const handleControls = ($) => {
                 name, category, measure, discount,
                 description, quantity, price, image
             } = data;
-            console.log(' : ',name, category, measure, discount,
-                description, quantity, price, image);
             // already has item
             if ($.form.querySelector('.add-item__block-id')
                 .getAttribute('data-id')) {
