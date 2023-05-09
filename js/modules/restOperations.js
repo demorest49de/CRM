@@ -10,7 +10,11 @@ const httpRequest = (url, {
     consts = {},
 }) => {
     const xhr = new XMLHttpRequest();
-    xhr.open(method, url + `/${id}`);
+    if (id) {
+        xhr.open(method, url + `/${id}`);
+    } else {
+        xhr.open(method, url);
+    }
 
     if (headers) {
         for (const [key, value] of Object.entries(headers)) {
@@ -20,7 +24,7 @@ const httpRequest = (url, {
 
     xhr.addEventListener('load', () => {
         const data = JSON.parse(xhr.response);
-        console.log(' : ', data);
+        // console.log(' : ', data);
         if (callback) {
             callback(data, consts, method);
         }
@@ -33,22 +37,12 @@ const httpRequest = (url, {
     xhr.send(JSON.stringify(body));
 };
 
-const renderGoods = (data, $, method) => {
-
-    if(method = $.verbs.get){
-        loadGoodsHandler($);
-        return;
-    }
-
-    if (data && method !== $.verbs.post) {
-        renderItems(data, $);
-        calculateTotal($);
-    } else {
-        loadGoodsHandler($);
-    }
+const loadGoods = (data, $, method) => {
+    loadGoodsHandler($);
 };
 
-const getGoods = (data, $, method) => {
+const renderGoods = (data, $, method) => {
+    console.log(' : ', data);
     renderItems(data, $);
     calculateTotal($);
 };
@@ -58,7 +52,7 @@ export const loadGoodsHandler = ($) => {
     httpRequest($.URL, {
         method: $.verbs.get,
         headers: {'Content-Type': 'application/json'},
-        callback: getGoods,
+        callback: renderGoods,
         consts: $,
     });
 };
@@ -67,7 +61,7 @@ export const sendGoodsHandler = (body, $) => {
 
     httpRequest($.URL, {
         method: $.verbs.post,
-        callback: renderGoods,
+        callback: loadGoods,
         headers: {'Content-Type': 'application/json'},
         consts: $,
         body: body,
@@ -79,7 +73,7 @@ export const deleteGoodsHandler = (id, $) => {
     httpRequest($.URL, {
         method: $.verbs.delete,
         id: id,
-        callback: renderGoods,
+        callback: loadGoods,
         headers: {'Content-Type': 'application/json'},
         consts: $,
     });

@@ -12,7 +12,7 @@ export const renderItems = (storage, $) => {
   while ($.tbody.firstChild) {
     $.tbody.removeChild($.tbody.firstChild);
   }
-  console.log(' : ',storage);
+  // console.log(' : ',storage);
   Object.values(storage).forEach((value) => {
     const row = createRow(value);
     $.tbody.append(row);
