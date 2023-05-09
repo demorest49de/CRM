@@ -1,6 +1,7 @@
 import {renderItems} from './render.js';
 import {calculateTotal} from "./calculations.js";
-export const loadGoogsHandler = ($) => {
+
+export const loadGoodsHandler = ($) => {
 
     const loadGoods = (callback) => {
         const xhr = new XMLHttpRequest();
@@ -26,5 +27,30 @@ export const loadGoogsHandler = ($) => {
     };
 
     loadGoods(renderGoogs);
+};
 
+export const sendGoodsHandler = (body, $) => {
+
+    const sendGoods = (callback) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('post', 'https://muddy-substantial-gear.glitch.me/api/goods');
+
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.addEventListener('load', () => {
+            JSON.parse(xhr.response);
+            callback();
+        });
+
+        xhr.addEventListener('error', () => {
+            console.log(' error: ',);
+        });
+
+        xhr.send(JSON.stringify(body));
+    };
+
+    const renderGoogs = () => {
+        loadGoodsHandler($);
+    };
+
+    sendGoods(renderGoogs);
 };

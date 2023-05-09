@@ -1,6 +1,6 @@
 import {renderCRM} from './modules/render.js';
 import {handleControls} from './modules/control.js';
-import {loadGoogsHandler} from './modules/loadGoods.js';
+import {loadGoodsHandler} from './modules/restOperations.js';
 
 
 {
@@ -14,7 +14,7 @@ import {loadGoogsHandler} from './modules/loadGoods.js';
     // Функционал
 
     handleControls(generalVars);
-    loadGoogsHandler(generalVars);
+    loadGoodsHandler(generalVars);
   };
 
   window.listProductInit = init;

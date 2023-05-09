@@ -1,6 +1,7 @@
 import {calculateTotal, calculateFormTotal, handleDiscount} from './calculations.js';
-import {createId, createRow} from './createElement.js';
+import {createRow} from './createElement.js';
 import {renderItems} from './render.js';
+import {sendGoodsHandler} from './restOperations.js';
 
 
 export const handleControls = ($) => {
@@ -13,8 +14,9 @@ export const handleControls = ($) => {
             $.overlay.querySelector('button.add-item__button-item[type=submit]')
                 .textContent = 'добавить товар';
             $.overlay.classList.add('is-visible');
-            const id = $.overlay.querySelector('.vendor-code__id');
-            id.textContent = createId();
+            // const id = $.overlay.querySelector('.vendor-code__id');
+            // id.textContent = createId();
+            $.overlay.querySelector('.add-item__id-block').style.display = `none`;
         });
     };
 
@@ -24,7 +26,7 @@ export const handleControls = ($) => {
             if (target === $.overlay || target.closest('.add-item-close-button')) {
                 $.overlay.classList.remove('is-visible');
                 $.form.reset();
-                $.form.discount.removeAttribute('data-discont');
+                // $.form.discount.removeAttribute('data-discont');
             }
         });
     };
@@ -37,7 +39,8 @@ export const handleControls = ($) => {
                 const item = target.closest('.list-product__table-tr');
                 const id = item.querySelector('.list-product__table-td[data-id]')
                     .getAttribute('data-id');
-                // const storage = getStorage($.title);
+
+                // написать запрос к апи метод delete
                 const data = storage.data;
                 storage.data = data.filter(x => x.id !== id);
                 // saveStorage(storage, $.title);
@@ -64,7 +67,7 @@ export const handleControls = ($) => {
                 const id = $.overlay.querySelector('.vendor-code__id');
                 id.textContent = tdId;
 
-                // const storage = getStorage($.title);
+                // написать запрос к апи метод put
                 const data = storage.data;
 
                 for (let i = 0; i < data.length; i++) {
@@ -92,21 +95,24 @@ export const handleControls = ($) => {
         });
     };
 
+    // написать запрос к апи метод post
     const submitFormData = () => {
         $.form.addEventListener('submit', e => {
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
-            // const storage = getStorage($.title);
             const {
                 name, category, measure, discount,
                 description, quantity, price, image
             } = data;
+            console.log(' : ',name, category, measure, discount,
+                description, quantity, price, image);
             // already has item
             if ($.form.querySelector('.add-item__block-id')
                 .getAttribute('data-id')) {
                 const id = $.form.querySelector('.add-item__block-id')
                     .getAttribute('data-id');
+
                 $.form.querySelector('.add-item__block-id')
                     .removeAttribute('data-id');
 
@@ -131,41 +137,20 @@ export const handleControls = ($) => {
                 storage.data = result;
                 renderItems(storage, $);
             } else {// new item
-                const id = $.overlay.querySelector('.vendor-code__id');
-                const rowData = {
-                    id: id.textContent,
+
+                const body = {
                     title: name,
-                    price,
-                    description,
-                    category,
-                    discont: discount,
-                    count: quantity,
+                    description: description,
+                    category: category,
+                    price: price,
                     units: measure,
-                    images: image.name ? {
-                        small: `/upload/${image.name}`,
-                        big: `/upload/${image.name}`,
-                    } : undefined,
+                    count: quantity,
+                    discount: discount,
+                    image: image.name || undefined,
                 };
-
-                // const imgBtn = $.form.querySelector('.add-item__button.add-item__button-image');
-                // const file = imgBtn.files[0];
-                //
-                // const reader = new FileReader();
-                // let base64, binary;
-                // reader.addEventListener('loadend', () => {
-                //   binary = reader.result;
-                //   base64 = btoa(binary);
-                // }, false);
-                // reader.readAsBinaryString(file);
-
-                const row = createRow(rowData);
-                storage.data.push(rowData);
-                $.tbody.append(row);
+                sendGoodsHandler(body, $);
             }
 
-            // delete attribute from form after submit
-            $.form.discount.removeAttribute('data-discont');
-            // saveStorage(storage, $.title);
             $.form.reset();
             $.overlay.classList.remove('is-visible');
             calculateTotal($);
