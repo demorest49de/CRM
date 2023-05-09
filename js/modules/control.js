@@ -1,6 +1,6 @@
 import {calculateTotal, calculateFormTotal, handleDiscount} from './calculations.js';
 import {renderItems} from './render.js';
-import {sendGoodsHandler, deleteGoodsHandler} from './restOperations.js';
+import {sendGoodsHandler, deleteGoodsHandler, editGoodHandler} from './restOperations.js';
 
 
 export const handleControls = ($) => {
@@ -56,35 +56,11 @@ export const handleControls = ($) => {
                 const tdId = target.closest('.list-product__table-tr')
                     .querySelector('td[data-id]').getAttribute('data-id');
 
+                $.overlay.querySelector('.add-item__id-block').style.display = `block`;
+
                 const id = $.overlay.querySelector('.vendor-code__id');
                 id.textContent = tdId;
-                // console.log(' : ',tdId);
-
-
-                // написать запрос к апи метод put
-                // const data = storage.data;
-
-                // for (let i = 0; i < data.length; i++) {
-                //     if (data[i].id === tdId) {
-                //         $.form.querySelector('.add-item__block-id')
-                //             .setAttribute('data-id', data[i].id);
-                //         $.form.name.value = data[i].title;
-                //         $.form.measure.value = data[i].units;
-                //         $.form.category.value = data[i].category;
-                //         if (data[i].discont) {
-                //             $.form.discount.removeAttribute('disabled', '');
-                //             $.form.discount.value = data[i].discont;
-                //             $.form.querySelector('.add-item__checkbox').checked = 'true';
-                //         } else {
-                //             $.form.discount.setAttribute('disabled', '');
-                //         }
-                //         $.form.description.value = data[i].description;
-                //         $.form.quantity.value = data[i].count;
-                //         $.form.price.value = data[i].price;
-                //         calculateFormTotal($);
-                //         return;
-                //     }
-                // }
+                editGoodHandler(tdId, $);
             }
         });
     };
@@ -99,6 +75,7 @@ export const handleControls = ($) => {
                 name, category, measure, discount,
                 description, quantity, price, image
             } = data;
+
             // already has item
             if ($.form.querySelector('.add-item__block-id')
                 .getAttribute('data-id')) {
