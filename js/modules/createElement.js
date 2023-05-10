@@ -288,6 +288,7 @@ const createOverlay = () => {
     `);
 
     const form = addItemContainer.querySelector('form');
+    const formInputs = form.querySelectorAll('.add-item__content input:not(.add-item__checkbox), #add-item__description');
     const addItemTotalBlock = createElem('div');
     addClass(addItemTotalBlock, ['add-item__total-block']);
 
@@ -327,7 +328,7 @@ const createOverlay = () => {
     addItemBlock.append(addItemCloseBtn);
     overlay.append(addItemBlock);
 
-    return {overlay, form};
+    return {overlay, form, formContent: formInputs};
 };
 
 export const createId = () => {

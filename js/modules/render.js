@@ -29,9 +29,9 @@ export const renderCRM = (app, title) => {
   sectionContainer.append(header);
   sectionContainer.append(mainBlock);
 
-  const {overlay, form} = createOverlay();
+  const {overlay, form, formContent} = createOverlay();
 
   app.append(section, overlay);
 
-  return {addItemBtn, overlay, tbody, form, header};
+  return {addItemBtn, overlay, tbody, form, header, formContent};
 };

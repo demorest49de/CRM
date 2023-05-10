@@ -26,7 +26,7 @@ const httpRequest = (url, {
         const data = JSON.parse(xhr.response);
         // console.log(' : ', data);
         if (callback) {
-            callback(data, consts);
+            callback(data, consts, id);
         }
     });
 
@@ -42,15 +42,16 @@ const loadGoods = (data, $) => {
 };
 
 const renderGoods = (data, $) => {
-    console.log(' : ', data);
+    // console.log(' : ', data);
     renderItems(data, $);
     calculateTotal($);
 };
 
-const editSingleItem = (data, $) => {
+const editSingleItem = (data, $, id) => {
     console.log(' : ',data);
-    // $.form.querySelector('.add-item__block-id')
-    //     .setAttribute('data-id', data[i].id);
+    $.form.querySelector('.add-item__block-id')
+        .setAttribute('data-id', id);
+
     $.form.name.value = data.title;
     $.form.measure.value = data.units;
     $.form.category.value = data.category;
