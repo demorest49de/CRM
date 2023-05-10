@@ -9,46 +9,60 @@ const httpRequest = (url, {
     headers,
     consts = {},
 }) => {
-    const xhr = new XMLHttpRequest();
-    if (id) {
-        xhr.open(method, url + `/${id}`);
-    } else {
-        xhr.open(method, url);
-    }
+    try {
+        const xhr = new XMLHttpRequest();
 
-    if (headers) {
-        for (const [key, value] of Object.entries(headers)) {
-            xhr.setRequestHeader(key, value);
+        if (id) {
+            xhr.open(method, url + `/${id}`);
+        } else {
+            xhr.open(method, url);
         }
-    }
 
-    xhr.addEventListener('load', () => {
-        const data = JSON.parse(xhr.response);
-        // console.log(' : ', data);
-        if (callback) {
-            callback(data, consts, id);
+        if (headers) {
+            for (const [key, value] of Object.entries(headers)) {
+                xhr.setRequestHeader(key, value);
+            }
         }
-    });
 
-    xhr.addEventListener('error', () => {
-        console.log(' error: ',);
-    });
+        xhr.addEventListener('load', () => {
+            const data = JSON.parse(xhr.response);
+            if (callback) {
+                callback(null, data, consts, id);
+            }
+        });
 
-    xhr.send(JSON.stringify(body));
+        xhr.addEventListener('error', () => {
+            callback(new Error(xhr.status), xhr.response);
+        });
+
+        xhr.send(JSON.stringify(body));
+    } catch (err) {
+        callback(err);
+    }
 };
 
-const loadGoods = (data, $) => {
+const loadGoods = (error, data, $) => {
+    if (error) {
+        // вывод сообщения пользователю
+        console.warn(' : ', error, data);
+    }
     loadGoodsHandler($);
 };
 
-const renderGoods = (data, $) => {
-    // console.log(' : ', data);
+const renderGoods = (error, data, $) => {
+    if (error) {
+        // вывод сообщения пользователю
+        console.warn(' : ', error, data);
+    }
     renderItems(data, $);
     calculateTotal($);
 };
 
-const editSingleItem = (data, $, id) => {
-    console.log(' : ',data);
+const editSingleItem = (error, data, $, id) => {
+    if (error) {
+        // вывод сообщения пользователю
+        console.warn(' : ', error, data);
+    }
     $.form.querySelector('.add-item__block-id')
         .setAttribute('data-id', id);
 
@@ -110,5 +124,17 @@ export const editGoodHandler = (id, $) => {
         callback: editSingleItem,
         headers: {'Content-Type': 'application/json'},
         consts: $,
+    });
+};
+
+export const updateGoodsHandler = (body, $, id) => {
+
+    httpRequest($.URL, {
+        method: $.verbs.patch,
+        id: id,
+        callback: loadGoodsHandler($),
+        // headers: {'Content-Type': 'application/json'},
+        consts: $,
+        body: body,
     });
 };

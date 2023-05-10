@@ -1,5 +1,10 @@
 import {calculateFormTotal, handleDiscount} from './calculations.js';
-import {sendGoodsHandler, deleteGoodsHandler, editGoodHandler} from './restOperations.js';
+import {
+    sendGoodsHandler,
+    deleteGoodsHandler,
+    editGoodHandler,
+    updateGoodsHandler,
+} from './restOperations.js';
 
 
 export const handleControls = ($) => {
@@ -8,14 +13,6 @@ export const handleControls = ($) => {
         $.formContent.forEach(item => {
             item.removeAttribute('data-changed');
         });
-    };
-
-    const getChangedFormFields = () => {
-        const changed = document.querySelectorAll('.add-item__content input:not(.add-item__checkbox), #add-item__description');
-        changed.forEach(item => {
-            console.log(' : ', item.value);
-        });
-        return changed;
     };
 
     const handleOpenForm = () => {
@@ -35,7 +32,6 @@ export const handleControls = ($) => {
             const target = event.target;
             if (target === $.overlay || target.closest('.add-item-close-button')) {
                 $.overlay.classList.remove('is-visible');
-                removeDataChangedAttribute();
                 $.form.reset();
             }
         });
@@ -90,6 +86,15 @@ export const handleControls = ($) => {
                 description, quantity, price, image
             } = data;
 
+            $.body.title = name;
+            $.body.description = description;
+            $.body.category = category;
+            $.body.price = +price;
+            $.body.discount = +discount;
+            $.body.count = +quantity;
+            $.body.units = measure;
+            $.body.image = image.name;
+
             // exist item - put
             if ($.form.querySelector('.add-item__block-id')
                 .getAttribute('data-id')) {
@@ -98,43 +103,17 @@ export const handleControls = ($) => {
 
                 $.form.querySelector('.add-item__block-id')
                     .removeAttribute('data-id');
-
-                const body = getChangedFormFields();
-                // const body = storage.data.map(item => {
-                //     if (item.id === id) {
-                //         item.category = category;
-                //         item.count = quantity;
-                //         item.description = description;
-                //         item.discont = discount;
-                //         item.images = image.name ? {
-                //             'small': `/upload/${image.name}`,
-                //             'big': `/upload/${image.name}`,
-                //         } : item.images;
-                //         item.price = price;
-                //         item.title = name;
-                //         item.units = measure;
-                //     }
-                //
-                //     return item;
-                // });
-
-                // updateGoodsHandler(body, $, id);
+                // const body = {
+                //     title: name, description: description, price: +price, discount: +discount,
+                //     count: +quantity, units: measure, images : []
+                // };
+                updateGoodsHandler($.body, $, id);
             } else {
                 // new item - post
-                const body = {
-                    title: name,
-                    description: description,
-                    category: category,
-                    price: price,
-                    units: measure,
-                    count: quantity,
-                    discount: discount,
-                    image: image.name || undefined,
-                };
-                sendGoodsHandler(body, $);
+
+                sendGoodsHandler($.body, $);
             }
 
-            removeDataChangedAttribute();
             $.form.reset();
             $.overlay.classList.remove('is-visible');
         });
@@ -178,14 +157,6 @@ export const handleControls = ($) => {
         });
     };
 
-    const checkInputChanges = () => {
-        $.formContent.forEach(item => {
-            console.log(' : ', item);
-            item.addEventListener('change', ({target}) => {
-                target.setAttribute('data-changed', 'true');
-            });
-        });
-    };
 
     handleOpenForm();
     handleCloseForm();
@@ -195,5 +166,4 @@ export const handleControls = ($) => {
     handleAddItemCheckbox();
     handleBlur();
     handleListProductImageBtn();
-    checkInputChanges();
 };

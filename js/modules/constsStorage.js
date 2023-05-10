@@ -7,5 +7,17 @@ export const getConsts = () => {
         delete: "delete",
         patch: "patch", // по id заменяеет часть объекта (меняет конкретные поля)
     };
-    return {URL, verbs};
+
+    const body = {
+        title: '',
+        description: '',
+        category: '',
+        price: NaN,
+        discount: NaN,
+        count: NaN,
+        units: '',
+        image: '',
+    };
+
+    return {URL, verbs, body};
 };
