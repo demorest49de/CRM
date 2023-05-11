@@ -32,37 +32,34 @@ const httpRequest = (url, {
         });
 
         xhr.addEventListener('error', () => {
+            console.log(' : ', xhr.status, xhr.response);
             callback(new Error(xhr.status), xhr.response);
         });
 
         xhr.send(JSON.stringify(body));
     } catch (err) {
-        callback(err);
+        console.log(' : ', err);
+        callback(err)
     }
 };
 
 const loadGoods = (error, data, $) => {
-    if (error) {
-        // вывод сообщения пользователю
-        console.warn(' : ', error, data);
+    if(error) {
+        console.warn(error, data);
     }
     loadGoodsHandler($);
 };
 
 const renderGoods = (error, data, $) => {
-    if (error) {
-        // вывод сообщения пользователю
-        console.warn(' : ', error, data);
+    if(error) {
+        console.warn(error, data);
     }
     renderItems(data, $);
     calculateTotal($);
 };
 
-const editSingleItem = (error, data, $, id) => {
-    if (error) {
-        // вывод сообщения пользователю
-        console.warn(' : ', error, data);
-    }
+const editSingleItem = (data, $, id) => {
+
     $.form.querySelector('.add-item__block-id')
         .setAttribute('data-id', id);
 
@@ -105,7 +102,7 @@ export const sendGoodsHandler = (body, $) => {
     });
 };
 
-export const deleteGoodsHandler = (id, $) => {
+export const deleteGoodsHandler = ($, id) => {
 
     httpRequest($.URL, {
         method: $.verbs.delete,
@@ -116,7 +113,7 @@ export const deleteGoodsHandler = (id, $) => {
     });
 };
 
-export const editGoodHandler = (id, $) => {
+export const editGoodHandler = ($, id) => {
 
     httpRequest($.URL, {
         method: $.verbs.get,
@@ -132,7 +129,7 @@ export const updateGoodsHandler = (body, $, id) => {
     httpRequest($.URL, {
         method: $.verbs.patch,
         id: id,
-        callback: loadGoodsHandler($),
+        callback: loadGoodsHandler,
         // headers: {'Content-Type': 'application/json'},
         consts: $,
         body: body,

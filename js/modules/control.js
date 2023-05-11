@@ -47,7 +47,7 @@ export const handleControls = ($) => {
                     .getAttribute('data-id');
 
                 // написать запрос к апи метод delete
-                deleteGoodsHandler(id, $);
+                deleteGoodsHandler($, id);
             }
         });
     };
@@ -70,7 +70,7 @@ export const handleControls = ($) => {
 
                 const id = $.overlay.querySelector('.vendor-code__id');
                 id.textContent = tdId;
-                editGoodHandler(tdId, $);
+                editGoodHandler($, tdId);
             }
         });
     };
