@@ -5,15 +5,10 @@ import {
     editGoodHandler,
     updateGoodsHandler,
 } from './restOperations.js';
+import {createErrorMessage} from "./createElement.js";
 
 
 export const handleControls = ($) => {
-
-    const removeDataChangedAttribute = () => {
-        $.formContent.forEach(item => {
-            item.removeAttribute('data-changed');
-        });
-    };
 
     const handleOpenForm = () => {
         $.addItemBtn.addEventListener('click', () => {
@@ -158,6 +153,14 @@ export const handleControls = ($) => {
     };
 
 
+
+    const addErrorScreen =() => {
+        const errorMessage = createErrorMessage();
+        $.app.append(errorMessage);
+    };
+
+
+
     handleOpenForm();
     handleCloseForm();
     editRow();
@@ -166,4 +169,5 @@ export const handleControls = ($) => {
     handleAddItemCheckbox();
     handleBlur();
     handleListProductImageBtn();
+    addErrorScreen();
 };

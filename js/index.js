@@ -5,18 +5,30 @@ import {getConsts} from "./modules/constsStorage.js";
 
 
 {
-  const init = (selectorApp, title) => {
-    const app = document.querySelector(selectorApp);
-    const crm = renderCRM(app, title);
-    const {URL, verbs, body} = getConsts();
-    const {addItemBtn, overlay, tbody, form, header, formContent} = crm;
-    const generalVars = {addItemBtn, overlay, tbody, form, header, title, URL, verbs, formContent, body};
+    const init = (selectorApp, title) => {
+        const app = document.querySelector(selectorApp);
+        const crm = renderCRM(app, title);
+        const {URL, verbs, body} = getConsts();
+        const {addItemBtn, overlay, tbody, form, header, formContent} = crm;
+        const generalVars = {
+            addItemBtn,
+            overlay,
+            tbody,
+            form,
+            header,
+            title,
+            URL,
+            verbs,
+            formContent,
+            body,
+            app,
+        };
 
-    // Функционал
+        // Функционал
 
-    handleControls(generalVars);
-    loadGoodsHandler(generalVars);
-  };
+        handleControls(generalVars);
+        loadGoodsHandler(generalVars);
+    };
 
-  window.listProductInit = init;
+    window.listProductInit = init;
 }

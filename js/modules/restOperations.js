@@ -25,6 +25,11 @@ const httpRequest = (url, {
         }
 
         xhr.addEventListener('load', () => {
+            if (xhr.status < 200 || xhr.status >= 300) {
+                callback(new Error(xhr.status), xhr.response);
+                return;
+            }
+
             const data = JSON.parse(xhr.response);
             if (callback) {
                 callback(null, data, consts, id);
@@ -32,33 +37,41 @@ const httpRequest = (url, {
         });
 
         xhr.addEventListener('error', () => {
-            console.log(' : ', xhr.status, xhr.response);
+            console.info('  xhr.status, xhr.response: ', xhr.status, xhr.response);
             callback(new Error(xhr.status), xhr.response);
         });
 
         xhr.send(JSON.stringify(body));
     } catch (err) {
         console.log(' : ', err);
-        callback(err)
+        callback(new Error(err));
     }
 };
 
 const loadGoods = (error, data, $) => {
-    if(error) {
+    if (error) {
         console.warn(error, data);
+        return;
     }
+
     loadGoodsHandler($);
 };
 
 const renderGoods = (error, data, $) => {
-    if(error) {
+    if (error) {
         console.warn(error, data);
+        return;
     }
+
     renderItems(data, $);
     calculateTotal($);
 };
 
-const editSingleItem = (data, $, id) => {
+const editSingleItem = (error, data, $, id) => {
+    if (error) {
+        console.warn(error, data);
+        return;
+    }
 
     $.form.querySelector('.add-item__block-id')
         .setAttribute('data-id', id);
@@ -80,6 +93,7 @@ const editSingleItem = (data, $, id) => {
     $.form.price.value = data.price;
     calculateFormTotal($);
 };
+
 
 export const loadGoodsHandler = ($) => {
 
@@ -129,8 +143,8 @@ export const updateGoodsHandler = (body, $, id) => {
     httpRequest($.URL, {
         method: $.verbs.patch,
         id: id,
-        callback: loadGoodsHandler,
-        // headers: {'Content-Type': 'application/json'},
+        callback: loadGoods,
+        headers: {'Content-Type': 'application/json'},
         consts: $,
         body: body,
     });
