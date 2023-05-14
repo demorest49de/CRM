@@ -1,7 +1,7 @@
 import {renderCRM} from './modules/render.js';
 import {handleControls} from './modules/control.js';
 import {loadGoodsHandler} from './modules/restOperations.js';
-import {getConsts} from "./modules/constsStorage.js";
+import {getConsts} from "./modules/varsStorage.js";
 
 
 {

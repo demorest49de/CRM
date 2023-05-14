@@ -10,7 +10,7 @@ const httpRequest = (url, {
     vars = {},
 }) => {
     try {
-        const xhr = new XMLHttpRequest();
+        // const xhr = new XMLHttpRequest();
 
         if (id) {
             xhr.open(method, url + `/${id}`);
@@ -26,7 +26,7 @@ const httpRequest = (url, {
 
         xhr.addEventListener('load', () => {
             if (xhr.status < 200 || xhr.status >= 300) {
-                callback(new Error(xhr.status.toString()), xhr.response);
+                callback(new Error(xhr.status.toString()), xhr.response, vars);
                 return;
             }
 
@@ -38,28 +38,35 @@ const httpRequest = (url, {
 
         xhr.addEventListener('error', () => {
             // console.info('  xhr.status, xhr.response: ', xhr.status, xhr.response);
-            callback(new Error(xhr.status), xhr.response, vars);
+            callback(new Error(xhr.status.toString()), xhr.response, vars);
         });
 
         xhr.send(JSON.stringify(body));
+
     } catch (err) {
         console.log(' : ', err);
-        callback(new Error(err));
+        callback(new Error(err), null, vars);
     }
 };
 
-const sendItem = (error, data, $) => {
+const handleErrorMessage = (error, data, $) => {
+    $.app.append($.addItemError);
+    if (!data) data = error.message;
+    console.warn(error, data);
+};
+
+const cbSendItem = (error, data, $) => {
     if (error) {
-        console.warn(error, data);
+        handleErrorMessage(error, data, $);
         return;
     }
 
     loadGoodsHandler($);
 };
 
-const renderGoods = (error, data, $) => {
+const sbRenderItems = (error, data, $) => {
     if (error) {
-        console.warn(error, data);
+        handleErrorMessage(error, data, $);
         return;
     }
 
@@ -67,9 +74,9 @@ const renderGoods = (error, data, $) => {
     calculateTotal($);
 };
 
-const openEdit = (error, data, $, id) => {
+const cbOpenEdit = (error, data, $, id) => {
     if (error) {
-        console.warn(error, data);
+        handleErrorMessage(error, data, $);
         return;
     }
 
@@ -100,7 +107,7 @@ export const loadGoodsHandler = ($) => {
     httpRequest($.URL, {
         method: $.verbs.get,
         headers: {'Content-Type': 'application/json'},
-        callback: renderGoods,
+        callback: sbRenderItems,
         vars: $,
     });
 };
@@ -110,7 +117,7 @@ export const sendGoodsHandler = (body, $) => {
 
     httpRequest($.URL, {
         method: $.verbs.post,
-        callback: sendItem,
+        callback: cbSendItem,
         headers: {'Content-Type': 'application/json'},
         vars: $,
         body: body,
@@ -123,7 +130,7 @@ export const deleteGoodsHandler = ($, id) => {
     httpRequest($.URL, {
         method: $.verbs.delete,
         id: id,
-        callback: sendItem,
+        callback: cbSendItem,
         headers: {'Content-Type': 'application/json'},
         vars: $,
     });
@@ -135,7 +142,7 @@ export const openEditHandler = ($, id) => {
     httpRequest($.URL, {
         method: $.verbs.get,
         id: id,
-        callback: openEdit,
+        callback: cbOpenEdit,
         headers: {'Content-Type': 'application/json'},
         vars: $,
     });
@@ -147,7 +154,7 @@ export const updateItemHandler = (body, $, id) => {
     httpRequest($.URL, {
         method: $.verbs.patch,
         id: id,
-        callback: sendItem,
+        callback: cbSendItem,
         headers: {'Content-Type': 'application/json'},
         vars: $,
         body: body,
