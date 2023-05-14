@@ -104,9 +104,6 @@ export const handleControls = ($) => {
 
                 sendGoodsHandler($.body, $);
             }
-
-            $.form.reset();
-            $.overlay.classList.remove('is-visible');
         });
     };
 

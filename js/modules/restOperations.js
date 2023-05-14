@@ -10,7 +10,7 @@ const httpRequest = (url, {
     vars = {},
 }) => {
     try {
-        // const xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest();
 
         if (id) {
             xhr.open(method, url + `/${id}`);
@@ -69,6 +69,9 @@ const sbRenderItems = (error, data, $) => {
         handleErrorMessage(error, data, $);
         return;
     }
+
+    $.form.reset();
+    $.overlay.classList.remove('is-visible');
 
     renderItems(data, $);
     calculateTotal($);
