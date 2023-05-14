@@ -7,7 +7,7 @@ const httpRequest = (url, {
     callback,
     body = {},
     headers,
-    consts = {},
+    vars = {},
 }) => {
     try {
         const xhr = new XMLHttpRequest();
@@ -26,19 +26,19 @@ const httpRequest = (url, {
 
         xhr.addEventListener('load', () => {
             if (xhr.status < 200 || xhr.status >= 300) {
-                callback(new Error(xhr.status), xhr.response);
+                callback(new Error(xhr.status.toString()), xhr.response);
                 return;
             }
 
             const data = JSON.parse(xhr.response);
             if (callback) {
-                callback(null, data, consts, id);
+                callback(null, data, vars, id);
             }
         });
 
         xhr.addEventListener('error', () => {
-            console.info('  xhr.status, xhr.response: ', xhr.status, xhr.response);
-            callback(new Error(xhr.status), xhr.response);
+            // console.info('  xhr.status, xhr.response: ', xhr.status, xhr.response);
+            callback(new Error(xhr.status), xhr.response, vars);
         });
 
         xhr.send(JSON.stringify(body));
@@ -48,7 +48,7 @@ const httpRequest = (url, {
     }
 };
 
-const loadGoods = (error, data, $) => {
+const sendItem = (error, data, $) => {
     if (error) {
         console.warn(error, data);
         return;
@@ -67,7 +67,7 @@ const renderGoods = (error, data, $) => {
     calculateTotal($);
 };
 
-const editSingleItem = (error, data, $, id) => {
+const openEdit = (error, data, $, id) => {
     if (error) {
         console.warn(error, data);
         return;
@@ -94,58 +94,62 @@ const editSingleItem = (error, data, $, id) => {
     calculateFormTotal($);
 };
 
-
+//get all
 export const loadGoodsHandler = ($) => {
 
     httpRequest($.URL, {
         method: $.verbs.get,
         headers: {'Content-Type': 'application/json'},
         callback: renderGoods,
-        consts: $,
+        vars: $,
     });
 };
 
+//post
 export const sendGoodsHandler = (body, $) => {
 
     httpRequest($.URL, {
         method: $.verbs.post,
-        callback: loadGoods,
+        callback: sendItem,
         headers: {'Content-Type': 'application/json'},
-        consts: $,
+        vars: $,
         body: body,
     });
 };
 
+//del by id
 export const deleteGoodsHandler = ($, id) => {
 
     httpRequest($.URL, {
         method: $.verbs.delete,
         id: id,
-        callback: loadGoods,
+        callback: sendItem,
         headers: {'Content-Type': 'application/json'},
-        consts: $,
+        vars: $,
     });
 };
 
-export const editGoodHandler = ($, id) => {
+//open edit
+export const openEditHandler = ($, id) => {
 
     httpRequest($.URL, {
         method: $.verbs.get,
         id: id,
-        callback: editSingleItem,
+        callback: openEdit,
         headers: {'Content-Type': 'application/json'},
-        consts: $,
+        vars: $,
     });
 };
 
-export const updateGoodsHandler = (body, $, id) => {
+//patch by id
+export const updateItemHandler = (body, $, id) => {
 
     httpRequest($.URL, {
         method: $.verbs.patch,
         id: id,
-        callback: loadGoods,
+        callback: sendItem,
         headers: {'Content-Type': 'application/json'},
-        consts: $,
+        vars: $,
         body: body,
     });
 };

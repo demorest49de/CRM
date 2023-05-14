@@ -10,9 +10,9 @@
 
 
 
-.add-item__overlay-error.is-visible {
-    display: block;
-}
+/*.add-item__overlay-error.is-visible {*/
+/*    display: block;*/
+/*}*/
 
 .add-item__error {
     background: #F2F0F9;
@@ -48,7 +48,7 @@
 
 @media (max-width: 613px) {
     .add-item__error {
-        margin: 15px auto;
-        padding: 15px 0;
+        margin: 0 15px;
+        padding: 0;
     }
 }

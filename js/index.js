@@ -9,7 +9,7 @@ import {getConsts} from "./modules/constsStorage.js";
         const app = document.querySelector(selectorApp);
         const crm = renderCRM(app, title);
         const {URL, verbs, body} = getConsts();
-        const {addItemBtn, overlay, tbody, form, header, formContent} = crm;
+        const {addItemBtn, overlay, tbody, form, header, formContent, addItemError} = crm;
         const generalVars = {
             addItemBtn,
             overlay,
@@ -22,6 +22,7 @@ import {getConsts} from "./modules/constsStorage.js";
             formContent,
             body,
             app,
+            addItemError,
         };
 
         // Функционал

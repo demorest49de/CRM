@@ -2,10 +2,9 @@ import {calculateFormTotal, handleDiscount} from './calculations.js';
 import {
     sendGoodsHandler,
     deleteGoodsHandler,
-    editGoodHandler,
-    updateGoodsHandler,
+    openEditHandler,
+    updateItemHandler,
 } from './restOperations.js';
-import {createErrorMessage} from "./createElement.js";
 
 
 export const handleControls = ($) => {
@@ -65,7 +64,7 @@ export const handleControls = ($) => {
 
                 const id = $.overlay.querySelector('.vendor-code__id');
                 id.textContent = tdId;
-                editGoodHandler($, tdId);
+                openEditHandler($, tdId);
             }
         });
     };
@@ -98,11 +97,8 @@ export const handleControls = ($) => {
 
                 $.form.querySelector('.add-item__block-id')
                     .removeAttribute('data-id');
-                // const body = {
-                //     title: name, description: description, price: +price, discount: +discount,
-                //     count: +quantity, units: measure, images : []
-                // };
-                updateGoodsHandler($.body, $, id);
+
+                updateItemHandler($.body, $, id);
             } else {
                 // new item - post
 
@@ -153,12 +149,14 @@ export const handleControls = ($) => {
     };
 
 
-
-    const addErrorScreen =() => {
-        const errorMessage = createErrorMessage();
-        $.app.append(errorMessage);
+    const closeErrorHandler = () => {
+        const closeBtn = $.addItemError.querySelector('.add-item-close-button');
+        closeBtn.addEventListener('click', () => {
+            $.addItemError.remove();
+            $.form.reset();
+            $.overlay.classList.remove('is-visible');
+        });
     };
-
 
 
     handleOpenForm();
@@ -169,5 +167,5 @@ export const handleControls = ($) => {
     handleAddItemCheckbox();
     handleBlur();
     handleListProductImageBtn();
-    addErrorScreen();
+    closeErrorHandler();
 };
