@@ -50,7 +50,8 @@ const httpRequest = (url, {
 };
 
 const handleErrorMessage = (error, data, $) => {
-    $.app.append($.addItemError);
+    // $.app.append($.addItemError);
+    $.addItemError.classList.add('is-visible');
     if (!data) data = error.message;
     console.warn(error, data);
 };

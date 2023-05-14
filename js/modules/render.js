@@ -31,7 +31,7 @@ export const renderCRM = (app, title) => {
 
   const {overlay, form, formContent, addItemError} = createOverlay();
 
-  app.append(section, overlay);
+  app.append(section, overlay, addItemError);
 
   return {addItemBtn, overlay, tbody, form, header, formContent, addItemError};
 };
