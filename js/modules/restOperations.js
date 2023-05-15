@@ -23,14 +23,14 @@ const fetchRequest = async (url, {
 
         if (response.ok) {
             const data = await response.json();
-            if (callback) callback(null, data, vars, id);
+            if (callback) return callback(null, data, vars, id);
             return;
         }
 
         throw new Error(`Error ${response.status}: ${response.statusText}`);
     } catch (err) {
         console.log(' : ', err);
-        callback(err, null, vars);
+        return callback(err, null, vars);
     }
 };
 
@@ -109,6 +109,8 @@ const sbRenderItems = (error, data, $) => {
 
     renderItems(data, $);
     calculateTotal($);
+    //4-15
+    return `Успех!`;
 };
 
 const cbOpenEdit = (error, data, $, id) => {
@@ -150,14 +152,15 @@ const cbOpenEdit = (error, data, $, id) => {
 // };
 
 //get all
-export const loadGoodsHandler = ($) => {
+export const loadGoodsHandler = async ($) => {
 
-    fetchRequest($.URL, {
+    const result = await fetchRequest($.URL, {
         method: $.verbs.get,
         headers: {'Content-Type': 'application/json'},
         callback: sbRenderItems,
         vars: $,
     });
+    console.log(' : ', result);
 };
 
 //post
