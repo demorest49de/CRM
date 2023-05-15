@@ -1,6 +1,39 @@
 import {renderItems} from './render.js';
 import {calculateFormTotal, calculateTotal} from "./calculations.js";
 
+
+const fetchRequest = async (url, {
+    method = 'get',
+    id = '',
+    callback,
+    headers,
+    vars = {},
+    body,
+}) => {
+    try {
+        const options = {
+            method,
+        };
+
+        if (body) options.body = JSON.stringify(body);
+
+        if (headers) options.headers = headers;
+
+        const response = await fetch(url, options);
+
+        if (response.ok) {
+            const data = await response.json();
+            if (callback) callback(null, data, vars, id);
+            return;
+        }
+
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+    } catch (err) {
+        console.log(' : ', err);
+        callback(err, null, vars);
+    }
+};
+
 const httpRequest = (url, {
     method = 'get',
     id = '',
@@ -106,9 +139,20 @@ const cbOpenEdit = (error, data, $, id) => {
 };
 
 //get all
+// export const loadGoodsHandler = ($) => {
+//
+//     httpRequest($.URL, {
+//         method: $.verbs.get,
+//         headers: {'Content-Type': 'application/json'},
+//         callback: sbRenderItems,
+//         vars: $,
+//     });
+// };
+
+//get all
 export const loadGoodsHandler = ($) => {
 
-    httpRequest($.URL, {
+    fetchRequest($.URL, {
         method: $.verbs.get,
         headers: {'Content-Type': 'application/json'},
         callback: sbRenderItems,
@@ -117,9 +161,21 @@ export const loadGoodsHandler = ($) => {
 };
 
 //post
+// export const sendGoodsHandler = (body, $) => {
+//
+//     httpRequest($.URL, {
+//         method: $.verbs.post,
+//         callback: cbSendItem,
+//         headers: {'Content-Type': 'application/json'},
+//         vars: $,
+//         body: body,
+//     });
+// };
+
+//post
 export const sendGoodsHandler = (body, $) => {
 
-    httpRequest($.URL, {
+    fetchRequest($.URL, {
         method: $.verbs.post,
         callback: cbSendItem,
         headers: {'Content-Type': 'application/json'},
@@ -153,9 +209,22 @@ export const openEditHandler = ($, id) => {
 };
 
 //patch by id
+// export const updateItemHandler = (body, $, id) => {
+//
+//     httpRequest($.URL, {
+//         method: $.verbs.patch,
+//         id: id,
+//         callback: cbSendItem,
+//         headers: {'Content-Type': 'application/json'},
+//         vars: $,
+//         body: body,
+//     });
+// };
+
+//patch by id
 export const updateItemHandler = (body, $, id) => {
 
-    httpRequest($.URL, {
+    fetchRequest($.URL, {
         method: $.verbs.patch,
         id: id,
         callback: cbSendItem,

@@ -1,5 +1,5 @@
 export const getConsts = () => {
-    const URL = 'https://muddy-substantial-gear.glitch.me/api/goods';
+    const URL = 'https://muddy-substantial-gear.glitch.me/api/goods/';
     const verbs = {
         get: "get",
         post: "post", // повторное применение имеет тот же результат и не приведет к созданию нового объекта
