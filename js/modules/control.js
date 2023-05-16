@@ -10,43 +10,41 @@ import {
 
 export const handleControls = ($) => {
 
-    const showModal = (element) => {
-        console.log(' : ',element);
+    const showModal = async (element) => {
+        console.log(' : ', element);
         if (element === $.addItemBtn) {
-            loadStylesAddItem('css/additem.css', () => {
-                $.app.append($.overlay);
-                handleDiscount($.form.querySelector('.add-item__checkbox'), $);
-                $.overlay.querySelector('.add-item__title')
-                    .textContent = 'добавить товар';
-                $.overlay.querySelector('button.add-item__button-item[type=submit]')
-                    .textContent = 'добавить товар';
-                $.overlay.querySelector('.add-item__id-block').style.display = `none`;
-                setTimeout(() => {
-                    $.overlay.classList.add('is-visible');
-                }, 300);
-            });
+            await loadStylesAddItem('css/additem.css');
+            $.app.append($.overlay);
+            handleDiscount($.form.querySelector('.add-item__checkbox'), $);
+            $.overlay.querySelector('.add-item__title')
+                .textContent = 'добавить товар';
+            $.overlay.querySelector('button.add-item__button-item[type=submit]')
+                .textContent = 'добавить товар';
+            $.overlay.querySelector('.add-item__id-block').style.display = `none`;
+            setTimeout(() => {
+                $.overlay.classList.add('is-visible');
+            }, 300);
         }
         if (element.classList.contains('list-product__button-edit')) {
-            loadStylesAddItem('css/additem.css', () => {
-                $.app.append($.overlay);
+            await loadStylesAddItem('css/additem.css');
+            $.app.append($.overlay);
 
-                $.overlay.querySelector('.add-item__title')
-                    .textContent = 'Изменить товар';
-                $.overlay.querySelector('button.add-item__button-item[type=submit]')
-                    .textContent = 'Сохранить';
+            $.overlay.querySelector('.add-item__title')
+                .textContent = 'Изменить товар';
+            $.overlay.querySelector('button.add-item__button-item[type=submit]')
+                .textContent = 'Сохранить';
 
-                const tdId = element.closest('.list-product__table-tr')
-                    .querySelector('td[data-id]').getAttribute('data-id');
+            const tdId = element.closest('.list-product__table-tr')
+                .querySelector('td[data-id]').getAttribute('data-id');
 
-                $.overlay.querySelector('.add-item__id-block').style.display = `block`;
-                const id = $.overlay.querySelector('.vendor-code__id');
-                id.textContent = tdId;
+            $.overlay.querySelector('.add-item__id-block').style.display = `block`;
+            const id = $.overlay.querySelector('.vendor-code__id');
+            id.textContent = tdId;
 
-                setTimeout(() => {
-                    $.overlay.classList.add('is-visible');
-                }, 300);
-                openEditHandler($, tdId);
-            });
+            setTimeout(() => {
+                $.overlay.classList.add('is-visible');
+            }, 300);
+            openEditHandler($, tdId);
         }
     };
 
