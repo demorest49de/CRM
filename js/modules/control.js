@@ -1,4 +1,5 @@
 import {calculateFormTotal, handleDiscount} from './calculations.js';
+import {loadStylesAddItem} from './loadStyles.js';
 import {
     sendGoodsHandler,
     deleteGoodsHandler,
@@ -9,15 +10,49 @@ import {
 
 export const handleControls = ($) => {
 
+    const showModal = (element) => {
+        console.log(' : ',element);
+        if (element === $.addItemBtn) {
+            loadStylesAddItem('css/additem.css', () => {
+                $.app.append($.overlay);
+                handleDiscount($.form.querySelector('.add-item__checkbox'), $);
+                $.overlay.querySelector('.add-item__title')
+                    .textContent = 'добавить товар';
+                $.overlay.querySelector('button.add-item__button-item[type=submit]')
+                    .textContent = 'добавить товар';
+                $.overlay.querySelector('.add-item__id-block').style.display = `none`;
+                setTimeout(() => {
+                    $.overlay.classList.add('is-visible');
+                }, 300);
+            });
+        }
+        if (element.classList.contains('list-product__button-edit')) {
+            loadStylesAddItem('css/additem.css', () => {
+                $.app.append($.overlay);
+
+                $.overlay.querySelector('.add-item__title')
+                    .textContent = 'Изменить товар';
+                $.overlay.querySelector('button.add-item__button-item[type=submit]')
+                    .textContent = 'Сохранить';
+
+                const tdId = element.closest('.list-product__table-tr')
+                    .querySelector('td[data-id]').getAttribute('data-id');
+
+                $.overlay.querySelector('.add-item__id-block').style.display = `block`;
+                const id = $.overlay.querySelector('.vendor-code__id');
+                id.textContent = tdId;
+
+                setTimeout(() => {
+                    $.overlay.classList.add('is-visible');
+                }, 300);
+                openEditHandler($, tdId);
+            });
+        }
+    };
+
     const handleOpenForm = () => {
-        $.addItemBtn.addEventListener('click', () => {
-            handleDiscount($.form.querySelector('.add-item__checkbox'), $);
-            $.overlay.querySelector('.add-item__title')
-                .textContent = 'добавить товар';
-            $.overlay.querySelector('button.add-item__button-item[type=submit]')
-                .textContent = 'добавить товар';
-            $.overlay.classList.add('is-visible');
-            $.overlay.querySelector('.add-item__id-block').style.display = `none`;
+        $.addItemBtn.addEventListener('click', ({target}) => {
+            showModal(target);
         });
     };
 
@@ -26,7 +61,10 @@ export const handleControls = ($) => {
             const target = event.target;
             if (target === $.overlay || target.closest('.add-item-close-button')) {
                 $.overlay.classList.remove('is-visible');
-                $.form.reset();
+                setTimeout(() => {
+                    $.overlay.remove();
+                    $.form.reset();
+                }, 300);
             }
         });
     };
@@ -50,21 +88,7 @@ export const handleControls = ($) => {
         $.tbody.addEventListener('click', e => {
             const target = e.target;
             if (target.closest('.list-product__button-edit')) {
-                $.overlay.classList.add('is-visible');
-
-                $.overlay.querySelector('.add-item__title')
-                    .textContent = 'Изменить товар';
-                $.overlay.querySelector('button.add-item__button-item[type=submit]')
-                    .textContent = 'Сохранить';
-
-                const tdId = target.closest('.list-product__table-tr')
-                    .querySelector('td[data-id]').getAttribute('data-id');
-
-                $.overlay.querySelector('.add-item__id-block').style.display = `block`;
-
-                const id = $.overlay.querySelector('.vendor-code__id');
-                id.textContent = tdId;
-                openEditHandler($, tdId);
+                showModal(target);
             }
         });
     };
