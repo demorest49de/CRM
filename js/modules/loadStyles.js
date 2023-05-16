@@ -1,9 +1,9 @@
-const styles = new Set();
+const styles = new Map();
 
 export const loadStylesAddItem = (url) => {
-    if (styles.has(url)) return;
-
-    return new Promise((resolve) => {
+    if (styles.has(url)) return styles.get(url);
+    // protestirovat' Map kollekciju;
+    const stylePromise = new Promise((resolve) => {
         const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = url;
@@ -11,6 +11,8 @@ export const loadStylesAddItem = (url) => {
             resolve();
         });
         document.head.append(link);
-        styles.add(url);
     });
+
+    styles.set(url, stylePromise);
+    return stylePromise;
 };
