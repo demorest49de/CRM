@@ -198,19 +198,21 @@ export const createErrorMessage = () => {
     errorScreen.classList.add('add-item__overlay-error');
     errorScreen.innerHTML = `
         <div class="add-item__error error">
-            <button class="add-item-close-button" type="button" title="закрыть">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 2L22 22" stroke="#6E6893" stroke-width="3" stroke-linecap="round"></path>
-                <path d="M2 22L22 2" stroke="#6E6893" stroke-width="3" stroke-linecap="round"></path>
-              </svg>
-            </button>
-            <div class="error__block">
-                
-                <svg class="add-item__red-big-error-cross" width="90" height="90" viewBox="0 0 90 90" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M2 2L92 92" stroke="#D80101" stroke-width="3" stroke-linecap="round"/>
-                    <path d="M2 92L92 2" stroke="#D80101" stroke-width="3" stroke-linecap="round"/>
-                </svg>
-                <p class="add-item__error-message">что-то пошло не так</p>
+            <div class="add-item__error-container">
+                <button class="add-item-close-button" type="button" title="закрыть">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 2L22 22" stroke="#6E6893" stroke-width="3" stroke-linecap="round"></path>
+                    <path d="M2 22L22 2" stroke="#6E6893" stroke-width="3" stroke-linecap="round"></path>
+                  </svg>
+                </button>
+                <div class="error__block">
+                    
+                    <svg class="add-item__red-big-error-cross" width="90" height="90" viewBox="0 0 90 90" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2 2L92 92" stroke="#D80101" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M2 92L92 2" stroke="#D80101" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                    <p class="add-item__error-message">что-то пошло не так</p>
+                </div>
             </div>
         </div>     
     `;

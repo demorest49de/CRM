@@ -87,8 +87,11 @@ const httpRequest = (url, {
 };
 
 const handleErrorMessage = (error, data, $) => {
-    // $.app.append($.addItemError);
-    $.addItemError.classList.add('is-visible');
+    $.app.append($.addItemError);
+    setTimeout(() => {
+        $.addItemError.classList.add('is-visible');
+    }, 300);
+
     if (!data) data = error.message;
     console.warn(error, data);
 };

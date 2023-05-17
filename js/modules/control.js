@@ -171,9 +171,13 @@ export const handleControls = ($) => {
     const closeErrorHandler = () => {
         const closeBtn = $.addItemError.querySelector('.add-item-close-button');
         closeBtn.addEventListener('click', () => {
+            $.overlay.classList.remove('is-visible');
             $.addItemError.classList.remove('is-visible');
             $.form.reset();
-            $.overlay.classList.remove('is-visible');
+            setTimeout(() => {
+                $.addItemError.remove();
+            }, 500);
+
         });
     };
 
