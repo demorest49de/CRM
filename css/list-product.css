@@ -310,6 +310,11 @@ tr,
     .list-product__footer {
         min-width: unset;
     }
+
+    .nav__search:before {
+        left: 13px;
+        top: 11px;
+    }
 }
 
 @media (max-width: 600px) {
@@ -344,6 +349,11 @@ tr,
 
     .list-product__footer-sub-block {
         display: none;
+    }
+
+    .nav__search:before {
+        left: 13px;
+        top: 20px;
     }
 }
 
