@@ -111,7 +111,7 @@ body {
     margin-bottom: 12px;
 }
 
-.add-item__discount{
+.add-item__discount {
     margin-bottom: 12px;
 }
 
@@ -137,12 +137,12 @@ body {
     outline: none;
 }
 
-.add-item__image-wrapper{
+.add-item__image-wrapper {
     background-color: black;
 }
 
 .add-item__add-image-button,
-.add-item__image-text{
+.add-item__image-text {
     margin-bottom: 29px;
     display: flex;
     align-items: end;
@@ -159,8 +159,7 @@ body {
     "measure    quantity"
     "discount   price"
     "image-text   add-image"
-    "image      image"
-;
+    "image      image";
 }
 
 .add-item__name {
@@ -197,7 +196,7 @@ body {
     grid-area: price;
 }
 
-.add-item__image-text{
+.add-item__image-text {
     grid-area: image-text;
 }
 
@@ -205,11 +204,11 @@ body {
     grid-area: add-image;
 }
 
-.add-item__image{
+.add-item__image {
     grid-area: image;
 }
 
-.add-item__form{
+.add-item__form {
     margin-bottom: 30px;
 }
 
@@ -277,11 +276,15 @@ body {
     font-weight: 600;
 }
 
-.add-item__image-text{
+.add-item__block.add-item__price {
+    margin-bottom: 29px;
+}
+
+.add-item__image-text {
     justify-content: center;
 }
 
-.add-item__image-size-text{
+.add-item__image-size-text {
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
@@ -290,7 +293,15 @@ body {
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #D80101;
+    /*height: 0;*/
+    /*opacity: 0;*/
+    /*visibility: hidden;*/
     transition: all .3s ease-in-out;
+}
+
+
+.add-item__block.add-item__price {
+    /*margin-bottom: 0;*/
 }
 
 .add-item__add-image-button {
@@ -305,25 +316,25 @@ body {
     font-size: 14px;
     line-height: 17px;
     left: 23px;
-    top: 31px;
+    top: 12px;
     z-index: 1;
     color: var(--color-FFFFFF);
 }
 
 .add-item__button-image {
     padding: 11px 27px;
-    margin-top: 20px;
+    /*margin-top: 20px;*/
     min-height: 39px;
     color: transparent;
     max-width: 250px;
 }
 
-.add-item__image{
+.add-item__image {
     display: flex;
     justify-self: center;
 }
 
-.add-item__image-wrapper{
+.add-item__image-wrapper {
     /*display: none;*/
     width: 200px;
     height: 200px;
@@ -436,7 +447,7 @@ body {
         position: absolute;
         width: fit-content;
         left: unset;
-        top: 31px;
+        top: 12px;
     }
 
     .add-item__button-image {
@@ -460,6 +471,10 @@ body {
     .add-item__input-set .add-item__input {
         max-width: calc(524px - 10px - 40px);
     }
+
+    .add-item__image-text {
+        margin-bottom: 29px;
+    }
 }
 
 @media (max-width: 613px) {
@@ -468,12 +483,6 @@ body {
         padding: 15px 0;
         margin: 0;
     }
-
-    .add-item__image-text{
-        margin-bottom: 0;
-    }
-
-
 
     .add-item__container {
         padding: 0 20px;
