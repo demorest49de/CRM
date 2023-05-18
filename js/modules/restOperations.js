@@ -15,9 +15,7 @@ const fetchRequest = async (url, {
             method,
         };
 
-        if (id) {
-            url += id.toString();
-        }
+        if (id) url += id.toString();
 
         if (body) options.body = JSON.stringify(body);
 

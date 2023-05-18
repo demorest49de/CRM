@@ -172,6 +172,7 @@ export const createRow = ({
     addClass(tr, ['list-product__table-tr']);
     const total = Math.floor(+price * +count *
         (1 - (+discount ? +discount / 100 : 0)));
+
     tr.innerHTML = `
     <td class="list-product__table-td" data-id='${id}'>${id}</td>
     <td class="list-product__table-td">${title}</td>
@@ -182,7 +183,7 @@ export const createRow = ({
     <td class="list-product__table-td" data-total-price=${total}>$${total}</td>
     <td class="list-product__table-td">
     <button class="list-product__table-btn
-    ${image && image?.small || image?.big ? 'list-product__button-img' :
+    ${!(image.includes('notimage.jpg')) ? 'list-product__button-img' :
         'list-product__button-no-img'}" aria-label="image" data-pic="upload/my_kote.jpg"></button>
     <button class="list-product__table-btn list-product__button-edit" 
     aria-label="edit"></button>
@@ -300,6 +301,9 @@ const createOverlay = () => {
               <input class="add-item__input" type="number"
                name="price" id="add-item__price" min="1" required>
             </div>
+            <div class="add-item__image-text">
+              <p class="add-item__image-size-text">изображение не должно превышать размер 1 мб</p>
+            </div>
           
             <div class="add-item__add-image-button">
               <label class="add-item__label-add-image"
@@ -309,6 +313,11 @@ const createOverlay = () => {
                 id="add-item__button-image"
                 name="image"
                 accept="image/jpeg, image/png">
+            </div>
+            <div class="add-item__block add-item__image">   
+                <div class="add-item__image-wrapper">
+                    <img class="add-item__image-preview">
+                </div>
             </div>
           </fieldset>
         </form>

@@ -29,15 +29,15 @@ body {
     background: #F2F0F9;
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
     color: #6E6893;
-    padding: 35px 35px;
+    padding: 35px 49px;
     font-size: 12px;
     text-transform: uppercase;
     font-weight: 600;
     line-height: 15px;
     letter-spacing: 0.05em;
     position: absolute;
-    max-width: 792px;
-    max-height: 613px;
+    max-width: fit-content;
+    max-height: fit-content;
     left: 0;
     right: 0;
     bottom: 0px;
@@ -79,10 +79,7 @@ body {
     background: #FFFFFF;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
-    padding: 28px;
-    max-width: 100%;
-    /*margin: 0 auto 28px auto;*/
-    margin-bottom: 28px;
+    padding: 28px 28px 28px 30px;
 }
 
 .add-item__line {
@@ -108,7 +105,14 @@ body {
 .add-item__block {
     display: flex;
     flex-direction: column;
+}
 
+.add-item__block:not(:nth-last-child(1)) {
+    margin-bottom: 12px;
+}
+
+.add-item__discount{
+    margin-bottom: 12px;
 }
 
 .add-item__label {
@@ -133,17 +137,31 @@ body {
     outline: none;
 }
 
+.add-item__image-wrapper{
+    background-color: black;
+}
+
+.add-item__add-image-button,
+.add-item__image-text{
+    margin-bottom: 29px;
+    display: flex;
+    align-items: end;
+}
+
 .add-item__content {
     display: grid;
     grid-template-columns: repeat(2, 250px);
     column-gap: 24px;
-    row-gap: 12px;
+    /*row-gap: 12px;*/
     grid-template-areas:
     "name       description"
     "category   description"
     "measure    quantity"
     "discount   price"
-    ".   add-image";
+    "image-text   add-image"
+    "image      image"
+    "total-block      total-block"
+;
 }
 
 .add-item__name {
@@ -180,8 +198,20 @@ body {
     grid-area: price;
 }
 
+.add-item__image-text{
+    grid-area: image-text;
+}
+
 .add-item__add-image-button {
     grid-area: add-image;
+}
+
+.add-item__image{
+    grid-area: image;
+}
+
+.add-item__form{
+    margin-bottom: 30px;
 }
 
 .add-item__checkbox {
@@ -248,6 +278,22 @@ body {
     font-weight: 600;
 }
 
+.add-item__image-text{
+    justify-content: end;
+}
+
+.add-item__image-size-text{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #D80101;
+    transition: all .3s ease-in-out;
+}
+
 .add-item__add-image-button {
     grid-area: add-image;
     position: relative;
@@ -274,15 +320,26 @@ body {
     max-width: 250px;
 }
 
+.add-item__image{
+    display: flex;
+    justify-self: center;
+}
+
+.add-item__image-wrapper{
+    /*display: none;*/
+    width: 200px;
+    height: 200px;
+}
+
 
 .add-item__button-image::-webkit-file-upload-button {
     display: none;
 }
 
 .add-item__total-block {
+    grid-area: total-block;
     display: flex;
     justify-content: space-between;
-    align-items: center;
 }
 
 .add-item__total {

@@ -27,6 +27,8 @@ export const handleControls = ($) => {
         }
         if (element.classList.contains('list-product__button-edit')) {
             await loadStylesAddItem('css/additem.css');
+            // по уроку 6.9 переделать: нужно что бы оверлей появлялся после разрешения промиса те есть когда
+            // выполнится get по id
             $.app.append($.overlay);
 
             $.overlay.querySelector('.add-item__title')
@@ -151,7 +153,7 @@ export const handleControls = ($) => {
         handleBlurElement($.form.discount);
     };
 
-    const handleListProductImageBtn = () => {
+    const handleImageBtn = () => {
         $.tbody.addEventListener('click', e => {
             const target = e.target;
             const imageBtn = target.closest('.list-product__table-btn.list-product__button-img');
@@ -189,6 +191,6 @@ export const handleControls = ($) => {
     submitFormData();
     handleAddItemCheckbox();
     handleBlur();
-    handleListProductImageBtn();
+    handleImageBtn();
     closeErrorHandler();
 };
