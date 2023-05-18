@@ -206,7 +206,7 @@ export const handleControls = ($) => {
             imagewrapper.append(image);
             image.alt = 'Превью изображеня';
             if (fileBtn.files.length > 0) {
-                const src = URL.createObjectURL(fileBtn.files[0]);
+                // const src = URL.createObjectURL(fileBtn.files[0]);
                 const result = await toBase64(fileBtn.files[0]);
                 image.src = result;
 
