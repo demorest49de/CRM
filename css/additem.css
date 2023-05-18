@@ -464,11 +464,16 @@ body {
 
 @media (max-width: 613px) {
     .add-item {
-        /*max-height: 940px;*/
         margin: 15px auto;
         padding: 15px 0;
         margin: 0;
     }
+
+    .add-item__image-text{
+        margin-bottom: 0;
+    }
+
+
 
     .add-item__container {
         padding: 0 20px;
