@@ -160,7 +160,6 @@ body {
     "discount   price"
     "image-text   add-image"
     "image      image"
-    "total-block      total-block"
 ;
 }
 
@@ -279,7 +278,7 @@ body {
 }
 
 .add-item__image-text{
-    justify-content: end;
+    justify-content: center;
 }
 
 .add-item__image-size-text{
@@ -295,7 +294,6 @@ body {
 }
 
 .add-item__add-image-button {
-    grid-area: add-image;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -399,7 +397,10 @@ body {
         "description"
         "quantity"
         "price"
-        "add-image";
+        "image-text"
+        "add-image"
+        "image";
+
 
         min-width: unset;
         padding: 28px 15px;
@@ -428,14 +429,13 @@ body {
 
     .add-item__add-image-button {
         flex-direction: row;
-        justify-content: end;
+        justify-content: center;
     }
 
     .add-item__label-add-image {
         position: absolute;
         width: fit-content;
         left: unset;
-        right: 23px;
         top: 31px;
     }
 
@@ -464,7 +464,7 @@ body {
 
 @media (max-width: 613px) {
     .add-item {
-        max-height: 940px;
+        /*max-height: 940px;*/
         margin: 15px auto;
         padding: 15px 0;
         margin: 0;
