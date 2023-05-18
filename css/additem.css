@@ -290,10 +290,19 @@ body {
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #D80101;
-    /*opacity: 0;*/
-    /*visibility: hidden;*/
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
     transition: all .3s ease-in-out;
 }
+
+.add-item__image-size-text.is-visible {
+    height: auto;
+    visibility: visible;
+    opacity: 1;
+}
+
 
 .add-item__add-image-button {
     position: relative;
@@ -326,11 +335,18 @@ body {
 }
 
 .add-item__image-wrapper {
-    /*display: none;*/
     width: 200px;
     height: 200px;
 }
 
+.add-item__image-wrapper.hide-image {
+    height: 0;
+    overflow: hidden;
+}
+
+.add-item__add-image-button.reduce-margin{
+    margin-bottom: 11px;
+}
 
 .add-item__button-image::-webkit-file-upload-button {
     display: none;
@@ -406,7 +422,10 @@ body {
 
         min-width: unset;
         padding: 28px 15px;
-        margin-bottom: 15px;
+    }
+
+    .add-item__image-text.remove-margin {
+        margin-bottom: 0;
     }
 
     .add-item__title {

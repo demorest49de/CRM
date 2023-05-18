@@ -301,11 +301,11 @@ const createOverlay = () => {
               <input class="add-item__input" type="number"
                name="price" id="add-item__price" min="1" required>
             </div>
-            <div class="add-item__image-text">
+            <div class="add-item__image-text remove-margin">
               <p class="add-item__image-size-text">изображение не должно превышать размер 1 мб</p>
             </div>
           
-            <div class="add-item__add-image-button">
+            <div class="add-item__add-image-button reduce-margin">
               <label class="add-item__label-add-image"
                for="add-item__button-image">добавить
                 изображение</label>
@@ -315,7 +315,7 @@ const createOverlay = () => {
                 accept="image/jpeg, image/png">
             </div>
             <div class="add-item__block add-item__image">   
-                <div class="add-item__image-wrapper">
+                <div class="add-item__image-wrapper hide-image">
                     <img class="add-item__image-preview">
                 </div>
             </div>
