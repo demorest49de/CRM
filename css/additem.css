@@ -198,6 +198,7 @@ body {
 
 .add-item__image-text {
     grid-area: image-text;
+    justify-content: center;
 }
 
 .add-item__add-image-button {
@@ -280,10 +281,6 @@ body {
     margin-bottom: 29px;
 }
 
-.add-item__image-text {
-    justify-content: center;
-}
-
 .add-item__image-size-text {
     font-style: normal;
     font-weight: 700;
@@ -293,15 +290,9 @@ body {
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #D80101;
-    /*height: 0;*/
     /*opacity: 0;*/
     /*visibility: hidden;*/
     transition: all .3s ease-in-out;
-}
-
-
-.add-item__block.add-item__price {
-    /*margin-bottom: 0;*/
 }
 
 .add-item__add-image-button {
@@ -470,10 +461,6 @@ body {
 
     .add-item__input-set .add-item__input {
         max-width: calc(524px - 10px - 40px);
-    }
-
-    .add-item__image-text {
-        margin-bottom: 29px;
     }
 }
 
