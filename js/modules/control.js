@@ -183,6 +183,37 @@ export const handleControls = ($) => {
         });
     };
 
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.addEventListener('loadend', () => {
+            resolve(reader.result);
+        });
+        reader.addEventListener('error', err => {
+            reject(err);
+        });
+
+        reader.readAsDataURL(file);
+    });
+
+    const handleAddImage = () => {
+        const fileBtn = $.form.querySelector('.add-item__button-image');
+        fileBtn.addEventListener('change', async () => {
+            const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
+            const img = imagewrapper.querySelector('img');
+            if (img) img.remove();
+            imagewrapper.classList.remove('hide-image');
+            const image = document.createElement('img');
+            imagewrapper.append(image);
+            image.alt = 'Превью изображеня';
+            if (fileBtn.files.length > 0) {
+                const src = URL.createObjectURL(fileBtn.files[0]);
+                const result = await toBase64(fileBtn.files[0]);
+                image.src = result;
+
+            }
+        });
+    };
+
 
     handleOpenForm();
     handleCloseForm();
@@ -192,5 +223,6 @@ export const handleControls = ($) => {
     handleAddItemCheckbox();
     handleBlur();
     handleImageBtn();
+    handleAddImage();
     closeErrorHandler();
 };

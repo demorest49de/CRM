@@ -137,10 +137,6 @@ body {
     outline: none;
 }
 
-.add-item__image-wrapper {
-    background-color: black;
-}
-
 .add-item__add-image-button,
 .add-item__image-text {
     margin-bottom: 29px;
@@ -344,10 +340,6 @@ body {
     overflow: hidden;
 }
 
-.add-item__add-image-button.reduce-margin{
-    margin-bottom: 11px;
-}
-
 .add-item__button-image::-webkit-file-upload-button {
     display: none;
 }
@@ -380,6 +372,8 @@ body {
     font-size: 16px;
     line-height: 19px;
     padding: 10px 25px;
+    max-width: fit-content;
+    max-height: fit-content;
 }
 
 .add-item-close-button {
