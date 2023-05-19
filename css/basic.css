@@ -12,10 +12,6 @@ section {
     margin: 0 auto;
 }
 
-.hide {
-    display: none;
-}
-
 @media (max-width: 1100px) {
     .container {
         padding: 0 15px;

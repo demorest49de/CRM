@@ -51,3 +51,7 @@ ul, ol {
   width: 1px !important;
   overflow: hidden;
 }
+
+.hide-element{
+  display: none;
+}
