@@ -335,6 +335,12 @@ body {
     height: 200px;
 }
 
+.add-item__image-preview{
+    width: inherit;
+    height: inherit;
+    overflow: hidden;
+}
+
 .add-item__image-wrapper.hide-image {
     height: 0;
     overflow: hidden;

@@ -7,7 +7,6 @@ import {
     updateItemHandler,
 } from './restOperations.js';
 
-
 export const handleControls = ($) => {
 
     const showModal = async (element) => {
@@ -95,7 +94,7 @@ export const handleControls = ($) => {
 
     // написать запрос к апи метод post
     const submitFormData = () => {
-        $.form.addEventListener('submit', e => {
+        $.form.addEventListener('submit', async e => {
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
@@ -103,7 +102,7 @@ export const handleControls = ($) => {
                 name, category, measure, discount,
                 description, quantity, price, image
             } = data;
-
+            const imageToSave = await toBase64(image);
             $.body.title = name;
             $.body.description = description;
             $.body.category = category;
@@ -204,11 +203,12 @@ export const handleControls = ($) => {
             imagewrapper.classList.remove('hide-image');
             const image = document.createElement('img');
             imagewrapper.append(image);
+            image.classList.add('add-item__image-preview');
             image.alt = 'Превью изображеня';
             if (fileBtn.files.length > 0) {
-                // const src = URL.createObjectURL(fileBtn.files[0]);
+                const src = URL.createObjectURL(fileBtn.files[0]);
                 const result = await toBase64(fileBtn.files[0]);
-                image.src = result;
+                image.src = src;
 
             }
         });
