@@ -25,6 +25,7 @@ const fetchRequest = async (url, {
 
     if (response.ok) {
       const data = await response.json();
+      console.log(' : ',data);
       if (callback) return callback(null, data, vars, id);
       return;
     }
