@@ -80,8 +80,8 @@ export const handleControls = ($) => {
     }
     if (element.classList.contains('list-product__button-edit')) {
       await loadStylesAddItem('css/additem.css');
-      // по уроку 6.9 переделать: нужно что бы оверлей появлялся после разрешения промиса те есть когда
-      // выполнится get по id
+      // TODO по уроку 6.9 переделать: нужно что бы оверлей появлялся после разрешения промиса те есть когда
+      // TODO выполнится get по id
       $.app.append($.overlay);
 
       $.overlay.querySelector('.add-item__title')
