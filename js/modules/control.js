@@ -50,9 +50,11 @@ export const handleControls = ($) => {
         image.alt = 'Превью изображеня';
     };
 
-    const handleLoadImage = (imagewrapper, fileBtn, dataPic = '') => {
+    const handleLoadImage = (imagewrapper, fileBtn, dataPic = '') => new Promise(resolve => {
         const image = document.createElement('img');
-
+        image.addEventListener('load', () => {
+            resolve();
+        });
         // replace, add
         if (fileBtn.files.length > 0) {
             // check size
@@ -70,7 +72,7 @@ export const handleControls = ($) => {
             imagewrapper.classList.remove('hide-image');
             image.src = dataPic;
         }
-    };
+    });
 
     const showModal = async (element) => {
         console.log(' : ', element);
@@ -105,7 +107,7 @@ export const handleControls = ($) => {
             if (dataPic) {
                 const fileBtn = $.form.querySelector('.add-item__button-image');
                 const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
-                handleLoadImage(imagewrapper, fileBtn, dataPic);
+                await handleLoadImage(imagewrapper, fileBtn, dataPic);
             }
 
             const tdId = element.closest('.list-product__table-tr')
@@ -262,14 +264,14 @@ export const handleControls = ($) => {
             }, 500);
         });
     };
-
-    const handleAddImage = () => {
+    // add new image instead of existing one
+    const handleAddImage = async () => {
         const fileBtn = $.form.querySelector('.add-item__button-image');
         fileBtn.addEventListener('change', async () => {
             const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
             const img = imagewrapper?.querySelector('img');
             img?.remove();
-            handleLoadImage(imagewrapper, fileBtn);
+            await handleLoadImage(imagewrapper, fileBtn);
         });
     };
 
