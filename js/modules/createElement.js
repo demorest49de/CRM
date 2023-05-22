@@ -1,3 +1,7 @@
+import {getConsts} from './varsStorage.js';
+
+const $ = getConsts();
+
 const addClass = (element, tokens) => {
   element.classList.add(...tokens);
 };
@@ -182,9 +186,9 @@ export const createRow = ({
     <td class="list-product__table-td" data-total-price=${total}>$${total}</td>
     <td class="list-product__table-td">
     <button class="list-product__table-btn
-    ${!(image.includes('notimage.jpg')) ? 'list-product__button-img' :
-        'list-product__button-no-img'}" aria-label="image" ${!(image.includes('notimage.jpg')) ?
-      'data-pic="upload/my_kote.jpg"' : ''}></button>
+    ${!(image && image?.includes('notimage.jpg')) ? 'list-product__button-img' :
+        'list-product__button-no-img'}" aria-label="image" ${!(image && image.includes('notimage.jpg')) ?
+      `data-pic="${$.imageURL}${image}"` : ''}></button>
     <button class="list-product__table-btn list-product__button-edit" 
     aria-label="edit"></button>
     <button class="list-product__table-btn list-product__button-delete" 

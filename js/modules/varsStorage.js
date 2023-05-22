@@ -1,5 +1,6 @@
 export const getConsts = () => {
   const URL = 'https://muddy-substantial-gear.glitch.me/api/goods/';
+  const imageURL = 'https://muddy-substantial-gear.glitch.me/';
   const verbs = {
     get: 'GET',
     post: 'POST', // повторное применение имеет тот же результат и не приведет к созданию нового объекта
@@ -19,5 +20,5 @@ export const getConsts = () => {
     image: '',
   };
 
-  return {URL, verbs, body};
+  return {URL, verbs, body, imageURL};
 };

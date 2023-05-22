@@ -8,7 +8,7 @@ import {getConsts} from './modules/varsStorage.js';
     const init = (selectorApp, title) => {
         const app = document.querySelector(selectorApp);
         const crm = renderCRM(app, title);
-        const {URL, verbs, body} = getConsts();
+        const {URL, verbs, body, imageURL} = getConsts();
         const {addItemBtn, overlay, tbody, form, header, formContent, addItemError} = crm;
         const generalVars = {
             addItemBtn,
@@ -23,6 +23,7 @@ import {getConsts} from './modules/varsStorage.js';
             body,
             app,
             addItemError,
+            imageURL
         };
 
         // Функционал
