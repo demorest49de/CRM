@@ -30,7 +30,7 @@ import {getConsts} from './modules/varsStorage.js';
 
         handleControls(generalVars);
         loadGoodsHandler(generalVars).then(data => {
-            console.log(' : ', data);
+
         });
     };
 

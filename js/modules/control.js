@@ -91,8 +91,6 @@ export const handleControls = ($) => {
         }
         if (element.classList.contains('list-product__button-edit')) {
             await loadStylesAddItem('css/additem.css');
-            // TODO по уроку 6.9 переделать: нужно что бы оверлей появлялся после разрешения промиса те есть когда
-            // TODO выполнится get по id
             $.app.append($.overlay);
 
             $.overlay.querySelector('.add-item__title')
@@ -102,7 +100,6 @@ export const handleControls = ($) => {
 
             const dataPic = element.closest('.list-product__table-tr')
                 .querySelector('button[data-pic]')?.getAttribute('data-pic');
-            console.log(' : ', dataPic);
 
             if (dataPic) {
                 const fileBtn = $.form.querySelector('.add-item__button-image');
