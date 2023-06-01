@@ -279,6 +279,24 @@ export const handleControls = ($) => {
     };
 
 
+    const handleInput = () => {
+        $.form.addEventListener('input', ({target}) => {
+            if (
+                target.closest('.add-item__input[name=name]') ||
+                target.closest('.add-item__input[name=category]') ||
+                target.closest('.add-item__input[name=description]')
+
+                ) {
+                target.value = target.value.replace(/[^А-Яа-я\s]/g, '');
+            }
+            if (
+                target.closest('.add-item__input[name=measure]')) {
+                target.value = target.value.replace(/[^А-Яа-я]/g, '');
+            }
+        });
+    };
+
+    handleInput();
     handleOpenForm();
     handleCloseForm();
     editRow();
