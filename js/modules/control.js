@@ -293,6 +293,14 @@ export const handleControls = ($) => {
                 target.closest('.add-item__input[name=measure]')) {
                 target.value = target.value.replace(/[^А-Яа-я]/g, '');
             }
+            if (
+                target.closest('.add-item__input[name=quantity]') ||
+                target.closest('.add-item__input[name=discount]') ||
+                target.closest('.add-item__input[name=price]')
+
+            ) {
+                target.value = target.value.replace(/[^0-9]/g, '');
+            }
         });
     };
 
