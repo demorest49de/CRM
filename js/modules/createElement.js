@@ -286,7 +286,7 @@ const createOverlay = () => {
               описание <span class="add-item__text-count">0</span>/80</label>
               <textarea class="add-item__input" rows="5"
                name="description" 
-              id="add-item__description" placeholder="минимум 80 знаков" required></textarea>
+              id="add-item__description" required></textarea>
             </div>
           
             <div class="add-item__block add-item__quantity">
