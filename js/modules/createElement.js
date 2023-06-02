@@ -277,17 +277,16 @@ const createOverlay = () => {
               <div class="add-item__input-set">
                 <input class="add-item__checkbox" type="checkbox">
                 <input class="add-item__input" type="text"
-                 name="discount" id="add-item__discount"
-                  required>
+                 name="discount" id="add-item__discount">
               </div>
             </div>  
           
             <div class="add-item__block add-item__description">
               <label class="add-item__label" for="add-item__description">
-              описание</label>
+              описание <span class="add-item__text-count">0</span>/80</label>
               <textarea class="add-item__input" rows="5"
                name="description" 
-              id="add-item__description"></textarea>
+              id="add-item__description" placeholder="минимум 80 знаков" required></textarea>
             </div>
           
             <div class="add-item__block add-item__quantity">

@@ -1,10 +1,7 @@
 import {calculateFormTotal, handleDiscount} from './calculations.js';
 import {loadStylesAddItem} from './loadStyles.js';
 import {
-    sendGoodsHandler,
-    deleteGoodsHandler,
-    openEditHandler,
-    updateItemHandler,
+    sendGoodsHandler, deleteGoodsHandler, openEditHandler, updateItemHandler,
 } from './restOperations.js';
 import {toBase64} from './toBase64.js';
 
@@ -17,9 +14,7 @@ export const handleControls = ($) => {
     };
 
     const checkWindowResize = () => {
-        if (
-            $.form.querySelector('.add-item__image-size-text').classList.contains('is-visible') &&
-            screen.width < 822) {
+        if ($.form.querySelector('.add-item__image-size-text').classList.contains('is-visible') && screen.width < 822) {
             //
             $.form.querySelector('.add-item__image-text').classList.remove('remove-margin');
         } else {
@@ -80,10 +75,8 @@ export const handleControls = ($) => {
             await loadStylesAddItem('css/additem.css');
             $.app.append($.overlay);
             handleDiscount($.form.querySelector('.add-item__checkbox'), $);
-            $.overlay.querySelector('.add-item__title')
-                .textContent = 'добавить товар';
-            $.overlay.querySelector('button.add-item__button-item[type=submit]')
-                .textContent = 'добавить товар';
+            $.overlay.querySelector('.add-item__title').textContent = 'добавить товар';
+            $.overlay.querySelector('button.add-item__button-item[type=submit]').textContent = 'добавить товар';
             $.overlay.querySelector('.add-item__id-block').style.display = `none`;
             setTimeout(() => {
                 $.overlay.classList.add('is-visible');
@@ -93,10 +86,8 @@ export const handleControls = ($) => {
             await loadStylesAddItem('css/additem.css');
             $.app.append($.overlay);
 
-            $.overlay.querySelector('.add-item__title')
-                .textContent = 'Изменить товар';
-            $.overlay.querySelector('button.add-item__button-item[type=submit]')
-                .textContent = 'Сохранить';
+            $.overlay.querySelector('.add-item__title').textContent = 'Изменить товар';
+            $.overlay.querySelector('button.add-item__button-item[type=submit]').textContent = 'Сохранить';
 
             const dataPic = element.closest('.list-product__table-tr')
                 .querySelector('button[data-pic]')?.getAttribute('data-pic');
@@ -173,10 +164,9 @@ export const handleControls = ($) => {
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
             const {
-                name, category, measure, discount,
-                description, quantity, price, image,
+                name, category, measure, discount, description, quantity, price, image,
             } = data;
-
+            if (description.length < 80) return;
             console.log('image: ', image);
             const imageToSave = await toBase64(image);
             console.log('imageToSave: ', imageToSave);
@@ -189,7 +179,6 @@ export const handleControls = ($) => {
             $.body.count = +quantity;
             $.body.units = measure;
             $.body.image = imageToSave;
-
             // exist item - put
             if ($.form.querySelector('.add-item__block-id')
                 .getAttribute('data-id')) {
@@ -281,22 +270,20 @@ export const handleControls = ($) => {
 
     const handleInput = () => {
         $.form.addEventListener('input', ({target}) => {
-            if (
-                target.closest('.add-item__input[name=name]') ||
-                target.closest('.add-item__input[name=category]') ||
-                target.closest('.add-item__input[name=description]')
+            if (target.closest('.add-item__input[name=name]') || target.closest('.add-item__input[name=category]') || target.closest('.add-item__input[name=description]')
 
-                ) {
+            ) {
                 target.value = target.value.replace(/[^А-Яа-я\s]/g, '');
+                if (target === document.querySelector('.add-item__input[name=description]')) {
+                    const textCount = document.querySelector('.add-item__description .add-item__text-count');
+                    target.value = target.value.replace(/(?<=^.{80}).+/g, '');
+                    textCount.textContent = target.value.length.toString();
+                }
             }
-            if (
-                target.closest('.add-item__input[name=measure]')) {
+            if (target.closest('.add-item__input[name=measure]')) {
                 target.value = target.value.replace(/[^А-Яа-я]/g, '');
             }
-            if (
-                target.closest('.add-item__input[name=quantity]') ||
-                target.closest('.add-item__input[name=discount]') ||
-                target.closest('.add-item__input[name=price]')
+            if (target.closest('.add-item__input[name=quantity]') || target.closest('.add-item__input[name=discount]') || target.closest('.add-item__input[name=price]')
 
             ) {
                 target.value = target.value.replace(/[^0-9]/g, '');
