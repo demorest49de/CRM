@@ -25,10 +25,12 @@ export const handleDiscount = (target, $) => {
     inputDiscount.removeAttribute('disabled');
     inputDiscount.value = inputDiscount.getAttribute('data-discont');
     inputDiscount.removeAttribute('data-discont');
+    inputDiscount.setAttribute('required', 'required');
   } else {
     inputDiscount.setAttribute('disabled', '');
     inputDiscount.setAttribute('data-discont', inputDiscount.value);
     inputDiscount.value = '';
+    inputDiscount.removeAttribute('required');
   }
   calculateFormTotal($);
 };

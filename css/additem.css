@@ -135,6 +135,10 @@ body {
   outline: none;
 }
 
+#add-item__description{
+  resize: none;
+}
+
 .add-item__add-image-button,
 .add-item__image-text {
   margin-bottom: 29px;
