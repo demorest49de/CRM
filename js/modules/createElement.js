@@ -247,33 +247,41 @@ const createOverlay = () => {
           <fieldset class="add-item__content">
             <div class="add-item__block-id hide-element"></div>
             <div class="add-item__block add-item__name">
-              <label class="add-item__label" for="add-item__name">
-                наименование
-              </label>
+              <div class="add-item__subblock">
+                  <label class="add-item__label" for="add-item__name">
+                    наименование
+                  </label>
+              </div>
               <input class="add-item__input" type="text"
                name="name" id="add-item__name" required>
             </div>
           
             <div class="add-item__block add-item__category">
-              <label class="add-item__label" for="add-item__category">
-                категория
-              </label>
+              <div class="add-item__subblock">
+                  <label class="add-item__label" for="add-item__category">
+                    категория
+                  </label>
+              </div>
               <input class="add-item__input" type="text"
                name="category" id="add-item__category" required>
             </div>
           
             <div class="add-item__block add-item__measure">
-              <label class="add-item__label" for="add-item__measure">
-                еденицы измерения
-              </label>
+              <div class="add-item__subblock">
+                <label class="add-item__label" for="add-item__measure">
+                  еденицы измерения
+                </label>
+              </div>
               <input class="add-item__input" type="text"
                name="measure" id="add-item__measure" required>
             </div>
           
             <div class="add-item__discount">
-              <label class="add-item__label" for="add-item__discount">
-              дисконт
-              </label>
+              <div class="add-item__subblock">
+                <label class="add-item__label" for="add-item__discount">
+                дисконт
+                </label>
+              </div>
               <div class="add-item__input-set">
                 <input class="add-item__checkbox" type="checkbox">
                 <input class="add-item__input" type="text"
@@ -282,25 +290,31 @@ const createOverlay = () => {
             </div>  
           
             <div class="add-item__block add-item__description">
-              <label class="add-item__label" for="add-item__description">
-              описание <span class="add-item__text-count">0</span>/80</label>
+                <div class="add-item__subblock">
+                  <label class="add-item__label" for="add-item__description">
+                  описание </label>
+                  <span class="add-item__text-count">0/80</span>
+                  <span class="add-item__warn-text"> !!! &#10003;</span>
+              </div>
               <textarea class="add-item__input" rows="5"
                name="description" 
               id="add-item__description" required></textarea>
             </div>
           
             <div class="add-item__block add-item__quantity">
-            <label class="add-item__label" 
-              for="add-item__quantity">количество</label>
+              <div class="add-item__subblock">
+                <label class="add-item__label" for="add-item__quantity">количество</label>
+              </div>
               <input class="add-item__input" type="number"
-               name="quantity" id="add-item__quantity" min="1"
-              required>
+               name="quantity" id="add-item__quantity" required>
             </div>
           
             <div class="add-item__block add-item__price">
-              <label class="add-item__label" for="add-item__price">
-                цена
-              </label>
+              <div class="add-item__subblock">
+                <label class="add-item__label" for="add-item__price">
+                  цена
+                </label>
+              </div>
               <input class="add-item__input" type="number"
                name="price" id="add-item__price" min="1" required>
             </div>

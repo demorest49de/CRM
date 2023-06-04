@@ -1,7 +1,7 @@
 import {calculateFormTotal, handleDiscount} from './calculations.js';
 import {loadStylesAddItem} from './loadStyles.js';
 import {
-    sendGoodsHandler, deleteGoodsHandler, openEditHandler, updateItemHandler,
+    sendGoodsHandler, deleteGoodsHandler, openEditHandler, updateItemHandler, loadGoodsHandler,
 } from './restOperations.js';
 import {toBase64} from './toBase64.js';
 
@@ -127,7 +127,6 @@ export const handleControls = ($) => {
                 $.form.querySelector('.add-item__image-size-text').classList.remove('is-visible');
                 setTimeout(() => {
                     $.overlay.remove();
-                    $.form.reset();
                 }, 300);
             }
         });
@@ -152,9 +151,53 @@ export const handleControls = ($) => {
         $.tbody.addEventListener('click', e => {
             const target = e.target;
             if (target.closest('.list-product__button-edit')) {
+                console.log(' : ',);
                 showModal(target);
             }
         });
+    };
+
+    const showWarnNotification = () => {
+        const warnText = document.querySelector('.add-item__warn-text');
+        warnText.style.color = 'darkred';
+        warnText.textContent = '  !!!';
+        setTimeout(() => {
+            if (!warnText.classList.contains('add-item__warn-text_visible')) warnText.classList.add('add-item__warn-text_visible');
+        }, 500);
+    };
+
+    const showVerificationSign = (isShow) => {
+        const warnText = document.querySelector('.add-item__warn-text');
+        warnText.style.color = 'darkgreen';
+        isShow ? warnText.innerHTML = '  &#10003;' : warnText.innerHTML = '';
+        setTimeout(() => {
+            if (!warnText.classList.contains('add-item__warn-text_visible')) warnText.classList.add('add-item__warn-text_visible');
+        }, 500);
+    };
+
+    const createWarnText = () =>{
+        const warnText = document.createElement('span');
+        warnText.classList.add('add-item__warn-text');
+        return warnText;
+    }
+
+    const addVerificationSign = (label, isShow) => {
+
+        console.log(' : ',label.parentNode);
+        console.log(' : ',!!label.parentNode.querySelector('.add-item__warn-text'));
+        if (!label.parentNode.querySelector('.add-item__warn-text')) {
+            const warnText = createWarnText();
+            label.insertAdjacentHTML('afterend', warnText.outerHTML);
+        }
+        const warnText = document.querySelector('.add-item__name .add-item__warn-text');
+        warnText.style.color = 'darkgreen';
+        isShow ? warnText.innerHTML = '  &#10003;' : warnText.innerHTML = '';
+        setTimeout(() => {
+            if (!warnText.classList.contains('add-item__warn-text_visible')) {
+                warnText.classList.add('add-item__warn-text_visible');
+            }
+            console.log(' : ', warnText);
+        }, 500);
     };
 
     // написать запрос к апи метод post
@@ -166,7 +209,10 @@ export const handleControls = ($) => {
             const {
                 name, category, measure, discount, description, quantity, price, image,
             } = data;
-            if (description.length < 80) return;
+            if (description.length < 80) {
+                showWarnNotification();
+                return;
+            }
             console.log('image: ', image);
             const imageToSave = await toBase64(image);
             console.log('imageToSave: ', imageToSave);
@@ -267,26 +313,41 @@ export const handleControls = ($) => {
         });
     };
 
+    const addMarkChecked = () => {
+
+    };
 
     const handleInput = () => {
+        const checkLength = (target, length) => {
+            if (target.value.length >= length) {
+                addVerificationSign(target.previousSibling.previousSibling, true);
+            }
+        };
         $.form.addEventListener('input', ({target}) => {
-            if (target.closest('.add-item__input[name=name]') || target.closest('.add-item__input[name=category]') || target.closest('.add-item__input[name=description]')
 
-            ) {
-                target.value = target.value.replace(/[^А-Яа-я\s]/g, '');
-                if (target === document.querySelector('.add-item__input[name=description]')) {
-                    const textCount = document.querySelector('.add-item__description .add-item__text-count');
-                    target.value = target.value.replace(/(?<=^.{80}).+/g, '');
-                    textCount.textContent = target.value.length.toString();
+            if (target === document.querySelector('.add-item__input[name=description]')) {
+                const textCount = document.querySelector('.add-item__text-count');
+                if (target.value.length >= 80) {
+                    textCount.textContent = '';
+                    showVerificationSign(true);
+                } else {
+                    showVerificationSign(false);
+                    textCount.textContent = `${target.value.length.toString()}/80`;
                 }
+                return;
+            }
+
+            if (target.closest('.add-item__input[name=name]') || target.closest('.add-item__input[name=category]')) {
+                target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
+                checkLength(target, 10);
             }
             if (target.closest('.add-item__input[name=measure]')) {
-                target.value = target.value.replace(/[^А-Яа-я]/g, '');
+                target.value = target.value.replace(/[^a-zA-ZА-Яа-я]/g, '');
+                checkLength(target, 2);
             }
-            if (target.closest('.add-item__input[name=quantity]') || target.closest('.add-item__input[name=discount]') || target.closest('.add-item__input[name=price]')
-
-            ) {
+            if (target.closest('.add-item__input[name=quantity]') || target.closest('.add-item__input[name=discount]') || target.closest('.add-item__input[name=price]')) {
                 target.value = target.value.replace(/[^0-9]/g, '');
+                checkLength(target, 1);
             }
         });
     };
@@ -300,7 +361,8 @@ export const handleControls = ($) => {
     handleAddItemCheckbox();
     handleBlur();
     handleImageBtn();
-    handleAddImage();
+    handleAddImage().then(() => {
+    });
     closeErrorHandler();
     handleWindowsResizeForImageTextSize();
 };
