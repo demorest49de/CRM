@@ -294,7 +294,6 @@ const createOverlay = () => {
                   <label class="add-item__label" for="add-item__description">
                   описание </label>
                   <span class="add-item__text-count">0/80</span>
-                  <span class="add-item__warn-text"> !!! &#10003;</span>
               </div>
               <textarea class="add-item__input" rows="5"
                name="description" 

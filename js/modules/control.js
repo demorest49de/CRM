@@ -337,16 +337,16 @@ export const handleControls = ($) => {
             } else {
                 handleNotificationSign(target, false);
             }
+            return target.value.length >= length;
         };
         $.form.addEventListener('input', ({target}) => {
 
             if (target === document.querySelector('.add-item__input[name=description]')) {
                 const textCount = document.querySelector('.add-item__text-count');
-                if (target.value.length >= 80) {
+
+                if (checkLength(target, 80)) {
                     textCount.textContent = '';
-                    showVerificationSign(true);
                 } else {
-                    showVerificationSign(false);
                     textCount.textContent = `${target.value.length.toString()}/80`;
                 }
                 return;
