@@ -169,8 +169,6 @@ export const handleControls = ($) => {
 
     const showWarnNotification = () => {
         const warnText = document.querySelector('.add-item__warn-text');
-        warnText.style.color = 'darkred';
-        warnText.textContent = '  !!!';
         setTimeout(() => {
             if (!warnText.classList.contains('add-item__warn-text_visible')) warnText.classList.add('add-item__warn-text_visible');
         }, 500);
@@ -191,20 +189,30 @@ export const handleControls = ($) => {
         return warnText;
     };
 
-    const addVerificationSign = (labelBlock, isShow) => {
+    const handleNotificationSign = (target, showVerification = false, showWarning = false) => {
+        const labelBlock = target.parentNode.querySelector('.add-item__subblock');
         console.log(' : ', labelBlock);
-        if (!labelBlock.parentNode.querySelector('.add-item__warn-text')) {
+        if (!labelBlock.querySelector('.add-item__warn-text')) {
             const warnText = createWarnText();
-            labelBlock.insertAdjacentHTML('afterend', warnText.outerHTML);
+            labelBlock.insertAdjacentHTML('beforeend', warnText.outerHTML);
         }
-        const warnText = document.querySelector('.add-item__name .add-item__warn-text');
-        warnText.style.color = 'darkgreen';
-        isShow ? warnText.innerHTML = '  &#10003;' : warnText.innerHTML = '';
+
+        const warnText = labelBlock.querySelector('.add-item__warn-text');
+
+        if (showVerification) {
+            warnText.style.color = 'darkgreen';
+        }
+        showVerification ? warnText.innerHTML = '  &#10003;' : warnText.innerHTML = '';
+
+        if (showWarning) {
+            warnText.style.color = 'darkred';
+            warnText.textContent = '  !!!';
+        }
+
         setTimeout(() => {
             if (!warnText.classList.contains('add-item__warn-text_visible')) {
                 warnText.classList.add('add-item__warn-text_visible');
             }
-            console.log(' : ', warnText);
         }, 500);
     };
 
@@ -322,14 +330,12 @@ export const handleControls = ($) => {
         });
     };
 
-    const addMarkChecked = () => {
-
-    };
-
     const handleInput = () => {
         const checkLength = (target, length) => {
             if (target.value.length >= length) {
-                addVerificationSign(target.closest('.add-item__subblock'), true);
+                handleNotificationSign(target, true);
+            } else {
+                handleNotificationSign(target, false);
             }
         };
         $.form.addEventListener('input', ({target}) => {
