@@ -70,7 +70,7 @@ export const handleControls = ($) => {
     });
 
     const showModal = async (element) => {
-        console.log(' : ', element);
+
         if (element === $.addItemBtn) {
             await loadStylesAddItem('css/additem.css');
             $.app.append($.overlay);
@@ -122,6 +122,14 @@ export const handleControls = ($) => {
         $.overlay.addEventListener('click', event => {
             const target = event.target;
             if (target === $.overlay || target.closest('.add-item-close-button')) {
+
+                const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
+                console.log(' : ', tr);
+                if (tr) {
+                    tr.removeAttribute('data-is-editable');
+                    $.form.reset();
+                }
+
                 $.overlay.classList.remove('is-visible');
                 hideImage();
                 $.form.querySelector('.add-item__image-size-text').classList.remove('is-visible');
@@ -151,7 +159,9 @@ export const handleControls = ($) => {
         $.tbody.addEventListener('click', e => {
             const target = e.target;
             if (target.closest('.list-product__button-edit')) {
-                console.log(' : ',);
+
+                const tr = target.closest('.list-product__table-tr');
+                tr.setAttribute('data-is-editable', 'true');
                 showModal(target);
             }
         });
@@ -175,19 +185,17 @@ export const handleControls = ($) => {
         }, 500);
     };
 
-    const createWarnText = () =>{
+    const createWarnText = () => {
         const warnText = document.createElement('span');
         warnText.classList.add('add-item__warn-text');
         return warnText;
-    }
+    };
 
-    const addVerificationSign = (label, isShow) => {
-
-        console.log(' : ',label.parentNode);
-        console.log(' : ',!!label.parentNode.querySelector('.add-item__warn-text'));
-        if (!label.parentNode.querySelector('.add-item__warn-text')) {
+    const addVerificationSign = (labelBlock, isShow) => {
+        console.log(' : ', labelBlock);
+        if (!labelBlock.parentNode.querySelector('.add-item__warn-text')) {
             const warnText = createWarnText();
-            label.insertAdjacentHTML('afterend', warnText.outerHTML);
+            labelBlock.insertAdjacentHTML('afterend', warnText.outerHTML);
         }
         const warnText = document.querySelector('.add-item__name .add-item__warn-text');
         warnText.style.color = 'darkgreen';
@@ -242,6 +250,7 @@ export const handleControls = ($) => {
             }
             // hide red text
             $.form.querySelector('.add-item__image-size-text').classList.remove('is-visible');
+            $.form.reset();
             hideImage();
         });
     };
@@ -320,7 +329,7 @@ export const handleControls = ($) => {
     const handleInput = () => {
         const checkLength = (target, length) => {
             if (target.value.length >= length) {
-                addVerificationSign(target.previousSibling.previousSibling, true);
+                addVerificationSign(target.closest('.add-item__subblock'), true);
             }
         };
         $.form.addEventListener('input', ({target}) => {
