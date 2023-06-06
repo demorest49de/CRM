@@ -54,24 +54,26 @@ const checkLength = (target, length) => {
     return target.value.length >= length;
 };
 
-export const handleDiscountValidation = (target) =>{
-    if (target.closest('.add-item__input[name=discount]')) {
-        target.value = target.value.replace(/[^0-9]/g, '');
-        checkLength(target, 1);
+export const handleDiscountValidation = () => {
+    const target = document.querySelector('.add-item__input[name=discount]');
 
-        let numValue;
+    target.value = target.value.replace(/[^0-9]/g, '');
+    checkLength(target, 1);
 
-        if(target.value !== ""){
-            numValue = +target.value;
-        }
+    let numValue;
 
-        if (numValue === 0 || numValue > 99) {
-            handleNotificationSign(target, null, true);
-        }
+    if (target.value !== "") {
+        numValue = +target.value;
     }
-}
+
+    if (numValue === 0 || numValue > 99) {
+        handleNotificationSign(target, null, true);
+        return false;
+    }
+};
 
 export const handleControls = ($) => {
+
     const removeAllNotifications = ($) => {
         $.form.querySelectorAll('.add-item__warn-text').forEach(item => {
                 item.remove();
@@ -240,13 +242,6 @@ export const handleControls = ($) => {
         });
     };
 
-    const showWarnNotification = () => {
-        const warnText = document.querySelector('.add-item__warn-text');
-        setTimeout(() => {
-            if (!warnText.classList.contains('add-item__warn-text_visible')) warnText.classList.add('add-item__warn-text_visible');
-        }, 500);
-    };
-
     // написать запрос к апи метод post
     const submitFormData = () => {
         $.form.addEventListener('submit', async e => {
@@ -256,6 +251,10 @@ export const handleControls = ($) => {
             const {
                 name, category, measure, discount, description, quantity, price, image,
             } = data;
+
+            if (!handleDiscountValidation())
+            //
+            return;
 
             console.log('image: ', image);
             const imageToSave = await toBase64(image);
@@ -341,6 +340,7 @@ export const handleControls = ($) => {
             }, 500);
         });
     };
+
     // add new image instead of existing one
     const handleAddImage = async () => {
         const fileBtn = $.form.querySelector('.add-item__button-image');
@@ -355,6 +355,21 @@ export const handleControls = ($) => {
     const handleWindowsResizeForImageTextSize = () => {
         window.addEventListener('resize', () => {
             checkWindowResize();
+        });
+    };
+
+    const handleDescriptionValidation = () => {
+        const target = $.form.querySelector('.add-item__input[name=description]');
+        if (target.value.length < 80) {
+            handleNotificationSign(target, null, true);
+            return false;
+        }
+    };
+
+    const handleDescriptionValidationOnBlur = () => {
+        const description = $.form.querySelector('.add-item__input[name=description]');
+        description.addEventListener('blur', () => {
+            handleDescriptionValidation();
         });
     };
 
@@ -373,7 +388,7 @@ export const handleControls = ($) => {
                 return;
             }
 
-            handleDiscountValidation(target);
+            handleDiscountValidation();
 
             if (target.closest('.add-item__input[name=name]') || target.closest('.add-item__input[name=category]')) {
                 target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
@@ -390,6 +405,7 @@ export const handleControls = ($) => {
         });
     };
 
+    handleDescriptionValidationOnBlur();
     handleInput();
     handleOpenForm();
     handleCloseForm();

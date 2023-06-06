@@ -37,6 +37,6 @@ export const handleDiscount = (target, $) => {
     inputDiscount.value = '';
     inputDiscount.removeAttribute('required');
   }
-  handleDiscountValidation(target.parentNode.querySelector('.add-item__input[name=discount]'));
+  handleDiscountValidation();
   calculateFormTotal($);
 };
