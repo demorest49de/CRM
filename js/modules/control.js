@@ -243,20 +243,6 @@ export const handleControls = ($) => {
         });
     };
 
-    // const validateInput = () => {
-    //     return new Promise((resolve, reject) => {
-    //         const res1 = !handleDiscountValidation();
-    //         const res2 = !handleDescriptionValidation();
-    //         // console.log(' res1: ', res1);
-    //         // console.log(' res2: ', res2);
-    //         if (res1 || res2) {
-    //             reject('false');
-    //         } else {
-    //             resolve(true);
-    //         }
-    //     });
-    // };
-
     // написать запрос к апи метод post
     const submitFormData = () => {
         $.form.addEventListener('submit', async (e) => {
@@ -312,6 +298,8 @@ export const handleControls = ($) => {
                 // hide red text
                 $.form.querySelector('.add-item__image-size-text').classList.remove('is-visible');
                 $.form.reset();
+                removeAllNotifications($);
+                $.overlay.classList.remove('is-visible');
                 hideImage();
             }).catch((error) => {
                 console.log(' : ', error);
