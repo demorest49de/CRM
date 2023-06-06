@@ -12,7 +12,8 @@ export const calculateTotal = ($) => {
 };
 
 export const calculateFormTotal = ($) => {
-  const discount = $.form.discount.value;
+  let discount = $.form.discount.value;
+  if(discount < 0 || discount >= 100) discount = 0;
   const price = $.form.price.value;
   const count = $.form.quantity.value;
   const result = Math.floor(+price * +count *

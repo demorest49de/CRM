@@ -58,7 +58,14 @@ export const handleDiscountValidation = (target) =>{
     if (target.closest('.add-item__input[name=discount]')) {
         target.value = target.value.replace(/[^0-9]/g, '');
         checkLength(target, 1);
-        if (target.value > 99) {
+
+        let numValue;
+
+        if(target.value !== ""){
+            numValue = +target.value;
+        }
+
+        if (numValue === 0 || numValue > 99) {
             handleNotificationSign(target, null, true);
         }
     }
