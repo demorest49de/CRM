@@ -5,7 +5,15 @@ import {
 } from './restOperations.js';
 import {toBase64} from './toBase64.js';
 
+
 export const handleControls = ($) => {
+    const removeAllNotifications = ($) => {
+        $.form.querySelectorAll('.add-item__warn-text').forEach(item => {
+                item.remove();
+            }
+        );
+    };
+
     const hideImage = () => {
         const image = $.form.querySelector('.add-item__image-preview');
         image?.remove();
@@ -70,21 +78,22 @@ export const handleControls = ($) => {
     });
 
     const showModal = async (element) => {
-
-        if (element === $.addItemBtn) {
-            await loadStylesAddItem('css/additem.css');
+        if (!$.app.querySelector('#app .overlay')) {
             $.app.append($.overlay);
+        }
+        if (element === $.addItemBtn) {
+            await loadStylesAddItem('css/additem.css').then(() => {
+                $.overlay.classList.add('is-visible');
+            });
             handleDiscount($.form.querySelector('.add-item__checkbox'), $);
             $.overlay.querySelector('.add-item__title').textContent = 'добавить товар';
             $.overlay.querySelector('button.add-item__button-item[type=submit]').textContent = 'добавить товар';
             $.overlay.querySelector('.add-item__id-block').style.display = `none`;
-            setTimeout(() => {
-                $.overlay.classList.add('is-visible');
-            }, 300);
         }
         if (element.classList.contains('list-product__button-edit')) {
-            await loadStylesAddItem('css/additem.css');
-            $.app.append($.overlay);
+            await loadStylesAddItem('css/additem.css').then(() => {
+                $.overlay.classList.add('is-visible');
+            });
 
             $.overlay.querySelector('.add-item__title').textContent = 'Изменить товар';
             $.overlay.querySelector('button.add-item__button-item[type=submit]').textContent = 'Сохранить';
@@ -105,9 +114,6 @@ export const handleControls = ($) => {
             const id = $.overlay.querySelector('.vendor-code__id');
             id.textContent = tdId;
 
-            setTimeout(() => {
-                $.overlay.classList.add('is-visible');
-            }, 300);
             openEditHandler($, tdId);
         }
     };
@@ -126,15 +132,17 @@ export const handleControls = ($) => {
                 const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
                 console.log(' : ', tr);
                 if (tr) {
+                    removeAllNotifications($);
                     tr.removeAttribute('data-is-editable');
                     $.form.reset();
+                    $.overlay.remove();
                 }
 
-                $.overlay.classList.remove('is-visible');
                 hideImage();
                 $.form.querySelector('.add-item__image-size-text').classList.remove('is-visible');
                 setTimeout(() => {
-                    $.overlay.remove();
+                    $.overlay.classList.remove('is-visible');
+                    // $.overlay.remove();
                 }, 300);
             }
         });
@@ -159,7 +167,7 @@ export const handleControls = ($) => {
         $.tbody.addEventListener('click', e => {
             const target = e.target;
             if (target.closest('.list-product__button-edit')) {
-
+                removeAllNotifications($);
                 const tr = target.closest('.list-product__table-tr');
                 tr.setAttribute('data-is-editable', 'true');
                 showModal(target);
@@ -174,23 +182,20 @@ export const handleControls = ($) => {
         }, 500);
     };
 
-    const showVerificationSign = (isShow) => {
-        const warnText = document.querySelector('.add-item__warn-text');
-        warnText.style.color = 'darkgreen';
-        isShow ? warnText.innerHTML = '  &#10003;' : warnText.innerHTML = '';
-        setTimeout(() => {
-            if (!warnText.classList.contains('add-item__warn-text_visible')) warnText.classList.add('add-item__warn-text_visible');
-        }, 500);
-    };
-
     const createWarnText = () => {
         const warnText = document.createElement('span');
         warnText.classList.add('add-item__warn-text');
         return warnText;
     };
 
-    const handleNotificationSign = (target, showVerification = false, showWarning = false) => {
-        const labelBlock = target.parentNode.querySelector('.add-item__subblock');
+    const handleNotificationSign = (target, showVerification = false, showWarning = false,) => {
+        let labelBlock = null;
+        if (target === document.querySelector('.add-item__input[name=discount]')) {
+            labelBlock = target.parentNode.parentNode.querySelector('.add-item__subblock');
+        } else {
+            labelBlock = target.parentNode.querySelector('.add-item__subblock');
+        }
+
         console.log(' : ', labelBlock);
         if (!labelBlock.querySelector('.add-item__warn-text')) {
             const warnText = createWarnText();
@@ -216,6 +221,10 @@ export const handleControls = ($) => {
         }, 500);
     };
 
+    const validateForm = () =>{
+
+    }
+
     // написать запрос к апи метод post
     const submitFormData = () => {
         $.form.addEventListener('submit', async e => {
@@ -225,10 +234,12 @@ export const handleControls = ($) => {
             const {
                 name, category, measure, discount, description, quantity, price, image,
             } = data;
-            if (description.length < 80) {
-                showWarnNotification();
-                return;
-            }
+
+            // if (description.length < 80) {
+            //     handleNotificationSign();
+            //     return;
+            // }
+
             console.log('image: ', image);
             const imageToSave = await toBase64(image);
             console.log('imageToSave: ', imageToSave);
@@ -330,6 +341,8 @@ export const handleControls = ($) => {
         });
     };
 
+
+
     const handleInput = () => {
         const checkLength = (target, length) => {
             if (target.value.length >= length) {
@@ -339,6 +352,7 @@ export const handleControls = ($) => {
             }
             return target.value.length >= length;
         };
+
         $.form.addEventListener('input', ({target}) => {
 
             if (target === document.querySelector('.add-item__input[name=description]')) {
@@ -352,6 +366,14 @@ export const handleControls = ($) => {
                 return;
             }
 
+            if (target.closest('.add-item__input[name=discount]')) {
+                target.value = target.value.replace(/[^0-9]/g, '');
+                checkLength(target, 1);
+                if (target.value > 99) {
+                    handleNotificationSign(target, null, true);
+                }
+            }
+
             if (target.closest('.add-item__input[name=name]') || target.closest('.add-item__input[name=category]')) {
                 target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
                 checkLength(target, 10);
@@ -360,7 +382,7 @@ export const handleControls = ($) => {
                 target.value = target.value.replace(/[^a-zA-ZА-Яа-я]/g, '');
                 checkLength(target, 2);
             }
-            if (target.closest('.add-item__input[name=quantity]') || target.closest('.add-item__input[name=discount]') || target.closest('.add-item__input[name=price]')) {
+            if (target.closest('.add-item__input[name=quantity]') || target.closest('.add-item__input[name=price]')) {
                 target.value = target.value.replace(/[^0-9]/g, '');
                 checkLength(target, 1);
             }

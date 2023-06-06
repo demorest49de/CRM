@@ -23,12 +23,14 @@ export const handleDiscount = (target, $) => {
   const inputDiscount = $.form.discount;
   if (target.checked) {
     inputDiscount.removeAttribute('disabled');
-    inputDiscount.value = inputDiscount.getAttribute('data-discont');
-    inputDiscount.removeAttribute('data-discont');
+    if(inputDiscount.hasAttribute('data-discont')){
+      inputDiscount.value = inputDiscount.getAttribute('data-discont');
+      inputDiscount.removeAttribute('data-discont');
+    }
     inputDiscount.setAttribute('required', 'required');
   } else {
-    inputDiscount.setAttribute('disabled', '');
     inputDiscount.setAttribute('data-discont', inputDiscount.value);
+    inputDiscount.setAttribute('disabled', '');
     inputDiscount.value = '';
     inputDiscount.removeAttribute('required');
   }
