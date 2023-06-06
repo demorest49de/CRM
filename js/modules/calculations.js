@@ -1,3 +1,5 @@
+import {handleDiscountValidation} from "./control.js";
+
 export const calculateTotal = ($) => {
   const totalPriceOfItems = $.header.querySelector('.card-sum__price-value');
   const totalPricesCount = $.tbody.querySelectorAll('.list-product__table-td[data-total-price]');
@@ -34,5 +36,6 @@ export const handleDiscount = (target, $) => {
     inputDiscount.value = '';
     inputDiscount.removeAttribute('required');
   }
+  handleDiscountValidation(target.parentNode.querySelector('.add-item__input[name=discount]'));
   calculateFormTotal($);
 };

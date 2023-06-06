@@ -1,10 +1,68 @@
 import {calculateFormTotal, handleDiscount} from './calculations.js';
 import {loadStylesAddItem} from './loadStyles.js';
 import {
-    sendGoodsHandler, deleteGoodsHandler, openEditHandler, updateItemHandler, loadGoodsHandler,
+    sendGoodsHandler, deleteGoodsHandler, openEditHandler, updateItemHandler,
 } from './restOperations.js';
 import {toBase64} from './toBase64.js';
 
+
+const createWarnText = () => {
+    const warnText = document.createElement('span');
+    warnText.classList.add('add-item__warn-text');
+    return warnText;
+};
+
+const handleNotificationSign = (target, showVerification = false, showWarning = false,) => {
+    let labelBlock = null;
+    if (target === document.querySelector('.add-item__input[name=discount]')) {
+        labelBlock = target.parentNode.parentNode.querySelector('.add-item__subblock');
+    } else {
+        labelBlock = target.parentNode.querySelector('.add-item__subblock');
+    }
+
+    console.log(' : ', labelBlock);
+    if (!labelBlock.querySelector('.add-item__warn-text')) {
+        const warnText = createWarnText();
+        labelBlock.insertAdjacentHTML('beforeend', warnText.outerHTML);
+    }
+
+    const warnText = labelBlock.querySelector('.add-item__warn-text');
+
+    if (showVerification) {
+        warnText.style.color = 'darkgreen';
+    }
+    showVerification ? warnText.innerHTML = '  &#10003;' : warnText.innerHTML = '';
+
+    if (showWarning) {
+        warnText.style.color = 'darkred';
+        warnText.textContent = '  !!!';
+    }
+
+    setTimeout(() => {
+        if (!warnText.classList.contains('add-item__warn-text_visible')) {
+            warnText.classList.add('add-item__warn-text_visible');
+        }
+    }, 500);
+};
+
+const checkLength = (target, length) => {
+    if (target.value.length >= length) {
+        handleNotificationSign(target, true);
+    } else {
+        handleNotificationSign(target, false);
+    }
+    return target.value.length >= length;
+};
+
+export const handleDiscountValidation = (target) =>{
+    if (target.closest('.add-item__input[name=discount]')) {
+        target.value = target.value.replace(/[^0-9]/g, '');
+        checkLength(target, 1);
+        if (target.value > 99) {
+            handleNotificationSign(target, null, true);
+        }
+    }
+}
 
 export const handleControls = ($) => {
     const removeAllNotifications = ($) => {
@@ -182,49 +240,6 @@ export const handleControls = ($) => {
         }, 500);
     };
 
-    const createWarnText = () => {
-        const warnText = document.createElement('span');
-        warnText.classList.add('add-item__warn-text');
-        return warnText;
-    };
-
-    const handleNotificationSign = (target, showVerification = false, showWarning = false,) => {
-        let labelBlock = null;
-        if (target === document.querySelector('.add-item__input[name=discount]')) {
-            labelBlock = target.parentNode.parentNode.querySelector('.add-item__subblock');
-        } else {
-            labelBlock = target.parentNode.querySelector('.add-item__subblock');
-        }
-
-        console.log(' : ', labelBlock);
-        if (!labelBlock.querySelector('.add-item__warn-text')) {
-            const warnText = createWarnText();
-            labelBlock.insertAdjacentHTML('beforeend', warnText.outerHTML);
-        }
-
-        const warnText = labelBlock.querySelector('.add-item__warn-text');
-
-        if (showVerification) {
-            warnText.style.color = 'darkgreen';
-        }
-        showVerification ? warnText.innerHTML = '  &#10003;' : warnText.innerHTML = '';
-
-        if (showWarning) {
-            warnText.style.color = 'darkred';
-            warnText.textContent = '  !!!';
-        }
-
-        setTimeout(() => {
-            if (!warnText.classList.contains('add-item__warn-text_visible')) {
-                warnText.classList.add('add-item__warn-text_visible');
-            }
-        }, 500);
-    };
-
-    const validateForm = () =>{
-
-    }
-
     // написать запрос к апи метод post
     const submitFormData = () => {
         $.form.addEventListener('submit', async e => {
@@ -234,11 +249,6 @@ export const handleControls = ($) => {
             const {
                 name, category, measure, discount, description, quantity, price, image,
             } = data;
-
-            // if (description.length < 80) {
-            //     handleNotificationSign();
-            //     return;
-            // }
 
             console.log('image: ', image);
             const imageToSave = await toBase64(image);
@@ -341,17 +351,7 @@ export const handleControls = ($) => {
         });
     };
 
-
-
     const handleInput = () => {
-        const checkLength = (target, length) => {
-            if (target.value.length >= length) {
-                handleNotificationSign(target, true);
-            } else {
-                handleNotificationSign(target, false);
-            }
-            return target.value.length >= length;
-        };
 
         $.form.addEventListener('input', ({target}) => {
 
@@ -366,13 +366,7 @@ export const handleControls = ($) => {
                 return;
             }
 
-            if (target.closest('.add-item__input[name=discount]')) {
-                target.value = target.value.replace(/[^0-9]/g, '');
-                checkLength(target, 1);
-                if (target.value > 99) {
-                    handleNotificationSign(target, null, true);
-                }
-            }
+            handleDiscountValidation(target);
 
             if (target.closest('.add-item__input[name=name]') || target.closest('.add-item__input[name=category]')) {
                 target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');

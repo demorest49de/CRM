@@ -11,7 +11,7 @@ body {
     background: rgba(0, 0, 0, 0.5);
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .overlay.is-visible,
@@ -43,7 +43,7 @@ body {
     bottom: 0px;
     top: 137px;
     margin: 0 auto;
-    transition: all 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
 }
 
 .add-item__container {
