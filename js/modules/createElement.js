@@ -305,7 +305,7 @@ const createOverlay = () => {
                 <label class="add-item__label" for="add-item__quantity">количество</label>
               </div>
               <input class="add-item__input" type="number"
-               name="quantity" id="add-item__quantity" required>
+               name="quantity" id="add-item__quantity" min="1" required>
             </div>
           
             <div class="add-item__block add-item__price">
