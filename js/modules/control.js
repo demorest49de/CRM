@@ -12,17 +12,6 @@ const createWarnText = () => {
     return warnText;
 };
 
-const countDescriptionLength = () => {
-    const target = document.querySelector('.add-item__input[name=description]');
-    const textCount = document.querySelector('.add-item__text-count');
-
-    if (checkLength(target, 80)) {
-        textCount.textContent = '';
-    } else {
-        textCount.textContent = `${target.value.length.toString()}/80`;
-    }
-};
-
 export const handleAllValidations = ($) => {
 
     const isDiscountValidated = handleDiscountValidation();
@@ -158,6 +147,17 @@ export const handleDiscountValidation = () => {
 };
 
 export const handleControls = ($) => {
+
+    const countDescriptionLength = () => {
+        const target = document.querySelector('.add-item__input[name=description]');
+        const textCount = document.querySelector('.add-item__text-count');
+
+        if (checkLength(target, 80)) {
+            textCount.textContent = '';
+        } else {
+            textCount.textContent = `${target.value.length.toString()}/80`;
+        }
+    };
 
     const removeAllNotifications = ($) => {
         $.form.querySelectorAll('.add-item__warn-text').forEach(item => {
