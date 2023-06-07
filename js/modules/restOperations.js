@@ -1,5 +1,6 @@
 import {renderItems} from './render.js';
 import {calculateFormTotal, calculateTotal} from './calculations.js';
+import {handleAllValidations} from "./control.js";
 
 
 const fetchRequest = async (url, {
@@ -140,6 +141,7 @@ const cbOpenEdit = (error, data, $, id) => {
   $.form.description.value = data.description;
   $.form.quantity.value = data.count;
   $.form.price.value = data.price;
+  handleAllValidations($);
   calculateFormTotal($);
 };
 
