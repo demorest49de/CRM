@@ -40,6 +40,7 @@ export const handleAllValidations = ($) => {
 
     for (const target of Array.from([name, category, measure, price, quantity, description])) {
         if (target.value != '') {
+
             console.log(' : ', target.outerHTML);
             if (target === description) {
                 isRestFieldsValidated = checkLength(target, 80);
@@ -99,6 +100,12 @@ const handleNotificationSign = (target, showVerification = false, showWarning = 
 };
 
 const checkLength = (target, length) => {
+
+    if (target.value.length === 0) {
+        handleNotificationSign(target, false, false);
+        return false;
+    }
+
     if (target.value.length >= length) {
         handleNotificationSign(target, true);
     } else {
@@ -114,10 +121,11 @@ export const handleDiscountValidation = () => {
 
     let numValue;
 
-    if (target.value !== "") {
+    if (target.value.length !== 0) {
         numValue = +target.value;
     } else {
         handleNotificationSign(target, false, false);
+        return false;
     }
 
     if (numValue === 0 || numValue > 99) {
@@ -128,7 +136,7 @@ export const handleDiscountValidation = () => {
         handleNotificationSign(target, true, false);
         return true;
     }
-    return true;
+    return false;
 };
 
 export const handleControls = ($) => {
@@ -305,11 +313,7 @@ export const handleControls = ($) => {
 
     const validateInput = () => {
         return new Promise((resolve, reject) => {
-            const res1 = !handleDiscountValidation();
-            const res2 = !handleDescriptionValidation();
-            // console.log(' res1: ', res1);
-            // console.log(' res2: ', res2);
-            if (res1 || res2) {
+            if (handleAllValidations($)) {
                 reject('false');
             } else {
                 resolve(true);
