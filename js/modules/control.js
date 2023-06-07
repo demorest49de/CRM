@@ -30,37 +30,37 @@ export const handleAllValidations = ($) => {
 
             console.log(' : ', target.outerHTML);
             if (target === description) {
-                isRestFieldsValidated = checkLength(target, 80);
+                isRestFieldsValidated = handleCheckLength(target, 80);
                 continue;
             }
 
             if (target === measure) {
                 target.value = target.value.replace(/[^a-zA-ZА-Яа-я]/g, '');
-                isRestFieldsValidated = checkLength(target, 2);
+                isRestFieldsValidated = handleCheckLength(target, 2);
                 continue;
             }
 
             if (target === price) {
                 target.value = target.value.replace(/([^0-9])/g, '');
-                isRestFieldsValidated = checkLength(target, 1);
+                isRestFieldsValidated = handleCheckLength(target, 1);
                 continue;
             }
 
             if (target === quantity) {
                 target.value = target.value.replace(/([^0-9])/g, '');
-                isRestFieldsValidated = checkLength(target, 1);
+                isRestFieldsValidated = handleCheckLength(target, 1);
                 continue;
             }
 
             if (target === name) {
                 target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
-                isRestFieldsValidated = checkLength(target, 10);
+                isRestFieldsValidated = handleCheckLength(target, 10);
                 continue;
             }
 
             if (target === category) {
                 target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
-                isRestFieldsValidated = checkLength(target, 10);
+                isRestFieldsValidated = handleCheckLength(target, 10);
             }
 
         } else {
@@ -106,7 +106,7 @@ const handleNotificationSign = (target, showVerification = false, showWarning = 
     }, 500);
 };
 
-const checkLength = (target, length) => {
+const handleCheckLength = (target, length) => {
 
     if (target.value.length === 0) {
         handleNotificationSign(target, false, false);
@@ -152,7 +152,7 @@ export const handleControls = ($) => {
         const target = document.querySelector('.add-item__input[name=description]');
         const textCount = document.querySelector('.add-item__text-count');
 
-        if (checkLength(target, 80)) {
+        if (handleCheckLength(target, 80)) {
             textCount.textContent = '';
         } else {
             textCount.textContent = `${target.value.length.toString()}/80`;
