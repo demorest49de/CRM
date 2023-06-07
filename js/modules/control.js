@@ -25,8 +25,6 @@ const countDescriptionLength = () => {
 
 export const handleAllValidations = ($) => {
 
-    countDescriptionLength();
-
     const isDiscountValidated = handleDiscountValidation();
 
     const name = $.form.querySelector('.add-item__input[name=name]');
@@ -53,18 +51,34 @@ export const handleAllValidations = ($) => {
                 continue;
             }
 
-            if (target === price || target === quantity) {
+            if (target === price) {
                 target.value = target.value.replace(/([^0-9])/g, '');
                 isRestFieldsValidated = checkLength(target, 1);
                 continue;
             }
 
-            target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
-            isRestFieldsValidated = checkLength(target, 10);
+            if (target === quantity) {
+                target.value = target.value.replace(/([^0-9])/g, '');
+                isRestFieldsValidated = checkLength(target, 1);
+                continue;
+            }
 
-            return isDiscountValidated && isRestFieldsValidated;
+            if (target === name) {
+                target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
+                isRestFieldsValidated = checkLength(target, 10);
+                continue;
+            }
+
+            if (target === category) {
+                target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
+                isRestFieldsValidated = checkLength(target, 10);
+            }
+
+        } else {
+            handleNotificationSign(target, false, false);
         }
     }
+    return isDiscountValidated && isRestFieldsValidated;
 };
 
 const handleNotificationSign = (target, showVerification = false, showWarning = false,) => {
@@ -84,8 +98,12 @@ const handleNotificationSign = (target, showVerification = false, showWarning = 
 
     if (showVerification) {
         warnText.style.color = 'darkgreen';
+        warnText.textContent = '  &#10003;';
+        warnText.innerHTML = '  &#10003;';
+    } else {
+        warnText.innerHTML = '';
+        warnText.textContent = '';
     }
-    showVerification ? warnText.innerHTML = '  &#10003;' : warnText.innerHTML = '';
 
     if (showWarning) {
         warnText.style.color = 'darkred';
@@ -445,6 +463,9 @@ export const handleControls = ($) => {
     const handleInput = () => {
 
         $.form.addEventListener('input', ({target}) => {
+
+            countDescriptionLength();
+
             handleAllValidations($);
         });
     };
