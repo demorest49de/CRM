@@ -1,7 +1,7 @@
 import {calculateFormTotal, handleDiscount} from './calculations.js';
-import {loadStylesAddItem} from './loadStyles.js';
+import {loadModalStyles} from './loadModal.js';
 import {
-    sendGoodsHandler, deleteGoodsHandler, openEditHandler, updateItemHandler, loadGoodsHandler,
+    sendGoodsHandler, deleteGoodsHandler, openEditHandler, updateItemHandler,
 } from './restOperations.js';
 import {toBase64} from './toBase64.js';
 
@@ -10,6 +10,60 @@ const createWarnText = () => {
     const warnText = document.createElement('span');
     warnText.classList.add('add-item__warn-text');
     return warnText;
+};
+
+const countDescriptionLength = () => {
+    const target = document.querySelector('.add-item__input[name=description]');
+    const textCount = document.querySelector('.add-item__text-count');
+
+    if (checkLength(target, 80)) {
+        textCount.textContent = '';
+    } else {
+        textCount.textContent = `${target.value.length.toString()}/80`;
+    }
+};
+
+export const handleAllValidations = ($) => {
+
+    countDescriptionLength();
+
+    const isDiscountValidated = handleDiscountValidation();
+
+    const name = $.form.querySelector('.add-item__input[name=name]');
+    const category = $.form.querySelector('.add-item__input[name=category]');
+    const measure = $.form.querySelector('.add-item__input[name=measure]');
+    const price = $.form.querySelector('.add-item__input[name=price]');
+    const quantity = $.form.querySelector('.add-item__input[name=quantity]');
+    const description = $.form.querySelector('.add-item__input[name=description]');
+
+    let isRestFieldsValidated = true;
+
+    for (const target of Array.from([name, category, measure, price, quantity, description])) {
+        if (target.value != '') {
+            console.log(' : ', target.outerHTML);
+            if (target === description) {
+                isRestFieldsValidated = checkLength(target, 80);
+                continue;
+            }
+
+            if (target === measure) {
+                target.value = target.value.replace(/[^a-zA-ZА-Яа-я]/g, '');
+                isRestFieldsValidated = checkLength(target, 2);
+                continue;
+            }
+
+            if (target === price || target === quantity) {
+                target.value = target.value.replace(/([^0-9])/g, '');
+                isRestFieldsValidated = checkLength(target, 1);
+                continue;
+            }
+
+            target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
+            isRestFieldsValidated = checkLength(target, 10);
+
+            return isDiscountValidated && isRestFieldsValidated;
+        }
+    }
 };
 
 const handleNotificationSign = (target, showVerification = false, showWarning = false,) => {
@@ -48,7 +102,7 @@ const checkLength = (target, length) => {
     if (target.value.length >= length) {
         handleNotificationSign(target, true);
     } else {
-        handleNotificationSign(target, false);
+        handleNotificationSign(target, false, true);
     }
     return target.value.length >= length;
 };
@@ -57,18 +111,22 @@ export const handleDiscountValidation = () => {
     const target = document.querySelector('.add-item__input[name=discount]');
 
     target.value = target.value.replace(/[^0-9]/g, '');
-    checkLength(target, 1);
 
     let numValue;
 
     if (target.value !== "") {
         numValue = +target.value;
+    } else {
+        handleNotificationSign(target, false, false);
     }
 
     if (numValue === 0 || numValue > 99) {
-        handleNotificationSign(target, null, true);
-
+        handleNotificationSign(target, false, true);
         return false;
+    }
+    if (numValue > 0 && numValue <= 99) {
+        handleNotificationSign(target, true, false);
+        return true;
     }
     return true;
 };
@@ -149,8 +207,9 @@ export const handleControls = ($) => {
         if (!$.app.querySelector('#app .overlay')) {
             $.app.append($.overlay);
         }
+        //add
         if (element === $.addItemBtn) {
-            await loadStylesAddItem('css/additem.css').then(() => {
+            await loadModalStyles('css/additem.css').then(() => {
                 $.overlay.classList.add('is-visible');
             });
             handleDiscount($.form.querySelector('.add-item__checkbox'), $);
@@ -158,8 +217,9 @@ export const handleControls = ($) => {
             $.overlay.querySelector('button.add-item__button-item[type=submit]').textContent = 'добавить товар';
             $.overlay.querySelector('.add-item__id-block').style.display = `none`;
         }
+        //edit
         if (element.classList.contains('list-product__button-edit')) {
-            await loadStylesAddItem('css/additem.css').then(() => {
+            await loadModalStyles('css/additem.css').then(() => {
                 $.overlay.classList.add('is-visible');
             });
 
@@ -378,61 +438,13 @@ export const handleControls = ($) => {
         });
     };
 
-    const handleDescriptionValidation = () => {
-        const target = $.form.querySelector('.add-item__input[name=description]');
-        if (target.value.length < 80) {
-            handleNotificationSign(target, null, true);
-
-            return false;
-        }
-        return true;
-    };
-
-    const handleDescriptionValidationOnBlur = () => {
-        const description = $.form.querySelector('.add-item__input[name=description]');
-        description.addEventListener('blur', () => {
-            handleDescriptionValidation();
-        });
-    };
-
-    const countDescriptionLength = (target) => {
-        if (target === document.querySelector('.add-item__input[name=description]')) {
-            const textCount = document.querySelector('.add-item__text-count');
-
-            if (checkLength(target, 80)) {
-                textCount.textContent = '';
-            } else {
-                textCount.textContent = `${target.value.length.toString()}/80`;
-            }
-            return true;
-        }
-        return false;
-    };
-
     const handleInput = () => {
 
         $.form.addEventListener('input', ({target}) => {
-
-            if (countDescriptionLength(target)) return;
-
-            handleDiscountValidation();
-
-            if (target.closest('.add-item__input[name=name]') || target.closest('.add-item__input[name=category]')) {
-                target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
-                checkLength(target, 10);
-            }
-            if (target.closest('.add-item__input[name=measure]')) {
-                target.value = target.value.replace(/[^a-zA-ZА-Яа-я]/g, '');
-                checkLength(target, 2);
-            }
-            if (target.closest('.add-item__input[name=quantity]') || target.closest('.add-item__input[name=price]')) {
-                target.value = target.value.replace(/([^0-9])/g, '');
-                checkLength(target, 1);
-            }
+            handleAllValidations($);
         });
     };
 
-    handleDescriptionValidationOnBlur();
     handleInput();
     handleOpenForm();
     handleCloseForm();

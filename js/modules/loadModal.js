@@ -1,8 +1,9 @@
 const styles = new Map();
 
-export const loadStylesAddItem = (url) => {
+export const loadModalStyles = (url) => {
+
   if (styles.has(url)) return styles.get(url);
-  // protestirovat' Map kollekciju;
+
   const stylePromise = new Promise((resolve) => {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
@@ -16,3 +17,9 @@ export const loadStylesAddItem = (url) => {
   styles.set(url, stylePromise);
   return stylePromise;
 };
+
+export const loadModal = () =>{
+  const modalPromise = new Promise((resolve) =>{
+
+  })
+}
