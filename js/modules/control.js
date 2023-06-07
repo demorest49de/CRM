@@ -23,51 +23,65 @@ export const handleAllValidations = ($) => {
     const quantity = $.form.querySelector('.add-item__input[name=quantity]');
     const description = $.form.querySelector('.add-item__input[name=description]');
 
-    let isRestFieldsValidated = true;
+    let notValidatedCount = 0;
+
+    const validatePriceQuanity = (target) => {
+        target.value = target.value.replace(/([^0-9])/g, '');
+        if (target.value > 0) {
+            handleCheckLength(target, 1);
+        } else {
+            handleNotificationSign(target, false, true);
+            notValidatedCount++;
+        }
+    };
+
+    const validateNameCategory = (target) => {
+        target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
+        if (!handleCheckLength(target, 10)) notValidatedCount++;
+    };
 
     for (const target of Array.from([name, category, measure, price, quantity, description])) {
         if (target.value != '') {
 
-            console.log(' : ', target.outerHTML);
+            // console.log(' : ', target.outerHTML);
             if (target === description) {
-                isRestFieldsValidated = handleCheckLength(target, 80);
+                if (!handleCheckLength(target, 80)) notValidatedCount++;
                 continue;
             }
 
             if (target === measure) {
                 target.value = target.value.replace(/[^a-zA-ZА-Яа-я]/g, '');
-                isRestFieldsValidated = handleCheckLength(target, 2);
+                if (!handleCheckLength(target, 2)) notValidatedCount++;
                 continue;
             }
 
             if (target === price) {
-                target.value = target.value.replace(/([^0-9])/g, '');
-                isRestFieldsValidated = handleCheckLength(target, 1);
+                validatePriceQuanity(target);
                 continue;
             }
 
             if (target === quantity) {
-                target.value = target.value.replace(/([^0-9])/g, '');
-                isRestFieldsValidated = handleCheckLength(target, 1);
+                validatePriceQuanity(target);
                 continue;
             }
 
             if (target === name) {
-                target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
-                isRestFieldsValidated = handleCheckLength(target, 10);
+                validateNameCategory(target);
                 continue;
             }
 
             if (target === category) {
-                target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
-                isRestFieldsValidated = handleCheckLength(target, 10);
+                validateNameCategory(target);
+                continue;
             }
 
         } else {
             handleNotificationSign(target, false, false);
         }
     }
-    return isDiscountValidated && isRestFieldsValidated;
+
+    console.log(' isDiscountValidated && notValidatedCount > 0: ', isDiscountValidated && notValidatedCount > 0);
+    return isDiscountValidated && notValidatedCount > 0;
 };
 
 const handleNotificationSign = (target, showVerification = false, showWarning = false,) => {
@@ -132,7 +146,6 @@ export const handleDiscountValidation = () => {
         numValue = +target.value;
     } else {
         handleNotificationSign(target, false, false);
-        return false;
     }
 
     if (numValue === 0 || numValue > 99) {
@@ -143,7 +156,7 @@ export const handleDiscountValidation = () => {
         handleNotificationSign(target, true, false);
         return true;
     }
-    return false;
+    return true;
 };
 
 export const handleControls = ($) => {
