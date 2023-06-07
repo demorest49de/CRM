@@ -244,7 +244,7 @@ export const handleControls = ($) => {
         }
     });
 
-    const showModal = async (element) => {
+    const  showModal = async (element) => {
         if (!$.app.querySelector('#app .overlay')) {
             $.app.append($.overlay);
         }
@@ -365,9 +365,10 @@ export const handleControls = ($) => {
 
             validateInput().then(async (result) => {
 
-                console.log(' : ', result);
+
                 console.log('image: ', image);
                 const imageToSave = await toBase64(image);
+
                 console.log('imageToSave: ', imageToSave);
 
                 $.body.title = name;
@@ -378,7 +379,7 @@ export const handleControls = ($) => {
                 $.body.count = +quantity;
                 $.body.units = measure;
                 console.log(' : ', imageToSave);
-                $.body.image = imageToSave;
+                if(imageToSave !== 'data:') $.body.image = imageToSave;
                 // exist item - put
                 if ($.form.querySelector('.add-item__block-id')
                     .getAttribute('data-id')) {
