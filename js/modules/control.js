@@ -23,8 +23,7 @@ export const handleAllValidations = ($) => {
     const quantity = $.form.querySelector('.add-item__input[name=quantity]');
     const description = $.form.querySelector('.add-item__input[name=description]');
 
-    let isAllFieldsFullfilled = false;
-    let isFieldNotValidated = 0;
+    let isAllFieldsValidated = 0;
 
     const validatePriceQuanity = (target) => {
         target.value = target.value.replace(/([^0-9])/g, '');
@@ -32,13 +31,13 @@ export const handleAllValidations = ($) => {
             handleCheckLength(target, 1);
         } else {
             handleNotificationSign(target, false, true);
-            isFieldNotValidated++;
+            isAllFieldsValidated++;
         }
     };
 
     const validateNameCategory = (target) => {
         target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
-        if (!handleCheckLength(target, 10)) isFieldNotValidated++;
+        if (!handleCheckLength(target, 10)) isAllFieldsValidated++;
     };
 
     for (const target of Array.from([name, category, measure, price, quantity, description])) {
@@ -46,13 +45,13 @@ export const handleAllValidations = ($) => {
 
             // console.log(' : ', target.outerHTML);
             if (target === description) {
-                if (!handleCheckLength(target, 80)) isFieldNotValidated++;
+                if (!handleCheckLength(target, 80)) isAllFieldsValidated++;
                 continue;
             }
 
             if (target === measure) {
                 target.value = target.value.replace(/[^a-zA-ZА-Яа-я]/g, '');
-                if (!handleCheckLength(target, 2)) isFieldNotValidated++;
+                if (!handleCheckLength(target, 2)) isAllFieldsValidated++;
                 continue;
             }
 
@@ -82,8 +81,8 @@ export const handleAllValidations = ($) => {
     }
 
     console.log(' isDiscountValidated: ', isDiscountValidated);
-    console.log(' isFieldNotValidated > 0: ', isFieldNotValidated === 0);
-    return isDiscountValidated && isFieldNotValidated === 0;
+    console.log(' isAllFieldsValidated > 0: ', isAllFieldsValidated === 0);
+    return isDiscountValidated && isAllFieldsValidated === 0;
 };
 
 const handleNotificationSign = (target, showVerification = false, showWarning = false,) => {
