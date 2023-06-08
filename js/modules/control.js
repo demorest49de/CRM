@@ -80,8 +80,8 @@ export const handleAllValidations = ($) => {
         }
     }
 
-    console.log(' isDiscountValidated: ', isDiscountValidated);
-    console.log(' isFieldNotValidated > 0: ', isFieldNotValidated === 0);
+    // console.log(' isDiscountValidated: ', isDiscountValidated);
+    // console.log(' isFieldNotValidated > 0: ', isFieldNotValidated === 0);
     const isALLFieldsValidated = isDiscountValidated && isFieldNotValidated === 0;
     return isALLFieldsValidated;
 };
@@ -229,6 +229,7 @@ export const handleControls = ($) => {
         if (fileBtn.files.length > 0) {
             // check size
             const file = fileBtn.files[0];
+            console.log(' : ', fileBtn, fileBtn.files[0]);
             if (!checkFileSize(file, imagewrapper, checkWindowResize)) return;
             appendImage(image, imagewrapper);
             const src = URL.createObjectURL(fileBtn.files[0]);
@@ -244,7 +245,7 @@ export const handleControls = ($) => {
         }
     });
 
-    const  showModal = async (element) => {
+    const showModal = async (element) => {
         if (!$.app.querySelector('#app .overlay')) {
             $.app.append($.overlay);
         }
@@ -353,6 +354,17 @@ export const handleControls = ($) => {
         });
     };
 
+    const loadImageOnFormSubmit = async () => {
+        const url = $.form.querySelector('.add-item__image-preview')?.src;
+        return await fetch(url).then(response => response.blob())
+            .then(blob => new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            }));
+    };
+
     // написать запрос к апи метод post
     const submitFormData = () => {
         $.form.addEventListener('submit', async (e) => {
@@ -364,12 +376,10 @@ export const handleControls = ($) => {
             } = data;
 
             validateInput().then(async (result) => {
-
-
-                console.log('image: ', image);
-                const imageToSave = await toBase64(image);
-
-                console.log('imageToSave: ', imageToSave);
+                if (image.name) {
+                    const imageToSave = await toBase64(image);
+                    $.body.image = imageToSave;
+                }
 
                 $.body.title = name;
                 $.body.description = description;
@@ -378,8 +388,7 @@ export const handleControls = ($) => {
                 $.body.discount = +discount;
                 $.body.count = +quantity;
                 $.body.units = measure;
-                console.log(' : ', imageToSave);
-                if(imageToSave !== 'data:') $.body.image = imageToSave;
+
                 // exist item - put
                 if ($.form.querySelector('.add-item__block-id')
                     .getAttribute('data-id')) {

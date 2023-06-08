@@ -126,7 +126,6 @@ const cbOpenEdit = (error, data, $, id) => {
 
   $.form.querySelector('.add-item__block-id')
       .setAttribute('data-id', id);
-
   $.form.name.value = data.title;
   $.form.measure.value = data.units;
   $.form.category.value = data.category;
@@ -141,6 +140,9 @@ const cbOpenEdit = (error, data, $, id) => {
   $.form.description.value = data.description;
   $.form.quantity.value = data.count;
   $.form.price.value = data.price;
+
+  $.form.image.src = data.image;
+  console.log(' : ',$.form.image);
   handleAllValidations($);
   calculateFormTotal($);
 };
