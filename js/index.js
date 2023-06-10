@@ -1,6 +1,6 @@
 import {renderCRM} from './modules/render.js';
 import {handleControls} from './modules/control.js';
-import {loadGoodsHandler} from './modules/restOperations.js';
+import {loadGoodsHandler, loadImg} from './modules/restOperations.js';
 import {getConsts} from './modules/varsStorage.js';
 
 
@@ -30,8 +30,10 @@ import {getConsts} from './modules/varsStorage.js';
 
         handleControls(generalVars);
         loadGoodsHandler(generalVars).then(data => {
-
         });
+
+        // loadImg(generalVars).then(data => {
+        // });
     };
 
     window.listProductInit = init;

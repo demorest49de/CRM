@@ -239,3 +239,17 @@ export const updateItemHandler = (body, $, id) => {
     body,
   });
 };
+
+
+export const loadImg = ($) => {
+// open edit
+  fetchRequest('https://muddy-substantial-gear.glitch.me/image/2294275063.jpg', {
+    method: $.verbs.get,
+    headers: {
+      // 'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': 'https://muddy-substantial-gear.glitch.me',
+},
+    vars: $,
+  });
+};
+
