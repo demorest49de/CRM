@@ -392,12 +392,14 @@ export const handleControls = ($) => {
 
             validateInput().then(async (result) => {
                 if (!image.name) {
-                    const urlImage = $.form.querySelector('.add-item__image-preview');
-                    getBase64Image(urlImage).then(blob => {
-                        $.body.image = blob;
-                    }).catch((error) => {
-                        console.log(' : ', error);
-                    });
+
+                    delete $.body.image;
+                    // const urlImage = $.form.querySelector('.add-item__image-preview');
+                    // getBase64Image(urlImage).then(blob => {
+                    //     $.body.image = blob;
+                    // }).catch((error) => {
+                    //     console.log(' : ', error);
+                    // });
                 } else {
                     await toBase64(image).then(blob => $.body.image = blob);
                 }

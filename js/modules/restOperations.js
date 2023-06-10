@@ -20,6 +20,8 @@ const fetchRequest = async (url, {
 
     if (body) options.body = JSON.stringify(body);
 
+    // if(!body.image.name) body
+
     if (headers) options.headers = headers;
 
     const response = await fetch(url, options);
