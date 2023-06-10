@@ -176,9 +176,8 @@ export const handleControls = ($) => {
 
     const removeAllNotifications = ($) => {
         $.form.querySelectorAll('.add-item__warn-text').forEach(item => {
-                item.remove();
-            }
-        );
+            item.remove();
+        });
     };
 
     const hideImage = () => {
@@ -222,6 +221,7 @@ export const handleControls = ($) => {
 
     const handleLoadImage = (imagewrapper, fileBtn, dataPic = '') => new Promise(resolve => {
         const image = document.createElement('img');
+
         image.addEventListener('load', () => {
             resolve();
         });
@@ -229,7 +229,7 @@ export const handleControls = ($) => {
         if (fileBtn.files.length > 0) {
             // check size
             const file = fileBtn.files[0];
-            console.log(' : ', fileBtn, fileBtn.files[0]);
+            // console.log(' : ', fileBtn, fileBtn.files[0]);
             if (!checkFileSize(file, imagewrapper, checkWindowResize)) return;
             appendImage(image, imagewrapper);
             const src = URL.createObjectURL(fileBtn.files[0]);
@@ -354,15 +354,30 @@ export const handleControls = ($) => {
         });
     };
 
-    const loadImageOnFormSubmit = async () => {
-        const url = $.form.querySelector('.add-item__image-preview')?.src;
-        return await fetch(url).then(response => response.blob())
-            .then(blob => new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(blob);
-            }));
+    const getBase64Image = (imgFrom) => {
+        return new Promise((resolve, reject) => {
+            if (imgFrom) {
+                const img = document.createElement("img");
+                img.src = imgFrom.src;
+
+                const canvas = document.createElement("canvas");
+                canvas.width = imgFrom.width;
+                canvas.height = imgFrom.height;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0);
+
+                img.onload = () => {
+                    try {
+                        console.log(' : ', img);
+                        const dataURI = canvas.toDataURL("image/png");
+                        console.log(' : ', dataURI);
+                        resolve(dataURI);
+                    } catch (e) {
+                        reject(e.toString());
+                    }
+                };
+            }
+        });
     };
 
     // написать запрос к апи метод post
@@ -376,9 +391,15 @@ export const handleControls = ($) => {
             } = data;
 
             validateInput().then(async (result) => {
-                if (image.name) {
-                    const imageToSave = await toBase64(image);
-                    $.body.image = imageToSave;
+                if (!image.name) {
+                    const urlImage = $.form.querySelector('.add-item__image-preview');
+                    getBase64Image(urlImage).then(blob => {
+                        $.body.image = blob;
+                    }).catch((error) => {
+                        console.log(' : ', error);
+                    });
+                } else {
+                    await toBase64(image).then(blob => $.body.image = blob);
                 }
 
                 $.body.title = name;

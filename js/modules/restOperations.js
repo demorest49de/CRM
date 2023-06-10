@@ -142,7 +142,7 @@ const cbOpenEdit = (error, data, $, id) => {
   $.form.price.value = data.price;
 
   $.form.image.src = data.image;
-  console.log(' : ',$.form.image);
+
   handleAllValidations($);
   calculateFormTotal($);
 };
