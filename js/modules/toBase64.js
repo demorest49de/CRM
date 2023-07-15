@@ -7,6 +7,5 @@ export const toBase64 = (file) =>
     reader.addEventListener('error', (err) => {
       reject(err);
     });
-
     reader.readAsDataURL(file);
   });

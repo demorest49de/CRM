@@ -75,7 +75,7 @@ const createNav = () => {
   form.insertAdjacentHTML('beforeend',
       `
         <input class="nav__input" type="search"
-         placeholder="Поиск по наименованию и категории">      
+         placeholder="Поиск по наименованию и категории (минимум 3 символа)">      
       `);
   navBlock.append(form);
 
