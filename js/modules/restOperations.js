@@ -145,8 +145,12 @@ const cbOpenEdit = (error, data, $, id) => {
 
     $.form.image.src = data.image;
 
-    handleAllValidations($);
+
     calculateFormTotal($);
+    if (!$.app.querySelector('#app .overlay')) {
+        $.app.append($.overlay);
+    }
+    handleAllValidations($);
 };
 
 const cbRenderSearchItems = (error, data, $, search) => {

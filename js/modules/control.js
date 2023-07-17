@@ -216,7 +216,6 @@ export const handleControls = ($) => {
     const appendImage = (image, imagewrapper) => {
 
         const preview = imagewrapper.getElementsByClassName('add-item__image-preview');
-        console.log(' : ', preview);
         imagewrapper.append(image);
         image.classList.add('add-item__image-preview');
         image.alt = 'Превью изображеня';
@@ -250,9 +249,6 @@ export const handleControls = ($) => {
     });
 
     const showModal = async (element) => {
-        if (!$.app.querySelector('#app .overlay')) {
-            $.app.append($.overlay);
-        }
         //add
         if (element === $.addItemBtn) {
             await loadModalStyles('css/additem.css').then(() => {
@@ -295,6 +291,7 @@ export const handleControls = ($) => {
 
     const handleOpenForm = () => {
         $.addItemBtn.addEventListener('click', ({target}) => {
+            async;
             showModal(target);
         });
     };
@@ -305,7 +302,6 @@ export const handleControls = ($) => {
             if (target === $.overlay || target.closest('.add-item-close-button')) {
 
                 const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
-                console.log(' : ', tr);
                 if (tr) {
                     removeAllNotifications($);
                     tr.removeAttribute('data-is-editable');
