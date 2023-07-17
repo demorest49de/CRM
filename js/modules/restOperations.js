@@ -147,9 +147,6 @@ const cbOpenEdit = (error, data, $, id) => {
 
 
     calculateFormTotal($);
-    if (!$.app.querySelector('#app .overlay')) {
-        $.app.append($.overlay);
-    }
     handleAllValidations($);
 };
 

@@ -249,10 +249,13 @@ export const handleControls = ($) => {
     });
 
     const showModal = async (element) => {
+        if (!$.app.querySelector('#app .overlay')) {
+            $.overlay.classList.add('is-visible');
+            // $.app.append($.overlay);
+        }
         //add
         if (element === $.addItemBtn) {
             await loadModalStyles('css/additem.css').then(() => {
-                $.overlay.classList.add('is-visible');
             });
             handleDiscount($.form.querySelector('.add-item__checkbox'), $);
             $.overlay.querySelector('.add-item__title').textContent = 'добавить товар';
@@ -262,8 +265,9 @@ export const handleControls = ($) => {
         //edit
         if (element.classList.contains('list-product__button-edit')) {
             await loadModalStyles('css/additem.css').then(() => {
-                $.overlay.classList.add('is-visible');
+
             });
+
             $.overlay.querySelector('.add-item__title').textContent = 'Изменить товар';
             $.overlay.querySelector('button.add-item__button-item[type=submit]').textContent = 'Сохранить';
 
@@ -286,13 +290,13 @@ export const handleControls = ($) => {
 
             openEditHandler($, tdId);
         }
-        ;
     };
 
     const handleOpenForm = () => {
         $.addItemBtn.addEventListener('click', ({target}) => {
-            async;
-            showModal(target);
+            showModal(target).then(()=>{
+                    $.app.append($.overlay);
+            });
         });
     };
 
@@ -341,7 +345,9 @@ export const handleControls = ($) => {
                 removeAllNotifications($);
                 const tr = target.closest('.list-product__table-tr');
                 tr.setAttribute('data-is-editable', 'true');
-                showModal(target);
+                showModal(target).then(()=>{
+                    $.app.append($.overlay);
+                });
             }
         });
     };
