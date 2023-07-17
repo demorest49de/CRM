@@ -17,9 +17,3 @@ export const loadModalStyles = (url) => {
   styles.set(url, stylePromise);
   return stylePromise;
 };
-
-export const loadModal = () =>{
-  const modalPromise = new Promise((resolve) =>{
-
-  })
-}

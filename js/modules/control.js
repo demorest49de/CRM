@@ -214,12 +214,16 @@ export const handleControls = ($) => {
     };
 
     const appendImage = (image, imagewrapper) => {
+
+        const preview = imagewrapper.getElementsByClassName('add-item__image-preview');
+        console.log(' : ', preview);
         imagewrapper.append(image);
         image.classList.add('add-item__image-preview');
         image.alt = 'Превью изображеня';
     };
 
     const handleLoadImage = (imagewrapper, fileBtn, dataPic = '') => new Promise(resolve => {
+
         const image = document.createElement('img');
 
         image.addEventListener('load', () => {
@@ -273,6 +277,7 @@ export const handleControls = ($) => {
             if (dataPic) {
                 const fileBtn = $.form.querySelector('.add-item__button-image');
                 const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
+
                 await handleLoadImage(imagewrapper, fileBtn, dataPic);
             }
 
@@ -285,6 +290,7 @@ export const handleControls = ($) => {
 
             openEditHandler($, tdId);
         }
+        ;
     };
 
     const handleOpenForm = () => {
@@ -380,7 +386,7 @@ export const handleControls = ($) => {
         });
     };
 
-    // написать запрос к апи метод post
+// написать запрос к апи метод post
     const submitFormData = () => {
         $.form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -446,7 +452,7 @@ export const handleControls = ($) => {
         });
     };
 
-    // handle blur when loosing focus from price input field
+// handle blur when loosing focus from price input field
     const handleBlur = () => {
         handleBlurElement($.form.price);
         handleBlurElement($.form.quantity);
@@ -482,10 +488,10 @@ export const handleControls = ($) => {
         });
     };
 
-    // add new image instead of existing one
+// add new image instead of existing one
     const handleAddImage = async () => {
         const fileBtn = $.form.querySelector('.add-item__button-image');
-        fileBtn.addEventListener('change', async () => {
+        fileBtn.addEventListener('change', async ({target}) => {
             const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
             const img = imagewrapper?.querySelector('img');
             img?.remove();
