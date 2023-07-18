@@ -353,7 +353,14 @@ tr,
 
     .nav__search:before {
         left: 13px;
-        top: 20px;
+        top: 11px;
+    }
+}
+
+@media (max-width: 455px) {
+    .nav__search:before {
+        left: 13px;
+        top: 19px;
     }
 }
 

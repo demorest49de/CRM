@@ -1,4 +1,3 @@
-import {handleDiscountValidation} from "./control.js";
 
 export const calculateTotal = ($) => {
   const totalPriceOfItems = $.header.querySelector('.card-sum__price-value');

@@ -4,162 +4,8 @@ import {
     sendGoodsHandler, deleteGoodsHandler, openEditHandler, updateItemHandler,
 } from './restOperations.js';
 import {toBase64} from './toBase64.js';
+import {handleAllValidations, handleCheckLength} from "./validation.js";
 
-
-const createWarnText = () => {
-    const warnText = document.createElement('span');
-    warnText.classList.add('add-item__warn-text');
-    return warnText;
-};
-
-export const handleAllValidations = ($) => {
-
-    const isDiscountValidated = handleDiscountValidation();
-
-    const name = $.form.querySelector('.add-item__input[name=name]');
-    const category = $.form.querySelector('.add-item__input[name=category]');
-    const measure = $.form.querySelector('.add-item__input[name=measure]');
-    const price = $.form.querySelector('.add-item__input[name=price]');
-    const quantity = $.form.querySelector('.add-item__input[name=quantity]');
-    const description = $.form.querySelector('.add-item__input[name=description]');
-
-    let isFieldNotValidated = 0;
-
-    const validatePriceQuanity = (target) => {
-        target.value = target.value.replace(/([^0-9])/g, '');
-        if (target.value > 0) {
-            handleCheckLength(target, 1);
-        } else {
-            handleNotificationSign(target, false, true);
-            isFieldNotValidated++;
-        }
-    };
-
-    const validateNameCategory = (target) => {
-        target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
-        if (!handleCheckLength(target, 10)) isFieldNotValidated++;
-    };
-
-    for (const target of Array.from([name, category, measure, price, quantity, description])) {
-        if (target.value != '') {
-
-            // console.log(' : ', target.outerHTML);
-            if (target === description) {
-                if (!handleCheckLength(target, 80)) isFieldNotValidated++;
-                continue;
-            }
-
-            if (target === measure) {
-                target.value = target.value.replace(/[^a-zA-ZА-Яа-я]/g, '');
-                if (!handleCheckLength(target, 2)) isFieldNotValidated++;
-                continue;
-            }
-
-            if (target === price) {
-                validatePriceQuanity(target);
-                continue;
-            }
-
-            if (target === quantity) {
-                validatePriceQuanity(target);
-                continue;
-            }
-
-            if (target === name) {
-                validateNameCategory(target);
-                continue;
-            }
-
-            if (target === category) {
-                validateNameCategory(target);
-                continue;
-            }
-
-        } else {
-            handleNotificationSign(target, false, false);
-        }
-    }
-
-    // console.log(' isDiscountValidated: ', isDiscountValidated);
-    // console.log(' isFieldNotValidated > 0: ', isFieldNotValidated === 0);
-    const isALLFieldsValidated = isDiscountValidated && isFieldNotValidated === 0;
-    return isALLFieldsValidated;
-};
-
-const handleNotificationSign = (target, showVerification = false, showWarning = false,) => {
-    let labelBlock = null;
-    if (target === document.querySelector('.add-item__input[name=discount]')) {
-        labelBlock = target.parentNode.parentNode.querySelector('.add-item__subblock');
-    } else {
-        labelBlock = target.parentNode.querySelector('.add-item__subblock');
-    }
-
-    if (!labelBlock.querySelector('.add-item__warn-text')) {
-        const warnText = createWarnText();
-        labelBlock.insertAdjacentHTML('beforeend', warnText.outerHTML);
-    }
-
-    const warnText = labelBlock.querySelector('.add-item__warn-text');
-
-    if (showVerification) {
-        warnText.style.color = 'darkgreen';
-        warnText.textContent = '  &#10003;';
-        warnText.innerHTML = '  &#10003;';
-    } else {
-        warnText.innerHTML = '';
-        warnText.textContent = '';
-    }
-
-    if (showWarning) {
-        warnText.style.color = 'darkred';
-        warnText.textContent = '  !!!';
-    }
-
-    setTimeout(() => {
-        if (!warnText.classList.contains('add-item__warn-text_visible')) {
-            warnText.classList.add('add-item__warn-text_visible');
-        }
-    }, 500);
-};
-
-const handleCheckLength = (target, length) => {
-
-    if (target.value.length === 0) {
-        handleNotificationSign(target, false, false);
-        return false;
-    }
-
-    if (target.value.length >= length) {
-        handleNotificationSign(target, true);
-    } else {
-        handleNotificationSign(target, false, true);
-    }
-    return target.value.length >= length;
-};
-
-export const handleDiscountValidation = () => {
-    const target = document.querySelector('.add-item__input[name=discount]');
-
-    target.value = target.value.replace(/[^0-9]/g, '');
-
-    let numValue;
-
-    if (target.value.length !== 0) {
-        numValue = +target.value;
-    } else {
-        handleNotificationSign(target, false, false);
-    }
-
-    if (numValue === 0 || numValue > 99) {
-        handleNotificationSign(target, false, true);
-        return false;
-    }
-    if (numValue > 0 && numValue <= 99) {
-        handleNotificationSign(target, true, false);
-        return true;
-    }
-    return true;
-};
 
 export const handleControls = ($) => {
 
@@ -251,7 +97,6 @@ export const handleControls = ($) => {
     const showModal = async (element) => {
         if (!$.app.querySelector('#app .overlay')) {
             $.overlay.classList.add('is-visible');
-            // $.app.append($.overlay);
         }
         //add
         if (element === $.addItemBtn) {
@@ -294,13 +139,15 @@ export const handleControls = ($) => {
 
     const handleOpenForm = () => {
         $.addItemBtn.addEventListener('click', ({target}) => {
-            showModal(target).then(()=>{
-                    $.app.append($.overlay);
+            showModal(target).then(() => {
+                $.app.append($.overlay);
+                handleAllValidations($);
             });
         });
     };
 
     const handleCloseForm = () => {
+        // дождаться закрытия формы
         $.overlay.addEventListener('click', event => {
             const target = event.target;
             if (target === $.overlay || target.closest('.add-item-close-button')) {
@@ -310,9 +157,9 @@ export const handleControls = ($) => {
                     removeAllNotifications($);
                     tr.removeAttribute('data-is-editable');
                     $.form.reset();
-                    $.overlay.remove();
                 }
 
+                $.overlay.remove();
                 hideImage();
                 $.form.querySelector('.add-item__image-size-text').classList.remove('is-visible');
                 setTimeout(() => {
@@ -345,7 +192,7 @@ export const handleControls = ($) => {
                 removeAllNotifications($);
                 const tr = target.closest('.list-product__table-tr');
                 tr.setAttribute('data-is-editable', 'true');
-                showModal(target).then(()=>{
+                showModal(target).then(() => {
                     $.app.append($.overlay);
                 });
             }
@@ -431,7 +278,8 @@ export const handleControls = ($) => {
                 $.form.querySelector('.add-item__image-size-text').classList.remove('is-visible');
                 $.form.reset();
                 removeAllNotifications($);
-                $.overlay.classList.remove('is-visible');
+                // $.overlay.classList.remove('is-visible');
+                $.overlay.remove();
                 hideImage();
             }).catch((error) => {
                 console.log(' : ', error);

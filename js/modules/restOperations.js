@@ -1,6 +1,6 @@
 import {renderItems} from './render.js';
 import {calculateFormTotal, calculateTotal} from './calculations.js';
-import {handleAllValidations} from "./control.js";
+import {handleAllValidations} from "./validation.js";
 
 
 const fetchRequest = async (url, {
