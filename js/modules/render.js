@@ -12,7 +12,7 @@ export const renderItems = (storage, $) => {
   while ($.tbody.firstChild) {
     $.tbody.removeChild($.tbody.firstChild);
   }
-  // console.log(' : ',storage);
+
   Object.values(storage).forEach((value) => {
     const row = createRow(value);
     $.tbody.append(row);
@@ -31,7 +31,7 @@ export const renderCRM = (app, title) => {
 
   const {overlay, form, formContent, addItemError} = createOverlay();
 
-  // app.append(section, overlay, addItemError);
+
   app.append(section);
 
   return {addItemBtn, overlay, tbody, form, header, formContent, addItemError};

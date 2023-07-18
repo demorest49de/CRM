@@ -36,6 +36,6 @@ export const handleDiscount = (target, $) => {
     inputDiscount.value = '';
     inputDiscount.removeAttribute('required');
   }
-  // handleDiscountValidation();
+
   calculateFormTotal($);
 };

@@ -77,7 +77,7 @@ const httpRequest = (url, {
         });
 
         xhr.addEventListener('error', () => {
-            // console.info('  xhr.status, xhr.response: ', xhr.status, xhr.response);
+
             callback(new Error(xhr.status.toString()), xhr.response, vars);
         });
 

@@ -35,7 +35,7 @@ export const handleControls = ($) => {
 
     const checkWindowResize = () => {
         if ($.form.querySelector('.add-item__image-size-text').classList.contains('is-visible') && screen.width < 822) {
-            //
+
             $.form.querySelector('.add-item__image-text').classList.remove('remove-margin');
         } else {
             $.form.querySelector('.add-item__image-text').classList.add('remove-margin');
@@ -78,7 +78,7 @@ export const handleControls = ($) => {
         if (fileBtn.files.length > 0) {
             // check size
             const file = fileBtn.files[0];
-            // console.log(' : ', fileBtn, fileBtn.files[0]);
+
             if (!checkFileSize(file, imagewrapper, checkWindowResize)) return;
             appendImage(image, imagewrapper);
             const src = URL.createObjectURL(fileBtn.files[0]);
@@ -164,7 +164,7 @@ export const handleControls = ($) => {
                 $.form.querySelector('.add-item__image-size-text').classList.remove('is-visible');
                 setTimeout(() => {
                     $.overlay.classList.remove('is-visible');
-                    // $.overlay.remove();
+
                 }, 300);
             }
         });
@@ -179,7 +179,7 @@ export const handleControls = ($) => {
                 const id = item.querySelector('.list-product__table-td[data-id]')
                     .getAttribute('data-id');
 
-                // написать запрос к апи метод delete
+
                 deleteGoodsHandler($, id);
             }
         });
@@ -209,33 +209,6 @@ export const handleControls = ($) => {
         });
     };
 
-    const getBase64Image = (imgFrom) => {
-        return new Promise((resolve, reject) => {
-            if (imgFrom) {
-                const img = document.createElement("img");
-                img.src = imgFrom.src;
-
-                const canvas = document.createElement("canvas");
-                canvas.width = imgFrom.width;
-                canvas.height = imgFrom.height;
-                const ctx = canvas.getContext("2d");
-                ctx.drawImage(img, 0, 0);
-
-                img.onload = () => {
-                    try {
-                        console.log(' : ', img);
-                        const dataURI = canvas.toDataURL("image/png");
-                        console.log(' : ', dataURI);
-                        resolve(dataURI);
-                    } catch (e) {
-                        reject(e.toString());
-                    }
-                };
-            }
-        });
-    };
-
-// написать запрос к апи метод post
     const submitFormData = () => {
         $.form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -278,7 +251,7 @@ export const handleControls = ($) => {
                 $.form.querySelector('.add-item__image-size-text').classList.remove('is-visible');
                 $.form.reset();
                 removeAllNotifications($);
-                // $.overlay.classList.remove('is-visible');
+
                 $.overlay.remove();
                 hideImage();
             }).catch((error) => {
@@ -302,7 +275,6 @@ export const handleControls = ($) => {
         });
     };
 
-// handle blur when loosing focus from price input field
     const handleBlur = () => {
         handleBlurElement($.form.price);
         handleBlurElement($.form.quantity);

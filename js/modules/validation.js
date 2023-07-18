@@ -36,7 +36,7 @@ export const handleAllValidations = ($) => {
     for (const target of Array.from([name, category, measure, price, quantity, description])) {
         if (target.value != '') {
 
-            // console.log(' : ', target.outerHTML);
+
             if (target === description) {
                 if (!handleCheckLength(target, 80)) isFieldNotValidated++;
                 continue;
