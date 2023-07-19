@@ -90,13 +90,8 @@ export const handleControls = ($) => {
                     $.form.reset();
                 }
 
-                $.overlay.remove();
                 hideImage($);
-                $.form.querySelector('.add-item__image-size-text').classList.remove('is-visible');
-                setTimeout(() => {
-                    $.overlay.classList.remove('is-visible');
-
-                }, 300);
+                $.overlay.remove();
             }
         });
     };
@@ -139,7 +134,7 @@ export const handleControls = ($) => {
                 name, category, measure, discount, description, quantity, price, image,
             } = data;
 
-            validateInput().then(async (result) => {
+            validateInput($).then(async (result) => {
                 if (!image.name) {
                     delete $.body.image;
                 } else {
@@ -214,6 +209,16 @@ export const handleControls = ($) => {
         });
     };
 
+    const handleAddImage = async () => {
+        const fileBtn = $.form.querySelector('.add-item__button-image');
+        fileBtn.addEventListener('change', async ({target}) => {
+            const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
+            const img = imagewrapper?.querySelector('img');
+            img?.remove();
+            await handleLoadImage($, imagewrapper, fileBtn, null);
+        });
+    };
+
     const handleWindowsResizeForImageTextSize = () => {
         window.addEventListener('resize', () => {
             checkWindowResize();
@@ -238,7 +243,7 @@ export const handleControls = ($) => {
     submitFormData();
     handleAddItemCheckbox();
     handleBlur();
-    handleImageBtn();
+    handleImageBtn($);
     handleAddImage().then(() => {
     });
     closeErrorHandler();

@@ -2,7 +2,9 @@ import {checkFileSize} from './fileHandler.js';
 
 export const hideImage = ($) => {
     const image = $.form.querySelector('.add-item__image-preview');
-    image?.remove();
+    const images = $.form.querySelectorAll('.add-item__image-preview');
+    console.log(' : ',images);
+    images?.forEach(e => e.remove());
     const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
     imagewrapper?.classList.add('hide-image');
 };
@@ -54,7 +56,7 @@ export const handleLoadImage = ($, imagewrapper, fileBtn, dataPic = '') => new P
     }
 });
 
-export const handleImageBtn = () => {
+export const handleImageBtn = ($) => {
     $.tbody.addEventListener('click', e => {
         const target = e.target;
         const imageBtn = target.closest('.list-product__table-btn.list-product__button-img');
