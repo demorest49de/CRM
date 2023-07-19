@@ -4,33 +4,18 @@ import {
     sendGoodsHandler, deleteGoodsHandler, openEditHandler, updateItemHandler,
 } from './restOperations.js';
 import {toBase64} from './toBase64.js';
-import {handleAllValidations, handleCheckLength} from "./validation.js";
+import {handleAllValidations, handleCheckLength,
+countDescriptionLength
+} from "./validation.js";
+import {hideImage, appendImage, handleLoadImage} from "./handleImage.js";
 
 
 export const handleControls = ($) => {
-
-    const countDescriptionLength = () => {
-        const target = document.querySelector('.add-item__input[name=description]');
-        const textCount = document.querySelector('.add-item__text-count');
-
-        if (handleCheckLength(target, 80)) {
-            textCount.textContent = '';
-        } else {
-            textCount.textContent = `${target.value.length.toString()}/80`;
-        }
-    };
 
     const removeAllNotifications = ($) => {
         $.form.querySelectorAll('.add-item__warn-text').forEach(item => {
             item.remove();
         });
-    };
-
-    const hideImage = () => {
-        const image = $.form.querySelector('.add-item__image-preview');
-        image?.remove();
-        const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
-        imagewrapper?.classList.add('hide-image');
     };
 
     const checkWindowResize = () => {
@@ -58,41 +43,6 @@ export const handleControls = ($) => {
         callback();
         return true;
     };
-
-    const appendImage = (image, imagewrapper) => {
-
-        const preview = imagewrapper.getElementsByClassName('add-item__image-preview');
-        imagewrapper.append(image);
-        image.classList.add('add-item__image-preview');
-        image.alt = 'Превью изображеня';
-    };
-
-    const handleLoadImage = (imagewrapper, fileBtn, dataPic = '') => new Promise(resolve => {
-
-        const image = document.createElement('img');
-
-        image.addEventListener('load', () => {
-            resolve();
-        });
-        // replace, add
-        if (fileBtn.files.length > 0) {
-            // check size
-            const file = fileBtn.files[0];
-
-            if (!checkFileSize(file, imagewrapper, checkWindowResize)) return;
-            appendImage(image, imagewrapper);
-            const src = URL.createObjectURL(fileBtn.files[0]);
-            image.src = src;
-            return;
-        }
-
-        // current
-        if (dataPic) {
-            appendImage(image, imagewrapper);
-            imagewrapper.classList.remove('hide-image');
-            image.src = dataPic;
-        }
-    });
 
     const showModal = async (element) => {
         if (!$.app.querySelector('#app .overlay')) {
@@ -160,7 +110,7 @@ export const handleControls = ($) => {
                 }
 
                 $.overlay.remove();
-                hideImage();
+                hideImage($);
                 $.form.querySelector('.add-item__image-size-text').classList.remove('is-visible');
                 setTimeout(() => {
                     $.overlay.classList.remove('is-visible');
@@ -253,7 +203,7 @@ export const handleControls = ($) => {
                 removeAllNotifications($);
 
                 $.overlay.remove();
-                hideImage();
+                hideImage($);
             }).catch((error) => {
                 console.log(' : ', error);
             });

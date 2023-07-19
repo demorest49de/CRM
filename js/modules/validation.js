@@ -151,3 +151,14 @@ export const handleDiscountValidation = () => {
     }
     return true;
 };
+
+export const countDescriptionLength = () => {
+    const target = document.querySelector('.add-item__input[name=description]');
+    const textCount = document.querySelector('.add-item__text-count');
+
+    if (handleCheckLength(target, 80)) {
+        textCount.textContent = '';
+    } else {
+        textCount.textContent = `${target.value.length.toString()}/80`;
+    }
+};
