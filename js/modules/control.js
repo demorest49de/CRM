@@ -1,22 +1,22 @@
 import {calculateFormTotal, handleDiscount} from './calculations.js';
 import {loadModalStyles} from './loadModal.js';
 import {
-    sendGoodsHandler, deleteGoodsHandler, openEditHandler, updateItemHandler,
+    sendGoodsHandler,
+    deleteGoodsHandler,
+    openEditHandler,
+    updateItemHandler,
 } from './restOperations.js';
 import {toBase64} from './toBase64.js';
-import {handleAllValidations, handleCheckLength,
-countDescriptionLength
+import {
+    handleAllValidations,
+    handleCheckLength,
+    countDescriptionLength,
+    removeVisualValidation
 } from "./validation.js";
 import {hideImage, appendImage, handleLoadImage} from "./handleImage.js";
 
 
 export const handleControls = ($) => {
-
-    const removeAllNotifications = ($) => {
-        $.form.querySelectorAll('.add-item__warn-text').forEach(item => {
-            item.remove();
-        });
-    };
 
     const checkWindowResize = () => {
         if ($.form.querySelector('.add-item__image-size-text').classList.contains('is-visible') && screen.width < 822) {
@@ -104,7 +104,7 @@ export const handleControls = ($) => {
 
                 const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
                 if (tr) {
-                    removeAllNotifications($);
+                    removeVisualValidation($);
                     tr.removeAttribute('data-is-editable');
                     $.form.reset();
                 }
@@ -139,7 +139,7 @@ export const handleControls = ($) => {
         $.tbody.addEventListener('click', e => {
             const target = e.target;
             if (target.closest('.list-product__button-edit')) {
-                removeAllNotifications($);
+                removeVisualValidation($);
                 const tr = target.closest('.list-product__table-tr');
                 tr.setAttribute('data-is-editable', 'true');
                 showModal(target).then(() => {
@@ -200,7 +200,7 @@ export const handleControls = ($) => {
                 // hide red text
                 $.form.querySelector('.add-item__image-size-text').classList.remove('is-visible');
                 $.form.reset();
-                removeAllNotifications($);
+                removeVisualValidation($);
 
                 $.overlay.remove();
                 hideImage($);

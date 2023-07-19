@@ -1,4 +1,3 @@
-
 const createWarnText = () => {
     const warnText = document.createElement('span');
     warnText.classList.add('add-item__warn-text');
@@ -161,4 +160,10 @@ export const countDescriptionLength = () => {
     } else {
         textCount.textContent = `${target.value.length.toString()}/80`;
     }
+};
+
+export const removeVisualValidation = ($) => {
+    $.form.querySelectorAll('.add-item__warn-text').forEach(item => {
+        item.remove();
+    });
 };
