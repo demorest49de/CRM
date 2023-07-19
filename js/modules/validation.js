@@ -167,3 +167,13 @@ export const removeVisualValidation = ($) => {
         item.remove();
     });
 };
+
+export const validateInput = () => {
+    return new Promise((resolve, reject) => {
+        if (handleAllValidations($)) {
+            resolve(true);
+        } else {
+            reject('false');
+        }
+    });
+};

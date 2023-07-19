@@ -162,7 +162,7 @@ const cbRenderSearchItems = (error, data, $, search) => {
     let searchedData = [];
 
 
-    if (search && search.length > 2) {
+    if (search && search.length > 1) {
         searchedData = data.filter(x => x && x.title.trim().toLowerCase().includes(search.trim().toLowerCase()));
         console.log(' : ', searchedData);
     }
