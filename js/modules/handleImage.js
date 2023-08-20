@@ -3,7 +3,6 @@ import {checkFileSize} from './fileHandler.js';
 export const hideImage = ($) => {
     const image = $.form.querySelector('.add-item__image-preview');
     const images = $.form.querySelectorAll('.add-item__image-preview');
-    console.log(' : ',images);
     images?.forEach(e => e.remove());
     const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
     imagewrapper?.classList.add('hide-image');

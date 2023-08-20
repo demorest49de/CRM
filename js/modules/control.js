@@ -24,7 +24,7 @@ import {
 
 
 export const handleControls = ($) => {
-
+    
     const showModal = async (element) => {
         if (!$.app.querySelector('#app .overlay')) {
             $.overlay.classList.add('is-visible');
@@ -67,7 +67,7 @@ export const handleControls = ($) => {
             openEditHandler($, tdId);
         }
     };
-
+    
     const handleOpenForm = () => {
         $.addItemBtn.addEventListener('click', ({target}) => {
             showModal(target).then(() => {
@@ -76,41 +76,41 @@ export const handleControls = ($) => {
             });
         });
     };
-
+    
     const handleCloseForm = () => {
         // дождаться закрытия формы
         $.overlay.addEventListener('click', event => {
             const target = event.target;
             if (target === $.overlay || target.closest('.add-item-close-button')) {
-
+                
                 const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
                 if (tr) {
                     removeVisualValidation($);
                     tr.removeAttribute('data-is-editable');
                     $.form.reset();
                 }
-
+                
                 hideImage($);
                 $.overlay.remove();
             }
         });
     };
-
+    
     const deleteRow = () => {
         $.tbody.addEventListener('click', e => {
             const target = e.target;
-
+            
             if (target.closest('.list-product__button-delete')) {
                 const item = target.closest('.list-product__table-tr');
                 const id = item.querySelector('.list-product__table-td[data-id]')
                     .getAttribute('data-id');
-
-
+                
+                
                 deleteGoodsHandler($, id);
             }
         });
     };
-
+    
     const editRow = () => {
         $.tbody.addEventListener('click', e => {
             const target = e.target;
@@ -124,7 +124,7 @@ export const handleControls = ($) => {
             }
         });
     };
-
+    
     const submitFormData = () => {
         $.form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -133,14 +133,14 @@ export const handleControls = ($) => {
             const {
                 name, category, measure, discount, description, quantity, price, image,
             } = data;
-
+            
             validateInput($).then(async (result) => {
                 if (!image.name) {
                     delete $.body.image;
                 } else {
                     await toBase64(image).then(blob => $.body.image = blob);
                 }
-
+                
                 $.body.title = name;
                 $.body.description = description;
                 $.body.category = category;
@@ -148,16 +148,16 @@ export const handleControls = ($) => {
                 $.body.discount = +discount;
                 $.body.count = +quantity;
                 $.body.units = measure;
-
+                
                 // exist item - put
                 if ($.form.querySelector('.add-item__block-id')
                     .getAttribute('data-id')) {
                     const id = $.form.querySelector('.add-item__block-id')
                         .getAttribute('data-id');
-
+                    
                     $.form.querySelector('.add-item__block-id')
                         .removeAttribute('data-id');
-
+                    
                     updateItemHandler($.body, $, id);
                 } else {
                     // new item - post
@@ -167,7 +167,7 @@ export const handleControls = ($) => {
                 $.form.querySelector('.add-item__image-size-text').classList.remove('is-visible');
                 $.form.reset();
                 removeVisualValidation($);
-
+                
                 $.overlay.remove();
                 hideImage($);
             }).catch((error) => {
@@ -175,7 +175,7 @@ export const handleControls = ($) => {
             });
         });
     };
-
+    
     const handleAddItemCheckbox = () => {
         $.form.addEventListener('click', e => {
             const target = e.target;
@@ -184,19 +184,19 @@ export const handleControls = ($) => {
             }
         });
     };
-
+    
     const handleBlurElement = (element) => {
         element.addEventListener('blur', () => {
             calculateFormTotal($);
         });
     };
-
+    
     const handleBlur = () => {
         handleBlurElement($.form.price);
         handleBlurElement($.form.quantity);
         handleBlurElement($.form.discount);
     };
-
+    
     const closeErrorHandler = () => {
         const closeBtn = $.addItemError.querySelector('.add-item-close-button');
         closeBtn.addEventListener('click', () => {
@@ -208,7 +208,7 @@ export const handleControls = ($) => {
             }, 500);
         });
     };
-
+    
     const handleAddImage = async () => {
         const fileBtn = $.form.querySelector('.add-item__button-image');
         fileBtn.addEventListener('change', async ({target}) => {
@@ -218,23 +218,23 @@ export const handleControls = ($) => {
             await handleLoadImage($, imagewrapper, fileBtn, null);
         });
     };
-
+    
     const handleWindowsResizeForImageTextSize = () => {
         window.addEventListener('resize', () => {
             checkWindowResize();
         });
     };
-
+    
     const handleInput = () => {
-
+        
         $.form.addEventListener('input', ({target}) => {
-
+            
             countDescriptionLength();
-
+            
             handleAllValidations($);
         });
     };
-
+    
     handleInput();
     handleOpenForm();
     handleCloseForm();
