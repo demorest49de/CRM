@@ -77,7 +77,6 @@ const httpRequest = (url, {
         });
 
         xhr.addEventListener('error', () => {
-
             callback(new Error(xhr.status.toString()), xhr.response, vars);
         });
 
@@ -148,6 +147,7 @@ const cbOpenEdit = (error, data, $, id) => {
 
     calculateFormTotal($);
     handleAllValidations($);
+    return true;
 };
 
 const cbRenderSearchItems = (error, data, $, search) => {
@@ -209,8 +209,19 @@ export const deleteGoodsHandler = ($, id) => {
 };
 
 // open edit
-export const openEditHandler = ($, id) => {
+export const xhrAddEdit = ($, id) => {
     httpRequest($.URL, {
+        method: $.verbs.get,
+        id,
+        callback: cbOpenEdit,
+        headers: {'Content-Type': 'application/json'},
+        vars: $,
+    });
+};
+
+// open edit
+export const fetchAddEdit = async ($, id) => {
+    return await fetchRequest($.URL, {
         method: $.verbs.get,
         id,
         callback: cbOpenEdit,
