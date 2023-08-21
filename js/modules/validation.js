@@ -5,8 +5,8 @@ const createWarnText = () => {
 };
 
 export const handleAllValidations = ($) => {
-
-    const isDiscountValidated = handleDiscountValidation();
+    console.log(' : ',$.form);
+    const isDiscountValidated = handleDiscountValidation($);
 
     const name = $.form.querySelector('.add-item__input[name=name]');
     const category = $.form.querySelector('.add-item__input[name=category]');
@@ -20,16 +20,16 @@ export const handleAllValidations = ($) => {
     const validatePriceQuanity = (target) => {
         target.value = target.value.replace(/([^0-9])/g, '');
         if (target.value > 0) {
-            handleCheckLength(target, 1);
+            handleCheckLength(target, 1, $);
         } else {
-            handleNotificationSign(target, false, true);
+            handleNotificationSign(target, false, true, $);
             isFieldNotValidated++;
         }
     };
 
     const validateNameCategory = (target) => {
         target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
-        if (!handleCheckLength(target, 10)) isFieldNotValidated++;
+        if (!handleCheckLength(target, 10, $)) isFieldNotValidated++;
     };
 
     for (const target of Array.from([name, category, measure, price, quantity, description])) {
@@ -37,13 +37,13 @@ export const handleAllValidations = ($) => {
 
 
             if (target === description) {
-                if (!handleCheckLength(target, 80)) isFieldNotValidated++;
+                if (!handleCheckLength(target, 80, $)) isFieldNotValidated++;
                 continue;
             }
 
             if (target === measure) {
                 target.value = target.value.replace(/[^a-zA-ZА-Яа-я]/g, '');
-                if (!handleCheckLength(target, 2)) isFieldNotValidated++;
+                if (!handleCheckLength(target, 2, $)) isFieldNotValidated++;
                 continue;
             }
 
@@ -76,9 +76,9 @@ export const handleAllValidations = ($) => {
     return isALLFieldsValidated;
 };
 
-const handleNotificationSign = (target, showVerification = false, showWarning = false,) => {
+const handleNotificationSign = (target, showVerification = false, showWarning = false, $ = null) => {
     let labelBlock = null;
-    if (target === document.querySelector('.add-item__input[name=discount]')) {
+    if (target === $.form.querySelector('.add-item__input[name=discount]')) {
         labelBlock = target.parentNode.parentNode.querySelector('.add-item__subblock');
     } else {
         labelBlock = target.parentNode.querySelector('.add-item__subblock');
@@ -112,23 +112,24 @@ const handleNotificationSign = (target, showVerification = false, showWarning = 
     }, 500);
 };
 
-export const handleCheckLength = (target, length) => {
+export const handleCheckLength = (target, length, $) => {
 
     if (target.value.length === 0) {
-        handleNotificationSign(target, false, false);
+        handleNotificationSign(target, false, false, $ = null);
         return false;
     }
 
     if (target.value.length >= length) {
-        handleNotificationSign(target, true);
+        handleNotificationSign(target, true, false, $);
     } else {
-        handleNotificationSign(target, false, true);
+        handleNotificationSign(target, false, true, $);
     }
     return target.value.length >= length;
 };
 
-export const handleDiscountValidation = () => {
-    const target = document.querySelector('.add-item__input[name=discount]');
+export const handleDiscountValidation = ($) => {
+    
+    const target = $.form.querySelector('.add-item__input[name=discount]');
 
     target.value = target.value.replace(/[^0-9]/g, '');
 
@@ -137,15 +138,15 @@ export const handleDiscountValidation = () => {
     if (target.value.length !== 0) {
         numValue = +target.value;
     } else {
-        handleNotificationSign(target, false, false);
+        handleNotificationSign(target, false, false, $);
     }
 
     if (numValue === 0 || numValue > 99) {
-        handleNotificationSign(target, false, true);
+        handleNotificationSign(target, false, true, $);
         return false;
     }
     if (numValue > 0 && numValue <= 99) {
-        handleNotificationSign(target, true, false);
+        handleNotificationSign(target, true, false, $);
         return true;
     }
     return true;
@@ -155,7 +156,7 @@ export const countDescriptionLength = () => {
     const target = document.querySelector('.add-item__input[name=description]');
     const textCount = document.querySelector('.add-item__text-count');
 
-    if (handleCheckLength(target, 80)) {
+    if (handleCheckLength(target, 80, $)) {
         textCount.textContent = '';
     } else {
         textCount.textContent = `${target.value.length.toString()}/80`;

@@ -24,9 +24,6 @@ import {
 export const handleControls = ($) => {
     
     const showModal = async (element) => {
-        // if (!$.app.querySelector('#app .overlay')) {
-        //     $.overlay.classList.add('is-visible');
-        // }
         
         $.overlay.classList.add('is-visible');
         
@@ -47,6 +44,10 @@ export const handleControls = ($) => {
                     $.overlay.querySelector('.add-item__title').textContent = 'Изменить товар';
                     $.overlay.querySelector('button.add-item__button-item[type=submit]').textContent = 'Сохранить';
                     
+                    $.overlay.querySelector('.add-item__id-block').style.display = `block`;
+                    const id = $.overlay.querySelector('.vendor-code__id');
+                    id.textContent = tdId;
+                }).then(() => {
                     const dataPic = element.closest('.list-product__table-tr')
                         .querySelector('button[data-pic]')?.getAttribute('data-pic');
                     
@@ -54,14 +55,11 @@ export const handleControls = ($) => {
                         const fileBtn = $.form.querySelector('.add-item__button-image');
                         const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
                         
-                        handleLoadImage($, imagewrapper, fileBtn, dataPic);
+                        handleLoadImage($, imagewrapper, fileBtn, dataPic).then(() => {
+                            $.app.append($.overlay);
+                        });
                     }
-                    
-                    $.overlay.querySelector('.add-item__id-block').style.display = `block`;
-                    const id = $.overlay.querySelector('.vendor-code__id');
-                    id.textContent = tdId;
                 });
-                
             }
         });
         
@@ -149,9 +147,7 @@ export const handleControls = ($) => {
                 removeVisualValidation($);
                 const tr = target.closest('.list-product__table-tr');
                 tr.setAttribute('data-is-editable', 'true');
-                showModal(target).then(() => {
-                    $.app.append($.overlay);
-                });
+                showModal(target);
             }
         });
     };
@@ -260,7 +256,7 @@ export const handleControls = ($) => {
         
         $.form.addEventListener('input', ({target}) => {
             
-            countDescriptionLength();
+            countDescriptionLength($);
             
             handleAllValidations($);
         });
