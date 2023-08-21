@@ -1,7 +1,6 @@
 const styles = new Map();
 
 export const loadModalStyles = (url) => {
-    
     if (styles.has(url)) return styles.get(url);
     
     const stylePromise = new Promise((resolve) => {

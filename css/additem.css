@@ -11,18 +11,14 @@ body {
     background: rgba(0, 0, 0, 0.5);
     opacity: 0;
     visibility: hidden;
-    transition: opacity 2.3s ease-in-out;
+    transition: 1.4s ease-in-out;
 }
 
 .overlay.is-visible,
-.overlay.is-visible .add-item {
+.add-item.is-visible
+{
     opacity: 1;
     visibility: visible;
-}
-
-.overlay .add-item {
-    opacity: 0;
-    visibility: hidden;
 }
 
 .add-item {
@@ -43,7 +39,30 @@ body {
     bottom: 0px;
     top: 137px;
     margin: 0 auto;
-    transition: opacity 2.5s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+    transition: 1.4s ease-in-out;
+}
+
+.add-item-animation{
+    animation-name: disappear;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+
+@keyframes disappear {
+    0%{
+        opacity: 0;
+    }
+
+    50%{
+        opacity: 0.5;
+    }
+
+
+    100%{
+        opacity: 1;
+    }
 }
 
 .add-item__container {

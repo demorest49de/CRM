@@ -73,13 +73,16 @@ export const handleControls = ($) => {
             }).then(() => {
                 setTimeout(() => {
                     $.overlay.classList.add('is-visible');
-                }, 300);
+                }, 100);
+            }).then(() => {
+                setTimeout(() => {
+                    $.addItemBlock.classList.add('is-visible');
+                }, 1000);
             });
         });
     };
     
     const handleCloseForm = () => {
-        // дождаться закрытия формы
         $.overlay.addEventListener('click', event => {
             const target = event.target;
             if (target === $.overlay || target.closest('.add-item-close-button')) {
@@ -91,12 +94,22 @@ export const handleControls = ($) => {
                     $.form.reset();
                 }
                 
-                hideImage($);
-                setTimeout(() => {
-                    $.overlay.classList.remove('is-visible');
-                },300);
-                
-                $.overlay.remove();
+                hideImage($).then((ok) => {
+                    if (ok) {
+                        setTimeout(() => {
+                            $.addItemBlock.classList.remove('is-visible');
+                        }, 100);
+                    }
+                }).then(() => {
+                    setTimeout(() => {
+                        $.overlay.classList.remove('is-visible');
+                    }, 1000);
+                }).then(()=>{
+                    setTimeout(() => {
+                        $.overlay.remove();
+                    }, 1300);
+                    
+                });
             }
         });
     };

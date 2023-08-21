@@ -1,16 +1,21 @@
 import {checkFileSize} from './fileHandler.js';
 
 export const hideImage = ($) => {
-    const image = $.form.querySelector('.add-item__image-preview');
-    const images = $.form.querySelectorAll('.add-item__image-preview');
-    images?.forEach(e => e.remove());
-    const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
-    imagewrapper?.classList.add('hide-image');
+    const promise = new Promise((resolve) => {
+        // const image = $.form.querySelector('.add-item__image-preview');
+        const images = $.form.querySelectorAll('.add-item__image-preview');
+        images?.forEach(e => e.remove());
+        const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
+        imagewrapper?.classList.add('hide-image');
+        
+        resolve(true);
+    });
+    
+    return promise;
 };
 
 export const appendImage = (image, imagewrapper) => {
-
-    const preview = imagewrapper.getElementsByClassName('add-item__image-preview');
+    // const preview = imagewrapper.getElementsByClassName('add-item__image-preview');
     imagewrapper.append(image);
     image.classList.add('add-item__image-preview');
     image.alt = 'Превью изображеня';
@@ -25,18 +30,18 @@ export const checkWindowResize = ($) => {
 };
 
 export const handleLoadImage = ($, imagewrapper, fileBtn, dataPic = '') => new Promise(resolve => {
-
+    
     const image = document.createElement('img');
-
+    
     image.addEventListener('load', () => {
         resolve();
     });
-
+    
     // replace, add
     if (fileBtn.files.length > 0) {
         // check size
         const file = fileBtn.files[0];
-
+        
         if (!checkFileSize($, file, imagewrapper, () => {
             checkWindowResize($);
         })) return;
@@ -45,7 +50,7 @@ export const handleLoadImage = ($, imagewrapper, fileBtn, dataPic = '') => new P
         image.src = src;
         return;
     }
-
+    
     // current
     if (dataPic) {
         appendImage(image, imagewrapper);

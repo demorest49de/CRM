@@ -10,7 +10,7 @@ import {handleSearch} from "./modules/input-search.js";
         const app = document.querySelector(selectorApp);
         const crm = renderCRM(app, title);
         const {URL, verbs, body, imageURL} = getConsts();
-        const {addItemBtn, overlay, tbody, form, header, formContent, addItemError} = crm;
+        const {addItemBtn, overlay, tbody, form, header, formContent, addItemError, addItemBlock} = crm;
         const generalVars = {
             addItemBtn,
             overlay,
@@ -24,7 +24,8 @@ import {handleSearch} from "./modules/input-search.js";
             body,
             app,
             addItemError,
-            imageURL
+            imageURL,
+            addItemBlock,
         };
 
         // Функционал

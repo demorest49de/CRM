@@ -381,7 +381,7 @@ const createOverlay = () => {
   addItemBlock.append(addItemCloseBtn);
   overlay.append(addItemBlock);
   const addItemError = createErrorMessage();
-  return {overlay, form, formContent: formInputs, addItemError};
+  return {overlay, form, formContent: formInputs, addItemError, addItemBlock};
 };
 
 export const createId = () => {
