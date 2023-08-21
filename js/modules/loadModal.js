@@ -15,6 +15,5 @@ export const loadModalStyles = (url) => {
     });
     
     styles.set(url, stylePromise);
-    console.log(' : ', stylePromise);
     return stylePromise;
 };

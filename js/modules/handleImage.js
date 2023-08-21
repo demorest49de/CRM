@@ -18,7 +18,6 @@ export const appendImage = (image, imagewrapper) => {
 
 export const checkWindowResize = ($) => {
     if ($.form.querySelector('.add-item__image-size-text').classList.contains('is-visible') && screen.width < 822) {
-
         $.form.querySelector('.add-item__image-text').classList.remove('remove-margin');
     } else {
         $.form.querySelector('.add-item__image-text').classList.add('remove-margin');

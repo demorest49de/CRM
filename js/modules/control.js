@@ -215,7 +215,7 @@ export const handleControls = ($) => {
     
     const handleWindowsResizeForImageTextSize = () => {
         window.addEventListener('resize', () => {
-            checkWindowResize();
+            checkWindowResize($);
         });
     };
     
