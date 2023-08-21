@@ -24,8 +24,6 @@ import {
 export const handleControls = ($) => {
     const showModal = async (element) => {
         
-        $.overlay.classList.add('is-visible');
-        
         await loadModalStyles('css/additem.css').then((response) => {
             if (response && element === $.addItemBtn) {
                 handleDiscount($.form.querySelector('.add-item__checkbox'), $);
@@ -53,10 +51,14 @@ export const handleControls = ($) => {
                     if (dataPic) {
                         const fileBtn = $.form.querySelector('.add-item__button-image');
                         const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
-                        if(!imagewrapper.contains(imagewrapper.querySelector('.add-item__image-preview')))
-                        handleLoadImage($, imagewrapper, fileBtn, dataPic).then(() => {
-                            $.app.append($.overlay);
-                        });
+                        if (!imagewrapper.contains(imagewrapper.querySelector('.add-item__image-preview')))
+                            handleLoadImage($, imagewrapper, fileBtn, dataPic).then(() => {
+                                $.app.append($.overlay);
+                            }).then(() => {
+                                setTimeout(() => {
+                                    $.overlay.classList.add('is-visible');
+                                }, 300);
+                            });
                     }
                 });
             }
@@ -68,6 +70,10 @@ export const handleControls = ($) => {
             showModal(target).then(() => {
                 $.app.append($.overlay);
                 handleAllValidations($);
+            }).then(() => {
+                setTimeout(() => {
+                    $.overlay.classList.add('is-visible');
+                }, 300);
             });
         });
     };
