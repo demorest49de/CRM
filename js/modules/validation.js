@@ -67,7 +67,7 @@ export const handleAllValidations = ($) => {
             }
             
         } else {
-            handleNotificationSign(target, false, false);
+            handleNotificationSign(target, false, false, $);
         }
     }
     
@@ -77,7 +77,6 @@ export const handleAllValidations = ($) => {
 
 const handleNotificationSign = (target, showVerification = false, showWarning = false, $ = null) => {
     let labelBlock = null;
-    console.log($.form);
     if (target === $.form.querySelector('.add-item__input[name=discount]')) {
         labelBlock = target.parentNode.parentNode.querySelector('.add-item__subblock');
     } else {
@@ -115,7 +114,7 @@ const handleNotificationSign = (target, showVerification = false, showWarning = 
 export const handleCheckLength = (target, length, $) => {
     
     if (target.value.length === 0) {
-        handleNotificationSign(target, false, false, $ = null);
+        handleNotificationSign(target, false, false, $);
         return false;
     }
     

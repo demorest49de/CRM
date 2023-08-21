@@ -22,7 +22,6 @@ import {
 
 
 export const handleControls = ($) => {
-    
     const showModal = async (element) => {
         
         $.overlay.classList.add('is-visible');
