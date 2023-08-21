@@ -92,6 +92,10 @@ export const handleControls = ($) => {
                 }
                 
                 hideImage($);
+                setTimeout(() => {
+                    $.overlay.classList.remove('is-visible');
+                },300);
+                
                 $.overlay.remove();
             }
         });
