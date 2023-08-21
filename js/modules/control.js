@@ -49,11 +49,11 @@ export const handleControls = ($) => {
                 }).then(() => {
                     const dataPic = element.closest('.list-product__table-tr')
                         .querySelector('button[data-pic]')?.getAttribute('data-pic');
-                    
+                    console.log($.form.querySelector('.add-item__image-wrapper'));
                     if (dataPic) {
                         const fileBtn = $.form.querySelector('.add-item__button-image');
                         const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
-                        
+                        if(!imagewrapper.contains(imagewrapper.querySelector('.add-item__image-preview')))
                         handleLoadImage($, imagewrapper, fileBtn, dataPic).then(() => {
                             $.app.append($.overlay);
                         });
