@@ -152,7 +152,7 @@ export const handleDiscountValidation = ($) => {
     return true;
 };
 
-export const countDescriptionLength = () => {
+export const countDescriptionLength = ($) => {
     const target = document.querySelector('.add-item__input[name=description]');
     const textCount = document.querySelector('.add-item__text-count');
 

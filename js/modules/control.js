@@ -40,7 +40,7 @@ export const handleControls = ($) => {
                     .querySelector('td[data-id]').getAttribute('data-id');
                 
                 fetchAddEdit($, tdId).then((result) => {
-                    console.log(' : ', result);
+                    
                     $.overlay.querySelector('.add-item__title').textContent = 'Изменить товар';
                     $.overlay.querySelector('button.add-item__button-item[type=submit]').textContent = 'Сохранить';
                     
@@ -62,39 +62,6 @@ export const handleControls = ($) => {
                 });
             }
         });
-        
-        // //add
-        // if (element === $.addItemBtn) {
-        //     handleDiscount($.form.querySelector('.add-item__checkbox'), $);
-        //     $.overlay.querySelector('.add-item__title').textContent = 'добавить товар';
-        //     $.overlay.querySelector('button.add-item__button-item[type=submit]').textContent = 'добавить товар';
-        //     $.overlay.querySelector('.add-item__id-block').style.display = `none`;
-        // }
-        //edit
-        // if (element.classList.contains('list-product__button-edit')) {
-        //
-        //     $.overlay.querySelector('.add-item__title').textContent = 'Изменить товар';
-        //     $.overlay.querySelector('button.add-item__button-item[type=submit]').textContent = 'Сохранить';
-        //
-        //     const dataPic = element.closest('.list-product__table-tr')
-        //         .querySelector('button[data-pic]')?.getAttribute('data-pic');
-        //
-        //     if (dataPic) {
-        //         const fileBtn = $.form.querySelector('.add-item__button-image');
-        //         const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
-        //
-        //         await handleLoadImage($, imagewrapper, fileBtn, dataPic);
-        //     }
-        //
-        //     const tdId = element.closest('.list-product__table-tr')
-        //         .querySelector('td[data-id]').getAttribute('data-id');
-        //
-        //     $.overlay.querySelector('.add-item__id-block').style.display = `block`;
-        //     const id = $.overlay.querySelector('.vendor-code__id');
-        //     id.textContent = tdId;
-        //
-        //     openEditHandler($, tdId);
-        //}
     };
     
     const handleOpenForm = () => {
