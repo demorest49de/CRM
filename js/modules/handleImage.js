@@ -1,13 +1,15 @@
 import {checkFileSize} from './fileHandler.js';
+import {toBase64} from "./toBase64.js";
+
 
 export const hideImage = ($) => {
     const promise = new Promise((resolve) => {
-        // const image = $.form.querySelector('.add-item__image-preview');
+        
         const images = $.form.querySelectorAll('.add-item__image-preview');
         images?.forEach(e => e.remove());
         const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
         imagewrapper?.classList.add('hide-image');
-        
+        $.form.querySelector('.add-item__file-size').textContent = '';
         resolve(true);
     });
     
@@ -15,7 +17,7 @@ export const hideImage = ($) => {
 };
 
 export const appendImage = (image, imagewrapper) => {
-    // const preview = imagewrapper.getElementsByClassName('add-item__image-preview');
+    
     imagewrapper.append(image);
     image.classList.add('add-item__image-preview');
     image.alt = 'Превью изображеня';
@@ -33,7 +35,7 @@ export const handleLoadImage = ($, imagewrapper, fileBtn, dataPic = '') => new P
     
     const image = document.createElement('img');
     
-    image.addEventListener('load', () => {
+    image.addEventListener('load', async () => {
         resolve();
     });
     

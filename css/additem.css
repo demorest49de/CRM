@@ -328,7 +328,7 @@ body {
 
 .add-item__button-image {
     padding: 11px 27px;
-    /*margin-top: 20px;*/
+    margin-bottom: 10px;
     min-height: 39px;
     color: transparent;
     max-width: 250px;
@@ -432,6 +432,10 @@ body {
     right: 30px;
     padding: 0;
     border-style: none;
+}
+
+.add-item__file-size{
+
 }
 
 @media (max-width: 822px) {

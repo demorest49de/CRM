@@ -329,6 +329,7 @@ const createOverlay = () => {
                 id="add-item__button-image"
                 name="image"
                 accept="image/jpeg, image/png">
+                <p class="add-item__file-size"></p>
             </div>
             <div class="add-item__block add-item__image">
                
