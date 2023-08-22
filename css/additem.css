@@ -364,10 +364,10 @@ body {
 
 .add-item__trashcan {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
+    width: 40px;
+    height: 40px;
+    top: calc(50% - 20px);
+    left: calc(50% - 20px);;
     background-image: url("../img/trashcan.svg");
     background-repeat: no-repeat;
     background-size: 40px 40px;

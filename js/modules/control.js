@@ -235,6 +235,13 @@ export const handleControls = ($) => {
         });
     };
     
+    const handleRemoveImage = () => {
+        const image = $.form.querySelector('.add-item__trashcan');
+        image.addEventListener('click', ({target}) => {
+            console.log(' : ',target);
+        });
+    };
+    
     const handleWindowsResizeForImageTextSize = () => {
         window.addEventListener('resize', () => {
             checkWindowResize($);
@@ -264,4 +271,5 @@ export const handleControls = ($) => {
     });
     closeErrorHandler();
     handleWindowsResizeForImageTextSize();
+    handleRemoveImage();
 };
