@@ -36,7 +36,7 @@ export const handleControls = ($) => {
                 const tdId = element.closest('.list-product__table-tr')
                     .querySelector('td[data-id]').getAttribute('data-id');
                 
-                fetchAddEdit($, tdId).then((result) => {
+                fetchAddEdit($, tdId).then(() => {
                     
                     $.overlay.querySelector('.add-item__title').textContent = 'Изменить товар';
                     $.overlay.querySelector('button.add-item__button-item[type=submit]').textContent = 'Сохранить';
@@ -44,7 +44,7 @@ export const handleControls = ($) => {
                     $.overlay.querySelector('.add-item__id-block').style.display = `block`;
                     const id = $.overlay.querySelector('.vendor-code__id');
                     id.textContent = tdId;
-                }).then(() => {
+                    
                     const dataPic = element.closest('.list-product__table-tr')
                         .querySelector('button[data-pic]')?.getAttribute('data-pic');
                     console.log($.form.querySelector('.add-item__image-wrapper'));
@@ -52,18 +52,17 @@ export const handleControls = ($) => {
                         const fileBtn = $.form.querySelector('.add-item__button-image');
                         const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
                         if (!imagewrapper.contains(imagewrapper.querySelector('.add-item__image-preview')))
-                            handleLoadImage($, imagewrapper, fileBtn, dataPic).then(() => {
-                                $.app.append($.overlay);
-                            }).then(() => {
-                                setTimeout(() => {
-                                    $.overlay.classList.add('is-visible');
-                                }, 10);
-                            }).then(() => {
-                                setTimeout(() => {
-                                    $.addItemBlock.classList.add('is-visible');
-                                }, 500);
-                            });
+                            handleLoadImage($, imagewrapper, fileBtn, dataPic);
                     }
+                }).then(() => {
+                    $.app.append($.overlay);
+                }).then(() => {
+                    setTimeout(() => {
+                        $.overlay.classList.add('is-visible');
+                    }, 10);
+                    setTimeout(() => {
+                        $.addItemBlock.classList.add('is-visible');
+                    }, 500);
                 });
             }
         });
@@ -78,7 +77,6 @@ export const handleControls = ($) => {
                 setTimeout(() => {
                     $.overlay.classList.add('is-visible');
                 }, 10);
-            }).then(() => {
                 setTimeout(() => {
                     $.addItemBlock.classList.add('is-visible');
                 }, 500);
@@ -91,12 +89,6 @@ export const handleControls = ($) => {
             const target = event.target;
             if (target === $.overlay || target.closest('.add-item-close-button')) {
                 
-                const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
-                if (tr) {
-                    removeVisualValidation($);
-                    tr.removeAttribute('data-is-editable');
-                    $.form.reset();
-                }
                 
                 hideImage($).then((ok) => {
                     if (ok) {
@@ -109,6 +101,12 @@ export const handleControls = ($) => {
                         $.overlay.classList.remove('is-visible');
                     }, 500);
                     setTimeout(() => {
+                        const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
+                        if (tr) {
+                            removeVisualValidation($);
+                            tr.removeAttribute('data-is-editable');
+                            $.form.reset();
+                        }
                         $.overlay.remove();
                     }, 900);
                 });

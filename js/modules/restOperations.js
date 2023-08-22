@@ -147,7 +147,6 @@ const cbOpenEdit = (error, data, $, id) => {
 
     calculateFormTotal($);
     handleAllValidations($);
-    return data;
 };
 
 const cbRenderSearchItems = (error, data, $, search) => {
