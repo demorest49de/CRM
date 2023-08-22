@@ -47,7 +47,7 @@ export const handleControls = ($) => {
                     
                     const dataPic = element.closest('.list-product__table-tr')
                         .querySelector('button[data-pic]')?.getAttribute('data-pic');
-                    console.log($.form.querySelector('.add-item__image-wrapper'));
+                    
                     if (dataPic) {
                         const fileBtn = $.form.querySelector('.add-item__button-image');
                         const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
@@ -236,9 +236,13 @@ export const handleControls = ($) => {
     };
     
     const handleRemoveImage = () => {
-        const image = $.form.querySelector('.add-item__trashcan');
-        image.addEventListener('click', ({target}) => {
-            console.log(' : ',target);
+        const trashcan = $.form.querySelector('.add-item__trashcan');
+        trashcan.addEventListener('click', ({target}) => {
+            const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
+            const image = imagewrapper.querySelector('.add-item__image-preview');
+            console.log(' : ',image);
+            image.remove();
+            imagewrapper?.classList.add('hide-image');
         });
     };
     
