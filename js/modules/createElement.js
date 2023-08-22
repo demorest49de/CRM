@@ -330,11 +330,12 @@ const createOverlay = () => {
                 name="image"
                 accept="image/jpeg, image/png">
             </div>
-            <div class="add-item__block add-item__image">  
-                <div class="add-item__"> 
+            <div class="add-item__block add-item__image">
+               
                   <div class="add-item__image-wrapper hide-image">
-                  </div>
+                   <div class="add-item__trashcan">
                 </div>
+                  </div>
             </div>
           </fieldset>
         </form>
