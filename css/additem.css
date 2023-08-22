@@ -11,7 +11,7 @@ body {
     background: rgba(0, 0, 0, 0.5);
     opacity: 0;
     visibility: hidden;
-    transition: 1.4s ease-in-out;
+    transition: 0.4s ease-in-out;
 }
 
 .overlay.is-visible,
@@ -41,28 +41,7 @@ body {
     margin: 0 auto;
     opacity: 0;
     visibility: hidden;
-    transition: 1.4s ease-in-out;
-}
-
-.add-item-animation{
-    animation-name: disappear;
-    animation-duration: 1s;
-    animation-iteration-count: 1;
-}
-
-@keyframes disappear {
-    0%{
-        opacity: 0;
-    }
-
-    50%{
-        opacity: 0.5;
-    }
-
-
-    100%{
-        opacity: 1;
-    }
+    transition: 0.4s ease-in-out;
 }
 
 .add-item__container {

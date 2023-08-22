@@ -57,7 +57,11 @@ export const handleControls = ($) => {
                             }).then(() => {
                                 setTimeout(() => {
                                     $.overlay.classList.add('is-visible');
-                                }, 300);
+                                }, 10);
+                            }).then(() => {
+                                setTimeout(() => {
+                                    $.addItemBlock.classList.add('is-visible');
+                                }, 500);
                             });
                     }
                 });
@@ -73,11 +77,11 @@ export const handleControls = ($) => {
             }).then(() => {
                 setTimeout(() => {
                     $.overlay.classList.add('is-visible');
-                }, 100);
+                }, 10);
             }).then(() => {
                 setTimeout(() => {
                     $.addItemBlock.classList.add('is-visible');
-                }, 1000);
+                }, 500);
             });
         });
     };
@@ -98,17 +102,15 @@ export const handleControls = ($) => {
                     if (ok) {
                         setTimeout(() => {
                             $.addItemBlock.classList.remove('is-visible');
-                        }, 100);
+                        }, 10);
                     }
                 }).then(() => {
                     setTimeout(() => {
                         $.overlay.classList.remove('is-visible');
-                    }, 1000);
-                }).then(()=>{
+                    }, 500);
                     setTimeout(() => {
                         $.overlay.remove();
-                    }, 1300);
-                    
+                    }, 900);
                 });
             }
         });
