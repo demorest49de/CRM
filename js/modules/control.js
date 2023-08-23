@@ -134,6 +134,7 @@ export const handleControls = ($) => {
         $.tbody.addEventListener('click', e => {
             const target = e.target;
             if (target.closest('.list-product__button-edit')) {
+                hideImage($, true);
                 removeVisualValidation($);
                 const tr = target.closest('.list-product__table-tr');
                 tr.setAttribute('data-is-editable', 'true');
@@ -186,7 +187,7 @@ export const handleControls = ($) => {
                 removeVisualValidation($);
                 
                 $.overlay.remove();
-                hideImage($);
+                hideImage($, true);
             }).catch((error) => {
                 console.log(' : ', error);
             });
