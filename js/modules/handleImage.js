@@ -75,13 +75,3 @@ export const handleImageBtn = ($) => {
         }
     });
 };
-
-export const handleAddImage = async () => {
-    const fileBtn = $.form.querySelector('.add-item__button-image');
-    fileBtn.addEventListener('change', async ({target}) => {
-        const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
-        const img = imagewrapper?.querySelector('img');
-        img?.remove();
-        await handleLoadImage($, imagewrapper, fileBtn, null);
-    });
-};

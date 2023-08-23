@@ -19,6 +19,7 @@ import {
     checkWindowResize,
     handleImageBtn
 } from "./handleImage.js";
+import {removeFileFromFileList} from "./fileHandler.js";
 
 
 export const handleControls = ($) => {
@@ -243,6 +244,9 @@ export const handleControls = ($) => {
             console.log(' : ', image);
             image.remove();
             imagewrapper?.classList.add('hide-image');
+            // const fileBtn = $.form.querySelector('.add-item__button-image');
+            // removeFileFromFileList(0, fileBtn);
+            // $.form.image.name = 'image/notimage.jpg';
         });
     };
     

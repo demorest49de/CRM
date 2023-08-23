@@ -12,7 +12,7 @@ export const checkFileSize = ($, file, imagewrapper, fileBtn, callback) => {
     
     const filesizeText = $.form.querySelector('.add-item__file-size');
     filesizeText.textContent = `${Math.floor(file.size/1000)} KB`;
-    console.log(' : ',filesizeText);
+    
     // добавляем после проверки размера
     $.form.querySelector('.add-item__image-size-text').classList.remove('is-visible');
     imagewrapper?.classList.remove('hide-image');
@@ -20,7 +20,7 @@ export const checkFileSize = ($, file, imagewrapper, fileBtn, callback) => {
     return true;
 };
 
-const removeFileFromFileList = (index, input) => {
+export const removeFileFromFileList = (index, input) => {
     const dt = new DataTransfer();
     const {files} = input;
     
@@ -30,5 +30,5 @@ const removeFileFromFileList = (index, input) => {
             dt.items.add(file); // here you exclude the file. thus removing it.
     }
     input.files = dt.files; // Assign the updates list
-    console.log(' : ',input.files);
+    
 };
