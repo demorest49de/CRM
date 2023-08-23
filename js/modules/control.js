@@ -4,7 +4,7 @@ import {
     sendGoodsHandler,
     deleteGoodsHandler,
     fetchAddEdit,
-    updateItemHandler, loadGoodsHandler,
+    updateItemHandler, getCategories,
 } from './restOperations.js';
 import {toBase64} from './toBase64.js';
 import {
@@ -240,7 +240,7 @@ export const handleControls = ($) => {
         trashcan.addEventListener('click', ({target}) => {
             const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
             const image = imagewrapper.querySelector('.add-item__image-preview');
-            console.log(' : ',image);
+            console.log(' : ', image);
             image.remove();
             imagewrapper?.classList.add('hide-image');
         });
@@ -262,6 +262,21 @@ export const handleControls = ($) => {
         });
     };
     
+    const handleDatalist = () => {
+        const datalist = $.form.querySelector('#add-item__category-list');
+        getCategories($).then((data) => {
+            const resultArray = data.forEach((value) => {
+                const option = document.createElement('option');
+                option.value = value;
+                option.textContent = value;
+                datalist.append(option);
+            });
+                // `<option value="${value}">${value}</option>`;
+            // datalist.append(...resultArray);
+        });
+    };
+    
+    
     handleInput();
     handleOpenForm();
     handleCloseForm();
@@ -276,4 +291,5 @@ export const handleControls = ($) => {
     closeErrorHandler();
     handleWindowsResizeForImageTextSize();
     handleRemoveImage();
+    handleDatalist();
 };

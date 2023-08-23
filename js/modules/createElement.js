@@ -263,7 +263,9 @@ const createOverlay = () => {
                   </label>
               </div>
               <input class="add-item__input" type="text"
-               name="category" id="add-item__category" required>
+               name="category" list="add-item__category-list" id="add-item__category" required>
+                <datalist class="add-item__category-datalist" id="add-item__category-list">
+                </datalist>
             </div>
           
             <div class="add-item__block add-item__measure">

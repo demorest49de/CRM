@@ -16,24 +16,24 @@ const fetchRequest = async (url, {
         const options = {
             method,
         };
-
+        
         if (id) url += id.toString();
-
+        
         if (body) options.body = JSON.stringify(body);
-
+        
         if (headers) options.headers = headers;
-
+        
         const response = await fetch(url, options);
-
+        
         if (response.ok) {
             const data = await response.json();
             if (callback && id) return callback(null, data, vars, id);
             if (callback && search) return callback(null, data, vars, search);
-
+            
             if (callback) return callback(null, data, vars);
             return;
         }
-
+        
         throw new Error(`Error ${response.status}: ${response.statusText}`);
     } catch (err) {
         console.log(' : ', err);
@@ -51,35 +51,35 @@ const httpRequest = (url, {
 }) => {
     try {
         const xhr = new XMLHttpRequest();
-
+        
         if (id) {
             xhr.open(method, url + `/${id}`);
         } else {
             xhr.open(method, url);
         }
-
+        
         if (headers) {
             for (const [key, value] of Object.entries(headers)) {
                 xhr.setRequestHeader(key, value);
             }
         }
-
+        
         xhr.addEventListener('load', () => {
             if (xhr.status < 200 || xhr.status >= 300) {
                 callback(new Error(xhr.status.toString()), xhr.response, vars);
                 return;
             }
-
+            
             const data = JSON.parse(xhr.response);
             if (callback) {
                 callback(null, data, vars, id);
             }
         });
-
+        
         xhr.addEventListener('error', () => {
             callback(new Error(xhr.status.toString()), xhr.response, vars);
         });
-
+        
         xhr.send(JSON.stringify(body));
     } catch (err) {
         console.log(' : ', err);
@@ -92,7 +92,7 @@ const handleErrorMessage = (error, data, $) => {
     setTimeout(() => {
         $.addItemError.classList.add('is-visible');
     }, 300);
-
+    
     if (!data) data = error.message;
     console.warn(error, data);
 };
@@ -102,7 +102,7 @@ const cbSendItem = (error, data, $) => {
         handleErrorMessage(error, data, $);
         return;
     }
-
+    
     loadGoodsHandler($);
 };
 
@@ -111,10 +111,10 @@ const cbRenderItems = (error, data, $) => {
         handleErrorMessage(error, data, $);
         return;
     }
-
+    
     $.form.reset();
     $.overlay.classList.remove('is-visible');
-
+    
     renderItems(data, $);
     calculateTotal($);
 };
@@ -124,13 +124,13 @@ const cbOpenEdit = (error, data, $, id) => {
         handleErrorMessage(error, data, $);
         return;
     }
-
+    
     $.form.querySelector('.add-item__block-id')
         .setAttribute('data-id', id);
     $.form.name.value = data.title;
     $.form.measure.value = data.units;
     $.form.category.value = data.category;
-
+    
     if (+(data.discount) > 0) {
         $.form.discount.removeAttribute('disabled', '');
         $.form.discount.value = data.discount;
@@ -141,12 +141,21 @@ const cbOpenEdit = (error, data, $, id) => {
     $.form.description.value = data.description;
     $.form.quantity.value = data.count;
     $.form.price.value = data.price;
-
+    
     $.form.image.src = data.image;
-
-
+    
+    
     calculateFormTotal($);
     handleAllValidations($);
+};
+
+const cbHandleCategory = (error, data, $) => {
+    if (error) {
+        handleErrorMessage(error, data, $);
+        return;
+    }
+    
+    return data;
 };
 
 const cbRenderSearchItems = (error, data, $, search) => {
@@ -154,23 +163,23 @@ const cbRenderSearchItems = (error, data, $, search) => {
         handleErrorMessage(error, data, $);
         return;
     }
-
+    
     $.form.reset();
     $.overlay.classList.remove('is-visible');
-
+    
     let searchedData = [];
-
-
+    
+    
     if (search && search.length > 1) {
         searchedData = data.filter(x => x && x.title.trim().toLowerCase().includes(search.trim().toLowerCase()));
         console.log(' : ', searchedData);
     }
-
+    
     if (searchedData.length > 0) {
         data = searchedData;
         console.log(' : ', data);
     }
-
+    
     renderItems(data, $);
     calculateTotal($);
 };
@@ -249,5 +258,15 @@ export const searchGoodsHandler = ($, search) => {
         callback: cbRenderSearchItems,
         vars: $,
         search: search,
+    });
+};
+
+export const getCategories = ($) => {
+    const URL = $.clearURL + $.apiCategory;
+    return fetchRequest(URL, {
+        method: $.verbs.get,
+        headers: {'Content-Type': 'application/json'},
+        vars: $,
+        callback: cbHandleCategory,
     });
 };

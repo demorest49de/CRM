@@ -1,5 +1,7 @@
 export const getConsts = () => {
-  const URL = 'https://muddy-substantial-gear.glitch.me/api/goods/';
+  const URLOfGoods = 'https://muddy-substantial-gear.glitch.me/api/goods/';
+  const clearURL = 'https://muddy-substantial-gear.glitch.me/';
+  const apiCategory = 'api/category/';
   const imageURL = 'https://muddy-substantial-gear.glitch.me/';
   const verbs = {
     get: 'GET',
@@ -20,5 +22,5 @@ export const getConsts = () => {
     image: '',
   };
 
-  return {URL, verbs, body, imageURL};
+  return {URL: URLOfGoods, verbs, body, imageURL, clearURL, apiCategory};
 };
