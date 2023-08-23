@@ -1,5 +1,4 @@
 import {checkFileSize} from './fileHandler.js';
-import {toBase64} from "./toBase64.js";
 
 
 export const hideImage = ($) => {
@@ -44,7 +43,7 @@ export const handleLoadImage = ($, imagewrapper, fileBtn, dataPic = '') => new P
         // check size
         const file = fileBtn.files[0];
         
-        if (!checkFileSize($, file, imagewrapper, () => {
+        if (!checkFileSize($, file, imagewrapper, fileBtn, () => {
             checkWindowResize($);
         })) return;
         appendImage(image, imagewrapper);
