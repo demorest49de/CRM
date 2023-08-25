@@ -75,19 +75,19 @@ export const handleControls = ($) => {
                 $.app.append($.overlay);
                 handleAllValidations($);
             }).then(() => {
-                modalAnimationHandler(400,1);
+                modalAnimationHandler(400, 1, 'visible');
             });
         });
     };
     
-    const modalAnimationHandler = (duration, direction) => {
-        $.overlay.style.visibility = 'visible';
+    const modalAnimationHandler = (duration, direction, visibility) => {
+        $.overlay.style.visibility = visibility;
         modalAnimation(duration, direction, (progress) => {
             $.overlay.style.opacity = `${progress}`;
         });
         
         setTimeout(() => {
-            $.addItemBlock.style.visibility = 'visible';
+            $.addItemBlock.style.visibility = visibility;
             modalAnimation(duration, direction, (progress) => {
                 $.addItemBlock.style.opacity = `${progress}`;
             });
@@ -102,7 +102,7 @@ export const handleControls = ($) => {
             startAnimation ||= timestamp;
             if (direction > 0) {
                 const progress = (timestamp - startAnimation) / duration;
-                console.log(' : ', progress);
+                // console.log(' : ', progress);
                 callback(progress);
                 if (progress < 1) {
                     requestId = requestAnimationFrame(step);
@@ -114,7 +114,7 @@ export const handleControls = ($) => {
                 
                 console.log(' : ', progress);
                 callback(progress);
-                if (progress > 0) {
+                if (progress > 0 && progress <= 1) {
                     requestId = requestAnimationFrame(step);
                 } else {
                     cancelAnimationFrame(requestId);
@@ -128,30 +128,42 @@ export const handleControls = ($) => {
             const target = event.target;
             if (target === $.overlay || target.closest('.add-item-close-button')) {
                 
-                
-                hideImage($).then((ok) => {
-                    if (ok) {
-                        setTimeout(() => {
-                            $.addItemBlock.classList.remove('is-visible');
-                        }, 10);
+                hideImage($).then(() => {
+                    modalAnimationHandler(400, -1, 'hidden');
+                    //$.addItemBlock.classList.remove('is-visible');
+                    //     $.overlay.classList.remove('is-visible');
+                    const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
+                    if (tr) {
+                        removeVisualValidation($);
+                        tr.removeAttribute('data-is-editable');
+                        $.form.reset();
                     }
-                }).then(() => {
-                    setTimeout(() => {
-                        $.overlay.classList.remove('is-visible');
-                    }, 500);
-                    setTimeout(() => {
-                        const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
-                        if (tr) {
-                            removeVisualValidation($);
-                            tr.removeAttribute('data-is-editable');
-                            $.form.reset();
-                        }
-                        $.overlay.remove();
-                    }, 900);
+                    $.overlay.remove();
                 });
             }
         });
     };
+    
+    // hideImage($).then((ok) => {
+    //     if (ok) {
+    //         setTimeout(() => {
+    //             $.addItemBlock.classList.remove('is-visible');
+    //         }, 10);
+    //     }
+    // }).then(() => {
+    //     setTimeout(() => {
+    //         $.overlay.classList.remove('is-visible');
+    //     }, 500);
+    //     setTimeout(() => {
+    //         const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
+    //         if (tr) {
+    //             removeVisualValidation($);
+    //             tr.removeAttribute('data-is-editable');
+    //             $.form.reset();
+    //         }
+    //         $.overlay.remove();
+    //     }, 900);
+    // });
     
     const deleteRow = () => {
         $.tbody.addEventListener('click', e => {
