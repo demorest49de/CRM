@@ -80,6 +80,27 @@ export const handleControls = ($) => {
         });
     };
     
+    const handleCloseForm = () => {
+        $.overlay.addEventListener('click', event => {
+            const target = event.target;
+            if (target === $.overlay || target.closest('.add-item-close-button')) {
+                
+                hideImage($).then(() => {
+                    modalAnimationHandler(400, -1, 'hidden');
+                    //$.addItemBlock.classList.remove('is-visible');
+                    //     $.overlay.classList.remove('is-visible');
+                    const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
+                    if (tr) {
+                        removeVisualValidation($);
+                        tr.removeAttribute('data-is-editable');
+                        $.form.reset();
+                    }
+                    $.overlay.remove();
+                });
+            }
+        });
+    };
+    
     const modalAnimationHandler = (duration, direction, visibility) => {
         $.overlay.style.visibility = visibility;
         modalAnimation(duration, direction, (progress) => {
@@ -119,27 +140,6 @@ export const handleControls = ($) => {
                 } else {
                     cancelAnimationFrame(requestId);
                 }
-            }
-        });
-    };
-    
-    const handleCloseForm = () => {
-        $.overlay.addEventListener('click', event => {
-            const target = event.target;
-            if (target === $.overlay || target.closest('.add-item-close-button')) {
-                
-                hideImage($).then(() => {
-                    modalAnimationHandler(400, -1, 'hidden');
-                    //$.addItemBlock.classList.remove('is-visible');
-                    //     $.overlay.classList.remove('is-visible');
-                    const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
-                    if (tr) {
-                        removeVisualValidation($);
-                        tr.removeAttribute('data-is-editable');
-                        $.form.reset();
-                    }
-                    $.overlay.remove();
-                });
             }
         });
     };
