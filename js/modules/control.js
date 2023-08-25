@@ -75,13 +75,51 @@ export const handleControls = ($) => {
                 $.app.append($.overlay);
                 handleAllValidations($);
             }).then(() => {
-                setTimeout(() => {
-                    $.overlay.classList.add('is-visible');
-                }, 10);
-                setTimeout(() => {
-                    $.addItemBlock.classList.add('is-visible');
-                }, 500);
+                modalAnimationHandler(400,1);
             });
+        });
+    };
+    
+    const modalAnimationHandler = (duration, direction) => {
+        $.overlay.style.visibility = 'visible';
+        modalAnimation(duration, direction, (progress) => {
+            $.overlay.style.opacity = `${progress}`;
+        });
+        
+        setTimeout(() => {
+            $.addItemBlock.style.visibility = 'visible';
+            modalAnimation(duration, direction, (progress) => {
+                $.addItemBlock.style.opacity = `${progress}`;
+            });
+        }, 400);
+    };
+    
+    const modalAnimation = (duration, direction, callback) => {
+        let requestId = NaN;
+        let startAnimation = NaN;
+        
+        requestId = window.requestAnimationFrame(function step(timestamp) {
+            startAnimation ||= timestamp;
+            if (direction > 0) {
+                const progress = (timestamp - startAnimation) / duration;
+                console.log(' : ', progress);
+                callback(progress);
+                if (progress < 1) {
+                    requestId = requestAnimationFrame(step);
+                } else {
+                    cancelAnimationFrame(requestId);
+                }
+            } else {
+                const progress = Math.abs(((timestamp - startAnimation) / duration) - 1);
+                
+                console.log(' : ', progress);
+                callback(progress);
+                if (progress > 0) {
+                    requestId = requestAnimationFrame(step);
+                } else {
+                    cancelAnimationFrame(requestId);
+                }
+            }
         });
     };
     
