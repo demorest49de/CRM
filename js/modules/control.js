@@ -86,33 +86,55 @@ export const handleControls = ($) => {
             if (target === $.overlay || target.closest('.add-item-close-button')) {
                 
                 hideImage($).then(() => {
-                    modalAnimationHandler(400, -1, 'hidden');
-                    //$.addItemBlock.classList.remove('is-visible');
-                    //     $.overlay.classList.remove('is-visible');
-                    const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
-                    if (tr) {
-                        removeVisualValidation($);
-                        tr.removeAttribute('data-is-editable');
-                        $.form.reset();
-                    }
-                    $.overlay.remove();
+                    modalAnimationHandler(400, -1, 'hidden').then((ok) => {
+                        const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
+                        if (tr) {
+                            removeVisualValidation($);
+                            tr.removeAttribute('data-is-editable');
+                            $.form.reset();
+                        }
+                        $.overlay.remove();
+                    });
                 });
             }
         });
     };
     
     const modalAnimationHandler = (duration, direction, visibility) => {
-        $.overlay.style.visibility = visibility;
-        modalAnimation(duration, direction, (progress) => {
-            $.overlay.style.opacity = `${progress}`;
-        });
-        
-        setTimeout(() => {
-            $.addItemBlock.style.visibility = visibility;
-            modalAnimation(duration, direction, (progress) => {
-                $.addItemBlock.style.opacity = `${progress}`;
+        const animationObject = {
+            visibilityIsUsed: true,
+            overlayAnimation: function () {
+                if (this.visibilityIsUsed) $.overlay.style.visibility = visibility;
+                modalAnimation(duration, direction, (progress) => {
+                    $.overlay.style.opacity = `${progress}`;
+                });
+            },
+            windowAnimation: function () {
+                if (this.visibilityIsUsed) $.addItemBlock.style.visibility = visibility;
+                modalAnimation(duration, direction, (progress) => {
+                    $.addItemBlock.style.opacity = `${progress}`;
+                });
+            },
+        };
+        if (direction === 1) {
+            animationObject.visibilityIsUsed = true;
+            animationObject.overlayAnimation();
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(animationObject.windowAnimation());
+                }, 400);
             });
-        }, 400);
+        }
+        
+        if (direction === -1) {
+            animationObject.visibilityIsUsed = false;
+            animationObject.windowAnimation();
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(animationObject.overlayAnimation());
+                }, 400);
+            });
+        }
     };
     
     const modalAnimation = (duration, direction, callback) => {
