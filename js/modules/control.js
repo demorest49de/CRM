@@ -87,13 +87,15 @@ export const handleControls = ($) => {
                 
                 hideImage($).then(() => {
                     modalAnimationHandler(400, -1, 'hidden').then((ok) => {
-                        const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
-                        if (tr) {
-                            removeVisualValidation($);
-                            tr.removeAttribute('data-is-editable');
-                            $.form.reset();
+                        if (ok) {
+                            const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
+                            if (tr) {
+                                removeVisualValidation($);
+                                tr.removeAttribute('data-is-editable');
+                                $.form.reset();
+                            }
+                            $.overlay.remove();
                         }
-                        $.overlay.remove();
                     });
                 });
             }
@@ -111,29 +113,37 @@ export const handleControls = ($) => {
             },
             windowAnimation: function () {
                 if (this.visibilityIsUsed) $.addItemBlock.style.visibility = visibility;
-                modalAnimation(duration, direction, (progress) => {
+                const promise = modalAnimation(duration, direction, (progress) => {
                     $.addItemBlock.style.opacity = `${progress}`;
                 });
+                console.log(' : ', promise);
+                return promise;
             },
         };
         if (direction === 1) {
             animationObject.visibilityIsUsed = true;
-            animationObject.overlayAnimation();
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve(animationObject.windowAnimation());
-                }, 400);
+            const promise = Promise.resolve(animationObject.overlayAnimation());
+            promise.then(() => {
+                (animationObject.windowAnimation());
             });
+            // return new Promise((resolve) => {
+            //     setTimeout(() => {
+            //         resolve(animationObject.windowAnimation());
+            //     }, 400);
+            // });
         }
         
         if (direction === -1) {
             animationObject.visibilityIsUsed = false;
-            animationObject.windowAnimation();
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve(animationObject.overlayAnimation());
-                }, 400);
+            const promise1 = Promise.resolve(animationObject.windowAnimation());
+            return promise1.then((ok) => {
+                if (ok) return (animationObject.overlayAnimation());
             });
+            // return new Promise((resolve) => {
+            //     setTimeout(() => {
+            //         resolve(animationObject.overlayAnimation());
+            //     }, 400);
+            // });
         }
     };
     
