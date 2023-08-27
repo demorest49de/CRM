@@ -2,20 +2,15 @@ import {checkFileSize} from './fileHandler.js';
 
 
 export const hideImage = ($, remove = false) => {
-    const promise = new Promise((resolve) => {
-        
-        if(remove){
-            const images = $.form.querySelectorAll('.add-item__image-preview');
-            images?.forEach(e => e.remove());
-            const imageWrapper = $.form.querySelector('.add-item__image-wrapper');
-            imageWrapper?.classList.add('hide-image');
-            $.form.querySelector('.add-item__file-size').textContent = '';
-        }
-        
-        resolve(true);
-    });
     
-    return promise;
+    // const images = $.form.querySelectorAll('.add-item__image-preview');
+    const images = document.querySelectorAll('.add-item__image-preview');
+    if (remove) {
+        images.forEach(e => e.remove());
+        const imageWrapper = $.form.querySelector('.add-item__image-wrapper');
+        imageWrapper?.classList.add('hide-image');
+        $.form.querySelector('.add-item__file-size').textContent = '';
+    }
 };
 
 export const appendImage = (image, imageWrapper) => {

@@ -41,8 +41,12 @@ export const handleControls = ($) => {
                     
                     if (dataPic) {
                         const fileBtn = $.form.querySelector('.add-item__button-image');
-                        const imageWrapper = $.form.querySelector('.add-item__image-wrapper');
-                        if (!imageWrapper.contains(imageWrapper.querySelector('.add-item__image-preview'))) handleLoadImage($, imageWrapper, fileBtn, dataPic);
+                        const imageWrapper = document.querySelector('.add-item__image-wrapper');
+                        
+                        imageWrapper.classList.remove('hide-image');
+                        
+                        if (!imageWrapper.contains(imageWrapper.querySelector('.add-item__image-preview')))
+                            handleLoadImage($, imageWrapper, fileBtn, dataPic);
                     }
                 });
             }
@@ -66,24 +70,23 @@ export const handleControls = ($) => {
             if (target === $.overlay || target.closest('.add-item-close-button')) {
                 const wrapper = $.form.querySelector('.add-item__image-wrapper');
                 const editAttr = wrapper.getAttribute("data-fromEditWindow");
-                let result;
+                
                 if (editAttr) {
                     wrapper.removeAttribute("data-fromEditWindow");
-                    result = hideImage($, true);
+                    hideImage($, true);
                 } else {
-                    result = hideImage($);
+                    hideImage($);
                 }
-            
-                result.then(() => {
-                    modalAnimationHandler(400, -1, 'hidden', function () {
-                        const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
-                        if (tr) {
-                            removeVisualValidation($);
-                            tr.removeAttribute('data-is-editable');
-                            $.form.reset();
-                        }
-                        $.overlay.remove();
-                    });
+                
+                
+                modalAnimationHandler(400, -1, 'hidden', function () {
+                    const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
+                    if (tr) {
+                        removeVisualValidation($);
+                        tr.removeAttribute('data-is-editable');
+                        $.form.reset();
+                    }
+                    $.overlay.remove();
                 });
             }
         });
@@ -98,7 +101,7 @@ export const handleControls = ($) => {
                 console.log(' overlay anim: ');
                 modalAnimation(duration, direction, (progress) => {
                     $.overlay.style.opacity = `${progress}`;
-                    console.log(' : ', progress);
+                    // console.log(' : ', progress);
                     if (callback && progress >= 1) {
                         callback();
                     }
