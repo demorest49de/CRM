@@ -64,8 +64,17 @@ export const handleControls = ($) => {
         $.overlay.addEventListener('click', event => {
             const target = event.target;
             if (target === $.overlay || target.closest('.add-item-close-button')) {
-                
-                hideImage($).then(() => {
+                const wrapper = $.form.querySelector('.add-item__image-wrapper');
+                const editAttr = wrapper.getAttribute("data-fromEditWindow");
+                let result;
+                if (editAttr) {
+                    wrapper.removeAttribute("data-fromEditWindow");
+                    result = hideImage($, true);
+                } else {
+                    result = hideImage($);
+                }
+            
+                result.then(() => {
                     modalAnimationHandler(400, -1, 'hidden', function () {
                         const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
                         if (tr) {
@@ -167,10 +176,11 @@ export const handleControls = ($) => {
             const target = e.target;
             if (target.closest('.list-product__button-edit')) {
                 hideImage($, true);
+                $.form.querySelector('.add-item__image-wrapper').setAttribute("data-fromEditWindow", "true");
                 removeVisualValidation($);
                 const tr = target.closest('.list-product__table-tr');
                 tr.setAttribute('data-is-editable', 'true');
-                prepareModal(target).then(()=>{
+                prepareModal(target).then(() => {
                     $.app.append($.overlay);
                 }).then(() => {
                     modalAnimationHandler(400, 1, 'visible');
