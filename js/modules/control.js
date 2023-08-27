@@ -10,11 +10,10 @@ import {
 import {
     hideImage, handleLoadImage, checkWindowResize, handleImageBtn
 } from "./handleImage.js";
-import {removeFileFromFileList} from "./fileHandler.js";
 
 
 export const handleControls = ($) => {
-    const showModal = async (element) => {
+    const prepareModal = async (element, callback) => {
         
         await loadModalStyles('css/additem.css').then((response) => {
             if (response && element === $.addItemBtn) {
@@ -45,23 +44,27 @@ export const handleControls = ($) => {
                         const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
                         if (!imagewrapper.contains(imagewrapper.querySelector('.add-item__image-preview'))) handleLoadImage($, imagewrapper, fileBtn, dataPic);
                     }
-                }).then(() => {
-                    $.app.append($.overlay);
-                }).then(() => {
-                    setTimeout(() => {
-                        $.overlay.classList.add('is-visible');
-                    }, 10);
-                    setTimeout(() => {
-                        $.addItemBlock.classList.add('is-visible');
-                    }, 500);
+                    return true;
+                }).then((ok) => {
+                    if(ok) callback();
                 });
+                //     .then(() => {
+                //     $.app.append($.overlay);
+                // }).then(() => {
+                //     setTimeout(() => {
+                //         $.overlay.classList.add('is-visible');
+                //     }, 10);
+                //     setTimeout(() => {
+                //         $.addItemBlock.classList.add('is-visible');
+                //     }, 500);
+                // });
             }
         });
     };
     
     const handleOpenForm = () => {
         $.addItemBtn.addEventListener('click', ({target}) => {
-            showModal(target).then(() => {
+            prepareModal(target).then(() => {
                 $.app.append($.overlay);
                 handleAllValidations($);
             }).then(() => {
@@ -126,7 +129,7 @@ export const handleControls = ($) => {
         if (direction === -1) {
             animationObject.visibilityIsUsed = false;
             animationObject.windowAnimation(() => {
-                animationObject.overlayAnimation(()=>{
+                animationObject.overlayAnimation(() => {
                     removeOverlayCallback();
                 });
             });
@@ -182,7 +185,9 @@ export const handleControls = ($) => {
                 removeVisualValidation($);
                 const tr = target.closest('.list-product__table-tr');
                 tr.setAttribute('data-is-editable', 'true');
-                showModal(target);
+                prepareModal(target, () => {
+                    modalAnimationHandler(400, 1, 'visible');
+                });
             }
         });
     };
