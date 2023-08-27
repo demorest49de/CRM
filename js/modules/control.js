@@ -76,58 +76,58 @@ export const handleControls = ($) => {
             if (target === $.overlay || target.closest('.add-item-close-button')) {
                 
                 hideImage($).then(() => {
-                    modalAnimationHandler(400, -1, 'hidden')
-                        .then((ok) => {
-                            if (ok) {
-                                const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
-                                if (tr) {
-                                    removeVisualValidation($);
-                                    tr.removeAttribute('data-is-editable');
-                                    $.form.reset();
-                                }
-                                $.overlay.remove();
-                            }
-                        });
+                    modalAnimationHandler(400, -1, 'hidden', function () {
+                        const tr = $.tbody.querySelector('.list-product__table-tr[data-is-editable=true]');
+                        if (tr) {
+                            removeVisualValidation($);
+                            tr.removeAttribute('data-is-editable');
+                            $.form.reset();
+                        }
+                        $.overlay.remove();
+                    });
                 });
             }
         });
     };
     
-    const modalAnimationHandler = (duration, direction, visibility) => {
+    const modalAnimationHandler = (duration, direction, visibility, callback) => {
         const animationObject = {
-            visibilityIsUsed: true, overlayAnimation: function () {
+            visibilityIsUsed: true,
+            
+            overlayAnimation: function (callback) {
                 if (this.visibilityIsUsed) $.overlay.style.visibility = visibility;
+                console.log(' overlay anim: ');
                 modalAnimation(duration, direction, (progress) => {
                     $.overlay.style.opacity = `${progress}`;
+                    console.log(' : ',progress);
+                    if (callback && progress >= 1) {
+                        callback();
+                    }
                 });
-            }, windowAnimation: function () {
+                
+            }, windowAnimation: function (callback) {
                 if (this.visibilityIsUsed) $.addItemBlock.style.visibility = visibility;
+                console.log(' window anim: ');
                 modalAnimation(duration, direction, (progress) => {
                     $.addItemBlock.style.opacity = `${progress}`;
+                    if (callback && progress <= 0) {
+                        callback();
+                    }
                 });
             },
         };
         
         if (direction === 1) {
             animationObject.visibilityIsUsed = true;
-            Promise.resolve(animationObject.overlayAnimation())
-                .then(() => {
-                    setTimeout(() => {
-                        animationObject.windowAnimation();
-                    }, 400);
-                });
+            animationObject.overlayAnimation(() => {
+                animationObject.windowAnimation();
+            });
         }
-        
-        
         if (direction === -1) {
             animationObject.visibilityIsUsed = false;
-            return Promise.resolve(animationObject.windowAnimation())
-                .then(() => {
-                    setTimeout(() => {
-                        animationObject.overlayAnimation();
-                    }, 400);
-                    return true;
-                });
+            animationObject.windowAnimation(() => {
+                animationObject.overlayAnimation();
+            });
         }
     };
     
@@ -137,9 +137,8 @@ export const handleControls = ($) => {
         
         requestId = window.requestAnimationFrame(function step(timestamp) {
             startAnimation ||= timestamp;
+            let progress = ((timestamp - startAnimation) / duration).toFixed(2);
             if (direction > 0) {
-                const progress = (timestamp - startAnimation) / duration;
-                // console.log(' : ', progress);
                 callback(progress);
                 if (progress < 1) {
                     requestId = requestAnimationFrame(step);
@@ -147,11 +146,9 @@ export const handleControls = ($) => {
                     cancelAnimationFrame(requestId);
                 }
             } else {
-                const progress = Math.abs(((timestamp - startAnimation) / duration) - 1);
-                
-                console.log(' : ', progress);
+                progress = (1 - progress).toFixed(2);
                 callback(progress);
-                if (progress > 0 && progress <= 1) {
+                if (progress > 0) {
                     requestId = requestAnimationFrame(step);
                 } else {
                     cancelAnimationFrame(requestId);
