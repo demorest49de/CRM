@@ -15,7 +15,7 @@ import {
 export const handleControls = ($) => {
     const prepareModal = async (element, callback) => {
         
-        await loadModalStyles('css/additem.css').then((response) => {
+        await loadModalStyles('css/addItem.css').then((response) => {
             if (response && element === $.addItemBtn) {
                 handleDiscount($.form.querySelector('.add-item__checkbox'), $);
                 $.overlay.querySelector('.add-item__title').textContent = 'добавить товар';
@@ -41,8 +41,8 @@ export const handleControls = ($) => {
                     
                     if (dataPic) {
                         const fileBtn = $.form.querySelector('.add-item__button-image');
-                        const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
-                        if (!imagewrapper.contains(imagewrapper.querySelector('.add-item__image-preview'))) handleLoadImage($, imagewrapper, fileBtn, dataPic);
+                        const imageWrapper = $.form.querySelector('.add-item__image-wrapper');
+                        if (!imageWrapper.contains(imageWrapper.querySelector('.add-item__image-preview'))) handleLoadImage($, imageWrapper, fileBtn, dataPic);
                     }
                 });
             }
@@ -268,24 +268,21 @@ export const handleControls = ($) => {
     const handleAddImage = async () => {
         const fileBtn = $.form.querySelector('.add-item__button-image');
         fileBtn.addEventListener('change', async ({target}) => {
-            const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
-            const img = imagewrapper?.querySelector('img');
+            const imageWrapper = $.form.querySelector('.add-item__image-wrapper');
+            const img = imageWrapper?.querySelector('img');
             img?.remove();
-            await handleLoadImage($, imagewrapper, fileBtn, null);
+            await handleLoadImage($, imageWrapper, fileBtn, null);
         });
     };
     
     const handleRemoveImage = () => {
         const trashcan = $.form.querySelector('.add-item__trashcan');
         trashcan.addEventListener('click', ({target}) => {
-            const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
-            const image = imagewrapper.querySelector('.add-item__image-preview');
+            const imageWrapper = $.form.querySelector('.add-item__image-wrapper');
+            const image = imageWrapper.querySelector('.add-item__image-preview');
             console.log(' : ', image);
             image.remove();
-            imagewrapper?.classList.add('hide-image');
-            // const fileBtn = $.form.querySelector('.add-item__button-image');
-            // removeFileFromFileList(0, fileBtn);
-            // $.form.image.name = 'image/notimage.jpg';
+            imageWrapper?.classList.add('hide-image');
         });
     };
     

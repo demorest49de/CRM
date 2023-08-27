@@ -7,8 +7,8 @@ export const hideImage = ($, remove = false) => {
         if(remove){
             const images = $.form.querySelectorAll('.add-item__image-preview');
             images?.forEach(e => e.remove());
-            const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
-            imagewrapper?.classList.add('hide-image');
+            const imageWrapper = $.form.querySelector('.add-item__image-wrapper');
+            imageWrapper?.classList.add('hide-image');
             $.form.querySelector('.add-item__file-size').textContent = '';
         }
         
@@ -18,9 +18,9 @@ export const hideImage = ($, remove = false) => {
     return promise;
 };
 
-export const appendImage = (image, imagewrapper) => {
+export const appendImage = (image, imageWrapper) => {
     
-    imagewrapper.append(image);
+    imageWrapper.append(image);
     image.classList.add('add-item__image-preview');
     image.alt = 'Превью изображеня';
 };
@@ -33,7 +33,7 @@ export const checkWindowResize = ($) => {
     }
 };
 
-export const handleLoadImage = ($, imagewrapper, fileBtn, dataPic = '') => new Promise(resolve => {
+export const handleLoadImage = ($, imageWrapper, fileBtn, dataPic = '') => new Promise(resolve => {
     
     const image = document.createElement('img');
     
@@ -46,10 +46,10 @@ export const handleLoadImage = ($, imagewrapper, fileBtn, dataPic = '') => new P
         // check size
         const file = fileBtn.files[0];
         
-        if (!checkFileSize($, file, imagewrapper, fileBtn, () => {
+        if (!checkFileSize($, file, imageWrapper, fileBtn, () => {
             checkWindowResize($);
         })) return;
-        appendImage(image, imagewrapper);
+        appendImage(image, imageWrapper);
         const src = URL.createObjectURL(fileBtn.files[0]);
         image.src = src;
         return;
@@ -57,8 +57,8 @@ export const handleLoadImage = ($, imagewrapper, fileBtn, dataPic = '') => new P
     
     // current
     if (dataPic) {
-        appendImage(image, imagewrapper);
-        imagewrapper.classList.remove('hide-image');
+        appendImage(image, imageWrapper);
+        imageWrapper.classList.remove('hide-image');
         image.src = dataPic;
     }
 });

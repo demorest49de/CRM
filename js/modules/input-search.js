@@ -22,7 +22,7 @@ export const handleSearch = ($) => {
 
             }
             lastCallTimerId = setTimeout(() => fn(...args), msec);
-            console.log(' new timer id: ', lastCallTimerId);
+            
 
         };
     };
