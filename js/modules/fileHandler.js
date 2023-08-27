@@ -10,8 +10,8 @@ export const checkFileSize = ($, file, imageWrapper, fileBtn, callback) => {
         return false;
     }
     
-    const filesizeText = $.form.querySelector('.add-item__file-size');
-    filesizeText.textContent = `${Math.floor(file.size/1000)} KB`;
+    const fileSizeText = $.form.querySelector('.add-item__file-size');
+    fileSizeText.textContent = `${Math.floor(file.size/1000)} KB`;
     
     // добавляем после проверки размера
     $.form.querySelector('.add-item__image-size-text').classList.remove('is-visible');

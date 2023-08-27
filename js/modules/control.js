@@ -157,8 +157,6 @@ export const handleControls = ($) => {
                 const item = target.closest('.list-product__table-tr');
                 const id = item.querySelector('.list-product__table-td[data-id]')
                     .getAttribute('data-id');
-                
-                
                 deleteGoodsHandler($, id);
             }
         });
