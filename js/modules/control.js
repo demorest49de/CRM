@@ -44,20 +44,7 @@ export const handleControls = ($) => {
                         const imagewrapper = $.form.querySelector('.add-item__image-wrapper');
                         if (!imagewrapper.contains(imagewrapper.querySelector('.add-item__image-preview'))) handleLoadImage($, imagewrapper, fileBtn, dataPic);
                     }
-                    return true;
-                }).then((ok) => {
-                    if(ok) callback();
                 });
-                //     .then(() => {
-                //     $.app.append($.overlay);
-                // }).then(() => {
-                //     setTimeout(() => {
-                //         $.overlay.classList.add('is-visible');
-                //     }, 10);
-                //     setTimeout(() => {
-                //         $.addItemBlock.classList.add('is-visible');
-                //     }, 500);
-                // });
             }
         });
     };
@@ -185,7 +172,9 @@ export const handleControls = ($) => {
                 removeVisualValidation($);
                 const tr = target.closest('.list-product__table-tr');
                 tr.setAttribute('data-is-editable', 'true');
-                prepareModal(target, () => {
+                prepareModal(target).then(()=>{
+                    $.app.append($.overlay);
+                }).then(() => {
                     modalAnimationHandler(400, 1, 'visible');
                 });
             }
