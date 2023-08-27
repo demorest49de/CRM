@@ -90,7 +90,7 @@ export const handleControls = ($) => {
         });
     };
     
-    const modalAnimationHandler = (duration, direction, visibility, callback) => {
+    const modalAnimationHandler = (duration, direction, visibility, removeOverlayCallback) => {
         const animationObject = {
             visibilityIsUsed: true,
             
@@ -99,7 +99,7 @@ export const handleControls = ($) => {
                 console.log(' overlay anim: ');
                 modalAnimation(duration, direction, (progress) => {
                     $.overlay.style.opacity = `${progress}`;
-                    console.log(' : ',progress);
+                    console.log(' : ', progress);
                     if (callback && progress >= 1) {
                         callback();
                     }
@@ -126,7 +126,9 @@ export const handleControls = ($) => {
         if (direction === -1) {
             animationObject.visibilityIsUsed = false;
             animationObject.windowAnimation(() => {
-                animationObject.overlayAnimation();
+                animationObject.overlayAnimation(()=>{
+                    removeOverlayCallback();
+                });
             });
         }
     };
