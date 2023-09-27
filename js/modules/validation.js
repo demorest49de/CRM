@@ -28,7 +28,7 @@ export const handleAllValidations = ($) => {
     
     const validateNameCategory = (target) => {
         target.value = target.value.replace(/[^0-9a-zA-ZА-Яа-я\s]/g, '');
-        if (!handleCheckLength(target, 10, $)) isFieldNotValidated++;
+        if (!handleCheckLength(target, 6, $)) isFieldNotValidated++;
     };
     
     for (const target of Array.from([name, category, measure, price, quantity, description])) {
