@@ -327,6 +327,20 @@ export const handleControls = ($) => {
         });
     };
     
+    const some = () => {
+        
+        const objEvent = {
+            handleEvent(event) {
+                console.log(' : ', event);
+                if (event.ctrlKey && event.key === 'Enter') {
+                
+                }
+            }
+        };
+        
+        document.querySelector('.add-item__button-item').addEventListener('keypress', objEvent);
+        
+    };
     
     handleInput();
     handleOpenForm();
