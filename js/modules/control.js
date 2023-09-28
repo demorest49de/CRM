@@ -67,7 +67,9 @@ export const handleControls = ($) => {
     const handleCloseForm = () => {
         $.overlay.addEventListener('click', event => {
             const target = event.target;
-            if (target === $.overlay || target.closest('.add-item-close-button')) {
+            if (
+                // target === $.overlay ||
+                target.closest('.add-item-close-button')) {
                 const wrapper = $.form.querySelector('.add-item__image-wrapper');
                 const editAttr = wrapper.getAttribute("data-fromEditWindow");
                 
