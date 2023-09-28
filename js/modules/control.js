@@ -57,10 +57,14 @@ export const handleControls = ($) => {
         
         const objEvent = {
             handleEvent(event) {
+                if (event.key === 'Escape') {
+                    console.log("escape!");
+                    formClose();
+                }
                 if (event.ctrlKey && event.key === 'Enter') {
                     console.log(' ctrl+Enter ');
                     const btn = $.overlay.querySelector('.add-item__button-item');
-                    // formClose();
+                    
                     btn.click();
                 }
             }
